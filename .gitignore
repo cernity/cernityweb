@@ -6,3 +6,9 @@ dist/
 .env
 # never carry the private evidence sources into this public repo
 proof-sources/
+
+# terraform
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/.terraform.lock.hcl
