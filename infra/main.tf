@@ -10,8 +10,10 @@ terraform {
   # operator/CI needs to apply this — a single-maintainer static site doesn't yet.
 }
 
-# CloudFront + (later) ACM certs must live in us-east-1; keep the whole stack there
-# so the deferred custom-domain cert (U6) needs no second provider alias.
+# Stack region = us-east-2 (account default). CloudFront is global, so the distribution
+# is region-agnostic; only the S3 bucket is regional. The deferred custom-domain ACM cert
+# (U6) must be us-east-1 for CloudFront — add a `provider "aws" { alias = "us_east_1" }`
+# just for that cert when cernity.io is wired up.
 provider "aws" {
   region = var.aws_region
 }

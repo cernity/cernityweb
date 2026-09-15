@@ -1,7 +1,7 @@
 variable "aws_region" {
-  description = "Region for the stack. Keep us-east-1 so the deferred ACM cert (U6) needs no provider alias."
+  description = "Region for the stack (S3 bucket). us-east-2 matches the account default. The deferred CloudFront ACM cert (U6) still must be us-east-1 — add a us-east-1 provider alias just for the cert then."
   type        = string
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "bucket_name" {
