@@ -1,0 +1,14 @@
+---
+const { ndrRepo } = Astro.props;
+---
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/">Cern<span>ity</span></a>
+    <nav>
+      <a href="/#value" class="hide-sm">Why Cernity</a>
+      <a href="/proof/">Proof</a>
+      <a href="/docs/" class="hide-sm">Docs</a>
+      <a href={ndrRepo} class="btn">GitHub ↗</a>
+    </nav>
+  </div>
+</header>

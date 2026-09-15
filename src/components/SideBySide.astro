@@ -1,0 +1,41 @@
+---
+// Renders one verified Suricata-vs-Cernity comparison from the curated figures.
+const { c } = Astro.props;
+const s = c.suricata, cer = c.cernity;
+const fmt = (v) => typeof v === 'number' ? v.toLocaleString() : v;
+---
+<div class="sbs">
+  <div class="head">
+    <strong>{c.title}</strong> <span class="pair">{c.pair}</span>
+  </div>
+  <div class="panels">
+    <div class="panel suricata">
+      <div class="who">Suricata alone</div>
+      <dl>
+        {s.flow_records !== undefined && (<><dt>flow records</dt><dd>{fmt(s.flow_records)}</dd></>)}
+        <dt>threat alerts</dt>
+        <dd class={s.threat_alerts === 0 ? 'zero' : ''}>{fmt(s.threat_alerts)}</dd>
+        {s.alerts_naming_exfil !== undefined && (<><dt>naming the threat</dt><dd class="zero">{fmt(s.alerts_naming_exfil)}</dd></>)}
+        {s.classification && (<><dt>classification</dt><dd>{s.classification}</dd></>)}
+      </dl>
+      <div class="verdict muted">{s.verdict}</div>
+    </div>
+    <div class="panel cernity">
+      <div class="who">+ Cernity</div>
+      <dl>
+        {cer.category && (<><dt>category</dt><dd>{cer.category}</dd></>)}
+        {cer.detector && (<><dt>detector</dt><dd>{cer.detector}</dd></>)}
+        {cer.detectors && (<><dt>detectors</dt><dd>{cer.detectors.join(', ')}</dd></>)}
+        {cer.mitre && (<><dt>ATT&CK</dt><dd>{cer.mitre}</dd></>)}
+        {cer.severity !== undefined && (<><dt>severity</dt><dd>{cer.severity}</dd></>)}
+        {cer.interval_s !== undefined && (<><dt>interval</dt><dd>{cer.interval_s}s (jitter {cer.jitter_s}s)</dd></>)}
+        {cer.connections !== undefined && (<><dt>connections</dt><dd>{fmt(cer.connections)}</dd></>)}
+        {cer.targets !== undefined && (<><dt>targets</dt><dd>{fmt(cer.targets)}</dd></>)}
+        {cer.bytes !== undefined && (<><dt>bytes</dt><dd>{fmt(cer.bytes)}</dd></>)}
+        {cer.findings !== undefined && (<><dt>findings</dt><dd>{cer.findings} (was {s.threat_alerts} alerts)</dd></>)}
+      </dl>
+      <div class="verdict">{cer.verdict}</div>
+    </div>
+  </div>
+  <div class="takeaway">{c.takeaway}</div>
+</div>

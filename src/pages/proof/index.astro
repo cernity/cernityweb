@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import SideBySide from '../../components/SideBySide.astro';
+import figures from '../../content/proof/figures.json';
+const NDR_REPO = 'https://github.com/cernity/cernityndr';
+---
+<Base title="Proof of value — Cernity vs Suricata alone" description="Verified side-by-side records: the same packets, what Suricata alone shows versus what Cernity derives.">
+  <section class="hero" style="padding-bottom: 12px;">
+    <span class="pill">Verified · same PCAP through both paths · only Cernity differs</span>
+    <h1>The same packets. Radically different output.</h1>
+    <p class="lede">
+      Each comparison below is drawn from an independently verified, hash-checked benchmark: an identical
+      capture replayed through Suricata→SIEM and through Suricata→Cernity→SIEM. Only Cernity is added.
+    </p>
+  </section>
+
+  <section>
+    {figures.comparisons.map((c) => <SideBySide c={c} />)}
+  </section>
+
+  <section>
+    <div class="caveat">
+      <h3>{figures.caveat.title}</h3>
+      <ul>
+        {figures.caveat.points.map((p) => <li>{p}</li>)}
+      </ul>
+    </div>
+    <p class="muted">
+      These figures are derived from a verified evidence package retained privately. The claims here are
+      deliberately bounded to what those records support. The product is open source —
+      <a href={NDR_REPO}>read the code and the benchmark harness on GitHub ↗</a>.
+    </p>
+  </section>
+</Base>

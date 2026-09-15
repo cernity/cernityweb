@@ -1,0 +1,14 @@
+---
+const { ndrRepo } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="wrap">
+    <span>© {year} Cernity · behavioural NDR for Suricata sensors</span>
+    <nav>
+      <a href="/proof/">Proof of value</a>
+      <a href="/docs/">Docs</a>
+      <a href={ndrRepo}>cernityndr on GitHub ↗</a>
+    </nav>
+  </div>
+</footer>

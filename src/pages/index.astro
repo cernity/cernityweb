@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import figures from '../content/proof/figures.json';
+const NDR_REPO = 'https://github.com/cernity/cernityndr';
+const highlight = figures.comparisons.find((c) => c.id === 'beacon');
+---
+<Base title="Cernity NDR — behavioural detection for Suricata sensors">
+  <section class="hero">
+    <span class="pill">Open-source · sits between Suricata and your SIEM</span>
+    <h1>Turn a signature-only Suricata sensor into a behavioural NDR.</h1>
+    <p class="lede">
+      Suricata sees the packets. It does not see the <em>behaviour</em> — the beacon, the low-and-slow
+      exfil, the internal fan-out. Cernity reads the same flows and turns them into named,
+      MITRE-tagged, entity-scoped findings, and folds repeating alerts into single incidents.
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="/proof/">See the evidence →</a>
+      <a class="btn" href={NDR_REPO}>View on GitHub ↗</a>
+    </div>
+  </section>
+
+  <section id="value">
+    <h2>What Cernity adds</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Behavioural detection</h3>
+        <p class="muted">Beaconing, low-and-slow exfil, DNS tunnelling, lateral fan-out — the patterns a
+        signature IDS has no rule for. Derived from the flows Suricata already emits.</p>
+      </div>
+      <div class="card">
+        <h3>Signal, not volume</h3>
+        <p class="muted">One classified incident instead of dozens of repeating alerts or raw flow rows.
+        Repeated signature hits collapse into a single tracked finding identity.</p>
+      </div>
+      <div class="card">
+        <h3>Analyst-ready context</h3>
+        <p class="muted">Every finding carries a category, an ATT&CK mapping, severity, and the scoped
+        source→destination entities — not a flow row to interpret by hand.</p>
+      </div>
+      <div class="card">
+        <h3>Drops into your pipeline</h3>
+        <p class="muted">Sits between the sensor and the SIEM. Same Suricata, same SIEM — Cernity is the
+        only thing added. Open source at <a href={NDR_REPO}>cernity/cernityndr</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  {highlight && (
+    <section>
+      <h2>The gap, in one example</h2>
+      <p class="lede">A periodic C2 callback, seen by both — Suricata logged it and said nothing; Cernity named it.</p>
+      <div class="sbs">
+        <div class="head"><strong>{highlight.title}</strong> <span class="pair">{highlight.pair}</span></div>
+        <div class="panels">
+          <div class="panel suricata"><div class="who">Suricata alone</div>
+            <dl><dt>flow records</dt><dd>{highlight.suricata.flow_records}</dd>
+            <dt>threat alerts</dt><dd class="zero">{highlight.suricata.threat_alerts}</dd></dl>
+            <div class="verdict muted">{highlight.suricata.verdict}</div></div>
+          <div class="panel cernity"><div class="who">+ Cernity</div>
+            <dl><dt>finding</dt><dd>{highlight.cernity.category} / {highlight.cernity.detector}</dd>
+            <dt>ATT&CK</dt><dd>{highlight.cernity.mitre}</dd>
+            <dt>cadence</dt><dd>{highlight.cernity.interval_s}s over {highlight.cernity.connections} conns</dd></dl>
+            <div class="verdict">{highlight.cernity.verdict}</div></div>
+        </div>
+        <div class="takeaway">{highlight.takeaway}</div>
+      </div>
+      <p><a class="btn" href="/proof/">See all four verified comparisons →</a></p>
+    </section>
+  )}
+</Base>

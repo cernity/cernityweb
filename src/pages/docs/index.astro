@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+const NDR_REPO = 'https://github.com/cernity/cernityndr';
+const docs = [
+  ['Getting started', 'docs/getting-started.md'],
+  ['How it works', 'docs/how-it-works.md'],
+  ['Deploy a sensor', 'docs/deploy-sensor.md'],
+  ['Enrichment', 'docs/enrichment.md'],
+  ['ML detection', 'docs/ml-detection.md'],
+  ['NDR coverage', 'docs/ndr-coverage.md'],
+  ['SIEM integrations', 'docs/siem-integrations.md'],
+  ['Suricata config', 'docs/suricata-config.md'],
+];
+---
+<Base title="Docs — Cernity NDR">
+  <section class="hero" style="padding-bottom: 8px;">
+    <h1>Documentation</h1>
+    <p class="lede">Cernity is open source. The canonical product documentation lives with the code in the
+    <a href={NDR_REPO}>cernityndr</a> repository — linked below so there is a single source of truth.</p>
+  </section>
+  <section>
+    <div class="grid">
+      {docs.map(([label, path]) => (
+        <a class="card" href={`${NDR_REPO}/blob/main/${path}`}>
+          <h3>{label} ↗</h3>
+          <p class="muted">{path}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

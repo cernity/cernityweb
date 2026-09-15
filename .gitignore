@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+*.log
+.env
+# never carry the private evidence sources into this public repo
+proof-sources/
