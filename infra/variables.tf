@@ -15,3 +15,15 @@ variable "github_repo" {
   type        = string
   default     = "cernity/cernityweb"
 }
+
+variable "site_aliases" {
+  description = "Custom domains served by CloudFront (empty = default *.cloudfront.net only)."
+  type        = list(string)
+  default     = ["cernity.io", "www.cernity.io"]
+}
+
+variable "acm_certificate_arn" {
+  description = "us-east-1 ACM cert ARN for site_aliases. Empty = use the default CloudFront cert."
+  type        = string
+  default     = ""
+}

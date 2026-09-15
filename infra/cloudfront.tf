@@ -10,6 +10,7 @@ resource "aws_cloudfront_distribution" "site" {
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
   comment             = "Cernity marketing site"
+  aliases             = var.site_aliases
 
   origin {
     domain_name              = aws_s3_bucket.site.bucket_regional_domain_name
@@ -41,10 +42,21 @@ resource "aws_cloudfront_distribution" "site" {
     }
   }
 
-  # Default CloudFront cert / *.cloudfront.net domain until cernity.io is bought (U6).
-  # Adding the custom domain later = an `aliases` block + swapping this for an
-  # acm_certificate_arn viewer_certificate; nothing else here changes.
-  viewer_certificate {
-    cloudfront_default_certificate = true
+  # Custom domain when acm_certificate_arn is set (cernity.io on a us-east-1 ACM cert),
+  # else the default *.cloudfront.net HTTPS cert. Kept switchable so the stack works with
+  # or without the domain.
+  dynamic "viewer_certificate" {
+    for_each = var.acm_certificate_arn == "" ? [1] : []
+    content {
+      cloudfront_default_certificate = true
+    }
+  }
+  dynamic "viewer_certificate" {
+    for_each = var.acm_certificate_arn != "" ? [1] : []
+    content {
+      acm_certificate_arn      = var.acm_certificate_arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
   }
 }
