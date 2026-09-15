@@ -1,29 +1,23 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 const NDR_REPO = 'https://github.com/cernity/cernityndr';
-const docs = [
-  ['Getting started', 'docs/getting-started.md'],
-  ['How it works', 'docs/how-it-works.md'],
-  ['Deploy a sensor', 'docs/deploy-sensor.md'],
-  ['Enrichment', 'docs/enrichment.md'],
-  ['ML detection', 'docs/ml-detection.md'],
-  ['NDR coverage', 'docs/ndr-coverage.md'],
-  ['SIEM integrations', 'docs/siem-integrations.md'],
-  ['Suricata config', 'docs/suricata-config.md'],
-];
+const docs = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Base title="Docs — Cernity NDR">
+<Base title="Docs — Cernity NDR" description="Product documentation for Cernity NDR — deploy, configure, and integrate the behavioural detection tier.">
   <section class="hero" style="padding-bottom: 8px;">
     <h1>Documentation</h1>
-    <p class="lede">Cernity is open source. The canonical product documentation lives with the code in the
-    <a href={NDR_REPO}>cernityndr</a> repository — linked below so there is a single source of truth.</p>
+    <p class="lede">
+      Everything to deploy Cernity onto a Suricata sensor and wire it into your SIEM. The
+      product is open source — the code lives at <a href={NDR_REPO}>cernity/cernityndr</a>.
+    </p>
   </section>
   <section>
     <div class="grid">
-      {docs.map(([label, path]) => (
-        <a class="card" href={`${NDR_REPO}/blob/main/${path}`}>
-          <h3>{label} ↗</h3>
-          <p class="muted">{path}</p>
+      {docs.map((d) => (
+        <a class="card" href={`/docs/${d.slug}`}>
+          <h3>{d.data.nav}</h3>
+          <p class="muted">{d.data.title}</p>
         </a>
       ))}
     </div>

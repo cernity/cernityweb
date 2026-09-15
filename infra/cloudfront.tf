@@ -5,6 +5,28 @@ resource "aws_cloudfront_origin_access_control" "site" {
   signing_protocol                  = "sigv4"
 }
 
+# Static-site URI rewrite: map "/docs/" -> "/docs/index.html" and extensionless
+# paths like "/docs/getting-started" -> "/docs/getting-started/index.html". Without
+# this, CloudFront only rewrites the root ("/") and every subpath 403s off S3.
+resource "aws_cloudfront_function" "rewrite" {
+  name    = "${var.bucket_name}-uri-rewrite"
+  runtime = "cloudfront-js-2.0"
+  comment = "Append index.html for directory-style requests"
+  publish = true
+  code    = <<-EOT
+    function handler(event) {
+      var request = event.request;
+      var uri = request.uri;
+      if (uri.endsWith('/')) {
+        request.uri = uri + 'index.html';
+      } else if (!uri.split('/').pop().includes('.')) {
+        request.uri = uri + '/index.html';
+      }
+      return request;
+    }
+  EOT
+}
+
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   default_root_object = "index.html"
@@ -26,6 +48,11 @@ resource "aws_cloudfront_distribution" "site" {
     compress               = true
     # AWS managed CachingOptimized policy — no custom TTLs to maintain.
     cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.rewrite.arn
+    }
   }
 
   # Astro emits a static 404.html; surface it with the right status.
