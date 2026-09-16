@@ -1,44 +1,91 @@
 {
-  "_note": "Curated verified figures for the proof visuals. Derived 2026-09-15 from the private, hash-checked evidence package (kept in homelabai). Only the specific values the marketing needs are baked in here; the raw package, report, and audits are NOT published.",
+  "_note": "Homepage highlights checked against saved exports. Full scoped counts, original document bodies, revisions, and limitations are published under /proof/ and /evidence/.",
   "comparisons": [
     {
       "id": "beacon",
       "title": "Periodic C2 callback",
-      "pair": "10.0.0.5 → 203.0.113.66:443",
-      "suricata": { "flow_records": 20, "threat_alerts": 0, "verdict": "17 flow rows for the host, 0 alerts — nothing flagged" },
-      "cernity": { "category": "c2", "detector": "beacon", "mitre": "T1071", "severity": 8, "interval_s": 5.0, "jitter_s": 0.0, "connections": 20, "verdict": "one C2-beacon finding with the measured cadence" },
-      "takeaway": "Suricata logged the callbacks but raised no alert. Cernity derived the 5-second cadence and named it C2."
+      "pair": "10.0.0.5 \u2192 203.0.113.66:443",
+      "suricata": {
+        "flow_records": 20,
+        "threat_alerts": 0,
+        "verdict": "20 flow records for this pair, 0 alert records"
+      },
+      "cernity": {
+        "category": "c2",
+        "detector": "beacon",
+        "mitre": "T1071",
+        "severity": 8,
+        "interval_s": 5.0,
+        "jitter_s": 0.0,
+        "connections": 20,
+        "verdict": "Selected 20-connection finding; three beacon finding IDs in the saved pair output"
+      },
+      "takeaway": "Cernity derived a five-second periodicity lead from the observed connections; this is not proof of malicious intent."
     },
     {
       "id": "scan",
       "title": "Internal fan-out",
-      "pair": "172.31.0.5 → 12 internal hosts",
-      "suricata": { "flow_records": 48, "threat_alerts": 0, "verdict": "48 flow rows, 0 alerts — connections scattered, unlinked" },
-      "cernity": { "category": "lateral", "detectors": ["lateral_movement", "rdp_fanout"], "targets": 12, "verdict": "one administrative-port fan-out lead" },
-      "takeaway": "The analyst would have to aggregate 48 connections by hand. Cernity delivered the fan-out as a single lead."
+      "pair": "172.31.0.5 \u2192 12 internal hosts",
+      "suricata": {
+        "flow_records": 48,
+        "threat_alerts": 0,
+        "verdict": "48 flow rows, 0 alerts \u2014 connections scattered, unlinked"
+      },
+      "cernity": {
+        "category": "lateral",
+        "detectors": [
+          "lateral_movement",
+          "rdp_fanout"
+        ],
+        "targets": 12,
+        "verdict": "Two findings: lateral_movement and rdp_fanout"
+      },
+      "takeaway": "Cernity summarized contact with twelve internal targets. The saved labels do not qualify attack recall or successful lateral movement."
     },
     {
       "id": "signature",
       "title": "Repeated signature, consolidated",
-      "pair": "203.0.113.5 → 203.0.113.10:4444",
-      "suricata": { "threat_alerts": 45, "classification": "A Network Trojan was detected", "verdict": "45 repeating alert records for one incident" },
-      "cernity": { "category": "c2", "mitre": "T1071", "findings": 1, "verdict": "one stable finding identity (2 revisions)" },
-      "takeaway": "Here Suricata does classify the threat — and fires it 45 times. Cernity keeps it as one tracked incident."
+      "pair": "203.0.113.5 \u2192 203.0.113.10:4444",
+      "suricata": {
+        "threat_alerts": 45,
+        "classification": "A Network Trojan was detected",
+        "verdict": "45 repeating alert records for one incident"
+      },
+      "cernity": {
+        "category": "c2",
+        "mitre": "T1071",
+        "findings": 1,
+        "verdict": "one stable finding identity (2 revisions)"
+      },
+      "takeaway": "45 matching alerts became two revisions of one finding ID. The later revision records an enrichment timeout."
     },
     {
       "id": "exfil",
       "title": "Distributed low-and-slow transfer",
-      "pair": "10.0.0.15 → 203.0.113.200",
-      "suricata": { "flow_records": 11, "threat_alerts": 44, "alerts_naming_exfil": 0, "verdict": "44 TCP stream-anomaly alerts on the pair — none says 'exfil'" },
-      "cernity": { "category": "exfil", "detector": "low_slow_exfil", "mitre": "TA0010", "severity": 6, "bytes": 5933840, "connections": 11, "verdict": "one data-exfiltration lead: 5.93 MB across 11 flows" },
-      "takeaway": "Suricata's alerts were protocol noise, not a data-theft signal. Cernity summed the transfer and tagged exfiltration."
+      "pair": "10.0.0.15 \u2192 203.0.113.200",
+      "suricata": {
+        "flow_records": 11,
+        "threat_alerts": 44,
+        "alerts_naming_exfil": 0,
+        "verdict": "44 TCP stream-anomaly alerts on the pair \u2014 none says 'exfil'"
+      },
+      "cernity": {
+        "category": "exfil",
+        "detector": "low_slow_exfil",
+        "mitre": "TA0010",
+        "severity": 6,
+        "bytes": 5933840,
+        "connections": 11,
+        "verdict": "one data-exfiltration lead: 5.93 MB across 11 flows"
+      },
+      "takeaway": "Cernity aggregated the transfer into an investigation lead. The saved run is inputs_drained, and transferred bytes do not establish theft."
     }
   ],
   "caveat": {
     "title": "Honest limits",
     "points": [
       "Cernity is not free of false leads: on a benign transfer in the same test its beacon detector raised two c2 leads that were not malicious.",
-      "These are synthetic, single-host scenarios that demonstrate the mechanism — not a population precision/recall study.",
+      "These are synthetic, single-host scenarios that demonstrate the mechanism \u2014 not a population precision/recall study.",
       "On threats Suricata already signatures, both catch it; Cernity's edge there is consolidation and enrichment.",
       "No analyst-workload or resource-cost figure is claimed here."
     ]

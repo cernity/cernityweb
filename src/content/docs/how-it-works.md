@@ -1,274 +1,124 @@
 ---
-title: "How Cernity works"
-nav: "How it works"
+title: "How Cernity works: from packet to investigation"
+nav: "Architecture & data flow"
 order: 2
 ---
 
-# How Cernity works
+# How Cernity works: from packet to investigation
 
-This explains the whole system in plain language — the idea, the pieces, and how a
-packet on the wire becomes a security finding in your SIEM. No prior knowledge of
-the internals is assumed. If you just want to run it, see the README quickstart; if
-you want to understand it, read on.
+**Suricata sees traffic and writes observations. A shipper sends those observations to Cernity. Cernity analyzes them and sends findings to your SIEM.** Each step is a separate service with a separate responsibility.
 
----
+You do not point the SIEM at a packet capture interface. You do not need Zeek on every sensor for the core Cernity pipeline. And installing Cernity centrally does not automatically collect the remote sensor's files.
 
-## 1. The problem it solves
+## Follow one connection through the system
 
-You have Suricata sensors watching network traffic. Suricata is good at inspecting
-packets and matching known-bad signatures, but a lot of real attacks don't trip a
-signature — they show up as *patterns over time*: a host calling home every 60
-seconds (command-and-control beaconing), a slow trickle of data leaving the network
-(exfiltration), thousands of odd DNS lookups (tunneling), one machine reaching out to
-many others (lateral movement).
-
-Catching those patterns needs **stateful analysis** — you have to remember what a
-host did over the last ten minutes and do math on it. Tools like Zeek and RITA do
-this, but running them *on the sensor* is expensive: they compete with Suricata for
-CPU and memory, and at fleet scale they produce far more data than a SIEM can afford.
-
-**Cernity's answer:** inspect packets once, at the edge, with Suricata. Ship only the
-lightweight *telemetry* (not the packets) to a central place. Do all the heavy,
-stateful analysis there, on hardware that has room for it. Send **findings** — "this
-looks like C2" — to your SIEM, not raw logs.
-
-> The rule everything follows: **raw network telemetry is analytics input; security
-> findings are SIEM input.** Telemetry stops at Cernity. Only findings go onward.
-
----
-
-## 2. The shape of it: three tiers
-
-```
-   Sensor (per Suricata box)        Central (Cernity)              Your SIEM
-   ------------------------         -----------------              ---------
-   Suricata  ->  eve logs  ->       message bus  ->  detectors ->  findings out
-                 shipper            (Redpanda)       finding-svc   (Devo, Splunk,
-   (optional) capture-agent  <----- capture loop ->  Zeek         Elastic, syslog…)
+```text
+MONITORED NETWORK
+A client connects to a server
+        │ copied traffic from a TAP / SPAN / virtual mirror
+        ▼
+SENSOR HOST
+Suricata: captures packets and writes local EVE JSON
+        │ eve-alerts.json + eve-nsm.json
+        ▼
+Fluent Bit: tails the files, parses JSON, adds sensor identity
+        │ outgoing Kafka-protocol connection
+        │ SASL/SCRAM authentication + TLS, TCP 19092
+        ▼
+CENTRAL CERNITY HOST
+Redpanda: holds events in topics for consumers
+        │ flow / dns / tls / http / raw / other topics
+        ▼
+Detectors: compare observations and produce candidate findings
+        ▼
+finding-service: applies lifecycle, context, and delivery decisions
+        ▼
+findings-forwarder: formats and sends findings
+        │ your chosen SIEM ingestion protocol
+        ▼
+YOUR SIEM
+Stored finding documents → analyst investigation → case decision
 ```
 
-- **Sensor tier** — your Suricata box plus a tiny log *shipper*. No analysis happens
-  here. It just produces logs and forwards them. Optionally a small *capture-agent*
-  grabs packets on demand (explained later).
-- **Central tier** — a set of small, single-job services connected by a message bus.
-  This is where detection happens.
-- **Your SIEM** — Cernity delivers findings to it and stops there.
+The arrows from Suricata to Fluent Bit are local file reads. The next arrow is a network connection initiated by the sensor. The final arrow is initiated by Cernity. These are not one shared connection.
 
-Each central service does one thing, reads from the bus, and writes back to the bus.
-That's what lets you run many copies of a busy service to handle more load.
+## 1. Packet visibility comes first
 
----
+Suricata can analyze only the packets it receives. A mirror on an internet uplink can see routed egress but miss two internal machines talking through a switch. An internal fan-out detector cannot reconstruct traffic that never reached the sensor.
 
-## 3. The message bus, and why everything is keyed by source IP
+Encrypted traffic often still exposes addresses, ports, sizes, and some handshake metadata. It does not automatically expose HTTP paths or transferred files. TLS logging is not decryption.
 
-The central services don't call each other directly. They pass messages through a
-**bus** (Redpanda, which speaks the Kafka protocol). A service *subscribes* to a
-topic (a named stream, e.g. `suricata.flow.v1`) and *publishes* to another
-(e.g. `ndr.finding.candidate.v1`).
+A monitoring sensor typically has a capture interface for mirrored traffic and a management interface with a routable address. The management path carries telemetry to Cernity. See [sensor dependencies](/docs/sensor-dependencies/) before selecting a capture point.
 
-Two properties matter:
+## 2. Suricata creates the observations
 
-- **Topics are split into partitions.** A partition is a lane. More lanes = more
-  copies of a service can work in parallel (one copy per lane). This is the knob you
-  turn to scale.
-- **Every record is keyed by the source IP.** The bus guarantees all records with the
-  same key land on the same partition, in order. So *one host's whole story stays
-  together on one lane* — which is exactly what stateful, per-host detection needs.
+EVE is Suricata's JSON logging format. One line can be a flow summary, an alert, a DNS transaction, or another observation. The supplied shipper reads two configured files:
 
-The message shapes are pinned in `contracts/` (JSON schemas + the topic list). That
-folder is Cernity's public interface: if you write your own producer or consumer, you
-build against those schemas.
+- `eve-alerts.json` contains alert events.
+- `eve-nsm.json` contains flow, protocol, file metadata, anomaly, and statistics events you enable.
 
----
+Splitting is a convention used by the supplied configuration, not a requirement of all Suricata installations. Existing deployments may have one `eve.json`; the logger and shipper paths must agree. Merely changing a filename does not enable a protocol logger.
 
-## 4. From packet to finding, step by step
+## 3. Fluent Bit moves the data off the sensor
 
-1. **Suricata** inspects packets and writes **EVE** logs (JSON, one event per line) —
-   flows, DNS, TLS, HTTP, alerts, and so on. See `docs/suricata-config.md`.
-2. The **shipper** (Fluent Bit) tails those logs, routes each event to its topic by
-   type (`flow` → `suricata.flow.v1`, `dns` → `suricata.dns.v1`, …), keys it by source
-   IP, and sends it to the bus. It does no analysis.
-3. The **detectors** read those topics, keep rolling per-host windows, and when a
-   pattern crosses a threshold they publish a **candidate finding**.
-4. **finding-service** takes candidates, removes duplicates, tags them with MITRE
-   ATT&CK techniques, decides whether packet-level proof is worth fetching, and
-   publishes a **final finding**.
-5. **findings-forwarder** delivers final findings to your SIEM.
+Fluent Bit runs on the host with access to the Suricata log directory. It opens the EVE files read-only, follows appended lines, parses each line as JSON, and applies `route.lua`.
 
-Everything after step 2 is central. The sensor only did steps 1–2.
+The routing function stamps `tenant` and `sensor_id` from configured environment variables, chooses a topic based on `event_type`, and uses the source IP as the Kafka message key when available. A **topic** is a named stream of messages. A **partition** is an ordered lane within that stream. Ordering within a partition is not global ordering across all sensors or topics.
 
----
+The shipper connects to `CENTRAL_HOST:19092`. Suricata itself is not making this Kafka connection. The central host does not SSH into the sensor to pull files. The [sensor transport guide](/docs/sensor-transport/) traces the exact paths, credentials, and troubleshooting checks.
 
-## 5. The pieces, explained
+## 4. Redpanda separates collection from analysis
 
-Each of these is a small container that reads from the bus and writes back to it.
+Redpanda is the Kafka-compatible message broker. It stores messages so producers and consumers do not have to run in lockstep. Consumers track offsets, meaning their position in each stream.
 
-### Ingestion
-- **shipper (Fluent Bit)** — *on the sensor.* Tails Suricata's split EVE files, maps
-  each event type to its topic, keys by source IP, ships to the bus. Replaceable with
-  Filebeat/Vector; any Kafka-API shipper works.
-- **normalizer** — reads the raw telemetry topics and writes typed rows into
-  ClickHouse for retention and hunting. (Optional; only needed if you keep telemetry.)
-- **ids-alerts** — turns Suricata's own signature alerts into finding candidates, so
-  signature hits and behavioral detections flow through the same pipeline.
+| Event type | Topic selected by the supplied shipper | Example consumer |
+|---|---|---|
+| `flow` | `suricata.flow.v1` | Behavioral and east-west detectors |
+| `dns` | `suricata.dns.v1` | DNS and behavioral detectors |
+| `tls`, `http`, `ssh` | `suricata.tls.v1`, `suricata.http.v1`, `suricata.ssh.v1` | Protocol detectors |
+| `fileinfo` | `suricata.file.v1` | Optional file-threat service |
+| `anomaly` | `suricata.anomaly.v1` | Anomaly detector |
+| `stats` | `suricata.stats.v1` | Coverage detector |
+| `alert`, `smb`, `krb5`, `dcerpc`, other unmatched types | `suricata.raw.v1` | IDS alert promotion and relevant protocol consumers |
 
-### Detectors (the analysis)
-Each keeps rolling per-host windows (default 10 minutes, re-scored every 30 seconds)
-and publishes candidates when something looks wrong.
-- **behavioral-detectors** — the core. Beaconing (a host calling home at a suspiciously
-  regular interval), data exfiltration (outbound byte volume), DNS tunneling (query
-  volume and randomness), long connections, "first time I've seen this host talk to
-  that destination," and a fleet-prevalence check that raises the priority of
-  destinations almost nobody else contacts. The regularity math follows RITA's method.
-- **dns-detector** — DNS-specific signals: bursts of failed lookups (NXDOMAIN) and
-  tunneling fingerprints.
-- **http-detector** — anomalies in HTTP traffic.
-- **protocol-detectors** — TLS/certificate oddities (self-signed, very short-lived,
-  rare fingerprints), DNS-over-HTTPS to unapproved resolvers, SSH brute force,
-  port/protocol mismatch, and domain-fronting (ECH usage or a cleartext HTTP Host
-  that disagrees with the flow's TLS SNI).
-- **east-west-detectors** — internal-to-internal traffic that looks like an attacker
-  spreading between machines: SMB/RDP/DCE-RPC/Kerberos fan-out, internal scanning,
-  **password spraying** (one source failing auth across many accounts), **AS-REP
-  roasting**, **ransomware over SMB** (a write-heavy file flood across many shares),
-  **remote-exec lateral movement** (PsExec/WMI/scheduled-task named pipes), and
-  **LLMNR/mDNS poisoning** (a Responder-style host answering many names it doesn't own).
-  These need east-west Windows/AD traffic to fire, so they stay quiet on a flat network
-  with none — to see them work, replay the bundled attack fixture (below).
-- **anomaly-detector** — statistical outliers over the flow telemetry.
-- **coverage-detector** — a health signal: is the sensor actually mirroring the traffic
-  we expect to see? Silence can mean a blind spot, not safety.
-- **threat-intel** — matches live traffic against abuse.ch blocklists (known C2 IPs,
-  bad TLS certificates, malicious JA3 fingerprints) plus an operator-supplied
-  known-C2 **server-fingerprint** list (JA3S/JA4S/JARM — e.g. Cobalt Strike, Sliver).
+Notice that alerts go to `suricata.raw.v1`, not an assumed `suricata.alert.v1`. The file name and the destination topic are different concepts.
 
-### Findings lifecycle
-- **finding-service** — the brain of the output. De-duplicates candidates (the same
-  beacon seen repeatedly becomes one finding), tags MITRE techniques, **enriches** the
-  finding (GeoIP/ASN and community-ID always; optionally reverse-DNS, domain age /
-  newly-registered-domain, fingerprint naming, and IP reputation — see
-  `docs/enrichment.md`), and emits the **final** finding. A confirmed threat (an IDS
-  signature, threat-intel hit, or known-bad file hash) is **delivered to your SIEM
-  immediately** — if packets are also worth fetching, the capture loop *enriches* that
-  finding later with the evidence; it never withholds delivery waiting on capture, so a
-  confirmed threat reaches you even when the optional forensics overlay isn't deployed.
-  Every capture-bound finding is finalized on the capture result, a refusal, or a
-  timeout — nothing is left dangling. Optionally records findings in ClickHouse.
-- **findings-forwarder** — the exit. Delivers final findings to your SIEM through a
-  pluggable adapter (Devo, Splunk, Elasticsearch/OpenSearch, syslog/CEF, webhook, or a
-  file), or several at once. Delivery is durable: each sink retries then dead-letters on
-  a SIEM outage (never a silent drop), offsets commit only after delivery (at-least-once),
-  and duplicates are dropped by finding id. See `docs/siem-integrations.md`.
-- **correlation-service** — links related findings together (reads ClickHouse).
-- **asset-service** — keeps an inventory of hosts and whether they're internal or
-  external, which several detectors use for context.
+## 5. Detectors ask questions across observations
 
-### Optional: on-demand packet forensics (the Zeek loop)
-Most detection needs only telemetry. Sometimes you want the actual packets — to prove
-a finding or carve a file. Cernity fetches packets *only when it's worth it*, and only
-for the one connection involved. This loop **enriches** a finding (attaching evidence);
-for a confirmed threat the finding is already on your SIEM before the capture runs:
-- **finding-service** decides a finding warrants packets and sends a **capture request**
-  carrying the sensor identity and the exact value to capture.
-- **capture-orchestrator** — *central.* Checks safety limits (is the sensor healthy,
-  are we within budget) and, if allowed, sends an **arm** instruction to the sensor.
-- **capture-agent** — *on the sensor.* Receives the arm instruction over the bus (no
-  inbound access needed), tells the local Suricata to write a small packet capture for
-  that one connection, and uploads it to central object storage. It does no packet
-  inspection itself — the packets only exist on the sensor, so the fetch has to happen
-  there. This is why it runs on the sensor; see the note below.
-- **zeek-central** — *central.* Runs Zeek over the uploaded capture (offline, on demand)
-  to extract deep protocol detail, files, and certificates.
-- **zeek-notice** — turns Zeek's findings into finding candidates.
-- **reconstruction** — builds a timeline and entity graph for a host from stored data.
-- **file-threat / file-yara** — when Suricata carves a file out of the stream, these
-  hash-check it and scan it with YARA rules to catch malware with no known hash.
+A detector may ask whether one host repeatedly connects at regular intervals, whether a source reaches many internal targets, or whether multiple outgoing transfers add up to an unusual pattern. It emits a **candidate finding**, not a verdict from a human investigator.
 
-> **Why capture-agent is on the sensor and not central:** the raw packets only exist
-> where Suricata is sniffing them — on the sensor. Central Cernity only ever has
-> *telemetry*. So when central decides it wants packets, it sends a *request back to
-> the sensor*, and the agent (which is the only thing that can see those packets) grabs
-> them. Central decides *when*; only the sensor *can* capture.
+The core services also promote existing Suricata signature alerts. That path adds lifecycle and consolidation; it must not be described as a new detection if the signature already identified the activity.
 
-### Response
-- **soar-forwarder** — runs automated response playbooks on final findings and can
-  notify or call a SOAR (TheHive, Shuffle, n8n).
+The reviewed central Compose file defaults detector state to `memory`. That state is process-local and does not survive a detector restart. Redis-backed implementations exist, but changing a variable is not a substitute for deploying Redis and passing the correct URL to every relevant service. Do not assume the basic deployment is a validated distributed cluster.
 
-### Streaming detectors (optional)
-- **flink** — the same scan-detection and session-stitching logic expressed as Flink
-  SQL, for teams that prefer a streaming-SQL engine. The Python detectors cover the
-  core without it.
+## 6. Findings have a lifecycle
 
-### ntop integration (optional)
-- **nDPI** — build Suricata with ntop's nDPI plugin and its flow-risk verdict
-  (`ndpi.flow_risk`: malicious JA3/JA4, DGA, cleartext creds, bad TLS…) flows into the
-  behavioral detector automatically. The single highest-value edge add-on; see
-  `docs/suricata-config.md`.
-- **PF_RING (ZC)** — ntop's kernel-bypass capture for line-rate (10 Gbps+) sensors.
+`finding-service` receives candidates on `ndr.finding.candidate.v1`. Depending on the finding, it can score, suppress, finalize, or request extra evidence. Deliverable findings reach `ndr.finding.final.v1`.
 
----
+A finding can be final for delivery while enrichment remains pending. A later revision may report a timeout. Neither state erases the original observation. The [signature evidence case](/proof/#signature) shows exactly this sequence.
 
-## 6. Where state and data live
+Consolidation is scoped to finding identity and revision. A repeated behavior can still produce multiple identities or findings from different detectors, as the [beacon](/proof/#beacon) and [fan-out](/proof/#scan) examples show.
 
-- **Redis** — the detectors' short-term memory. Each host's rolling window (call-back
-  times, byte counters, seen-destinations) lives here with a time-to-live so it can't
-  grow forever. Because the state is shared in Redis and keyed by the host (not by
-  which copy of the service handled it), you can run many copies of a detector and any
-  copy can handle any host correctly.
-- **ClickHouse** *(optional)* — long-ish retention of telemetry and findings, for
-  hunting and pivoting ("show me everything this host did").
-- **MinIO** *(optional)* — object storage for the on-demand packet captures and carved
-  files.
+## 7. The forwarder delivers to the SIEM
 
-Findings themselves are the durable output and go to your SIEM; the raw telemetry is
-kept only as long as you choose (short by default).
+The forwarder consumes final findings, excludes suppressed findings from analyst delivery, and applies the selected adapter. JSON-based sinks preserve a richer document than the compact CEF mapping. Adapters and SIEM parsers determine what your search screen exposes.
 
----
+Cernity does not automatically build your SIEM dashboards, configure its index mappings, or retain every raw flow there. For a full investigation, decide where the original telemetry is retained and how analysts pivot to it. See [SIEM delivery and record formats](/docs/siem-integrations/).
 
-## 7. How you run it, and how it scales
+## Where Zeek fits
 
-Three deployment paths, same architecture (details in the README and
-`deploy/scale/README.md`):
+The optional packet-forensics path is separate from normal telemetry collection. It requires capture orchestration centrally, an agent able to access the sensor's Suricata control socket and capture output, reachable object storage, and a central Zeek worker.
 
-- **Single host** (Docker Compose) — evaluation and small sites.
-- **Manual multi-server** (Compose, no orchestration) — put the bus/state/storage on
-  one or more hosts, run detector copies on others, scale by setting replica counts.
-- **Kubernetes** (Helm) — detectors as autoscaled Deployments.
+The intended sequence is a scoped capture request, sensor-side capture, upload, offline Zeek analysis, and an update to the finding. This is not continuous Zeek packet inspection on every sensor. It also cannot recover packets from the past unless a configured retention or buffering mechanism actually holds them.
 
-Scaling in one sentence: **more partitions on a topic let you run more copies of the
-detectors that read it, and each copy takes a share of the partitions.** For a large
-fleet you cluster the bus/state/storage, give the busy topics plenty of partitions,
-and add detector copies until consumer-group *lag* stops rising.
+The reviewed optional Compose wiring has unresolved secure-bus and permissions dependencies described in [sensor dependencies](/docs/sensor-dependencies/#optional-packet-forensics). Treat the overlay as a separate integration project, not a prerequisite for understanding or evaluating basic findings.
 
-The sensor side scales by itself — every sensor runs its own shipper (and optional
-agent), self-arming over the bus, with no central coordinator holding keys.
+## What the basic deployment does not install
 
----
+The central core includes Redpanda, the detector services, finding-service, and findings-forwarder. It does not include a SIEM UI, a deployed ClickHouse store, Redis, or the full optional forensics stack. These require additional deployment and verification.
 
-## 8. Configuration and observability
+Source availability does not make every optional capability active. A service must be running, subscribed to the appropriate input, supplied with the fields it needs, and able to deliver its output.
 
-- **Everything is set through one file** (`.env`, copied from `cernity.env.example`):
-  bus address, tenant name, state backend, findings sink, ClickHouse, log level. No
-  editing compose files or code for a normal deployment.
-- **Logging** is a health signal, not a firehose: services log startup and periodic
-  activity at INFO (per-event detail is DEBUG), and container logs are size-capped so
-  they can't fill a disk.
-- Each service exposes Prometheus metrics and health endpoints.
+## Implementation references
 
----
-
-## 9. What Cernity is and isn't
-
-- It **is** the central analytics tier: it turns Suricata telemetry into findings and
-  hands them to your SIEM.
-- It **does not** ship a SIEM, replace Suricata, or run detection on your sensors.
-- It reproduces Zeek/RITA-style behavioral analysis centrally; on real traffic, the
-  optional Zeek loop is mostly *forensic depth* (packet-level proof, file carving),
-  not additional detections — so treat it as enrichment you turn on when you want it.
-- Put another way: **Cernity is the add-on that completes Suricata into a full NDR** —
-  the analytics, correlation, enrichment, prioritization, and response tier a standalone
-  IDS doesn't have. See `docs/ndr-coverage.md` for how each NDR capability area is covered
-  (and the honest boundaries — no ML models, no vuln scanning, console delegated to your SIEM).
-
-For configuring Suricata, deploying the sensor, and wiring your SIEM, see the other
-files in `docs/`.
+This walkthrough was checked against Cernity revision `18174b8`. Inspect the [central Compose file](https://github.com/cernity/cernityndr/blob/18174b8c2d8e29e2312d4f27064a2baa3456d9e3/deploy/central/docker-compose.yml), [sensor bundle](https://github.com/cernity/cernityndr/blob/18174b8c2d8e29e2312d4f27064a2baa3456d9e3/deploy/sensor/docker-compose.yml), and [routing function](https://github.com/cernity/cernityndr/blob/18174b8c2d8e29e2312d4f27064a2baa3456d9e3/deploy/fluent-bit/route.lua). Historical proof records are from their saved runs, not a fresh benchmark of this revision.

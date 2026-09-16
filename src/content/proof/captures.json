@@ -1,0 +1,3934 @@
+{
+  "stage": "detector",
+  "total_services": 7,
+  "total_detectors": 28,
+  "total_findings": 36,
+  "total_delivered": 33,
+  "total_suppressed": 3,
+  "total_suricata_alerts": 0,
+  "services": [
+    {
+      "service": "ot-detectors",
+      "fixture": "modbus-ot-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:32Z",
+      "suricata": {
+        "record_count": 21,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.20",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.21",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:02+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.22",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 4
+              },
+              "access": "READ",
+              "unit_id": 2
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:03+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.23",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:04+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.24",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:05+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.20",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.99",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 16
+              },
+              "access": "WRITE_MULTIPLE",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:07+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.98",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 90
+              },
+              "access": "WRITE",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:08+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 1
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:09+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 2
+              },
+              "access": "READ",
+              "unit_id": 2
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:10+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 3
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:11+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 4
+              },
+              "access": "READ",
+              "unit_id": 4
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:12+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 7
+              },
+              "access": "READ",
+              "unit_id": 5
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:13+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 11
+              },
+              "access": "READ",
+              "unit_id": 6
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:14+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.77",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1,
+              "exception": "ILLEGAL_FUNCTION"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:15+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.77",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1,
+              "exception": "ILLEGAL_DATA_ADDRESS"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:16+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.77",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1,
+              "exception": "ILLEGAL_FUNCTION"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:17+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.77",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1,
+              "exception": "ILLEGAL_DATA_ADDRESS"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:18+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.77",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1,
+              "exception": "ILLEGAL_FUNCTION"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:19+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.66",
+            "dest_ip": "10.0.7.11",
+            "dest_port": 1502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:20+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.20",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          }
+        ]
+      },
+      "detector_count": 6,
+      "finding_count": 12,
+      "delivered_count": 12,
+      "suppressed_count": 0,
+      "detectors": [
+        {
+          "detector_id": "program_download",
+          "category": "ics_control",
+          "severity": 9,
+          "confidence": 0.8,
+          "mitre": [
+            "T0858",
+            "T0843"
+          ],
+          "why": "program/mode transfer fc=90",
+          "fired_count": 1,
+          "variant_whys": [
+            "program/mode transfer fc=90"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:07+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.98",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 90
+              },
+              "access": "WRITE",
+              "unit_id": 1
+            }
+          },
+          "finding": {
+            "finding_id": "program_download-178720555-497107",
+            "tenant_id": "default",
+            "detector_id": "program_download",
+            "detector_version": "1.0",
+            "category": "ics_control",
+            "severity": 9,
+            "confidence": 0.8,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.98\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"program/mode transfer fc=90\"}, {\"type\": \"modbus_fc\", \"value\": 90}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T0858",
+              "T0843"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.7.98"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.7.10"
+              },
+              {
+                "type": "why",
+                "value": "program/mode transfer fc=90"
+              },
+              {
+                "type": "modbus_fc",
+                "value": 90
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:program_download-178720555-497107:r2",
+              "_source": {
+                "finding_id": "program_download-178720555-497107",
+                "tenant_id": "default",
+                "detector_id": "program_download",
+                "detector_version": "1.0",
+                "category": "ics_control",
+                "severity": 9,
+                "confidence": 0.8,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.98\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"program/mode transfer fc=90\"}, {\"type\": \"modbus_fc\", \"value\": 90}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T0858",
+                  "T0843"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|program_download|ics_control|9|cs1=program_download-178720555-497107 cs1Label=findingId cs2=T0858,T0843 cs2Label=mitre cs3=default cs3Label=tenant cat=ics_control src=10.0.7.98 dst=10.0.7.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "unauthorized_write",
+          "category": "ics_control",
+          "severity": 8,
+          "confidence": 0.7,
+          "mitre": [
+            "T0855",
+            "T0831"
+          ],
+          "why": "unauthorized write fc=16 access=WRITE_MULTIPLE",
+          "fired_count": 2,
+          "variant_whys": [
+            "unauthorized write fc=16 access=WRITE_MULTIPLE",
+            "unauthorized write fc=90 access=WRITE"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.99",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 16
+              },
+              "access": "WRITE_MULTIPLE",
+              "unit_id": 1
+            }
+          },
+          "finding": {
+            "finding_id": "unauthorized_write-7408133162-497107",
+            "tenant_id": "default",
+            "detector_id": "unauthorized_write",
+            "detector_version": "1.0",
+            "category": "ics_control",
+            "severity": 8,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.99\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"unauthorized write fc=16 access=WRITE_MULTIPLE\"}, {\"type\": \"modbus_fc\", \"value\": 16}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T0855",
+              "T0831"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.7.99"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.7.10"
+              },
+              {
+                "type": "why",
+                "value": "unauthorized write fc=16 access=WRITE_MULTIPLE"
+              },
+              {
+                "type": "modbus_fc",
+                "value": 16
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:unauthorized_write-7408133162-497107:r2",
+              "_source": {
+                "finding_id": "unauthorized_write-7408133162-497107",
+                "tenant_id": "default",
+                "detector_id": "unauthorized_write",
+                "detector_version": "1.0",
+                "category": "ics_control",
+                "severity": 8,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.99\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"unauthorized write fc=16 access=WRITE_MULTIPLE\"}, {\"type\": \"modbus_fc\", \"value\": 16}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T0855",
+                  "T0831"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|unauthorized_write|ics_control|8|cs1=unauthorized_write-7408133162-497107 cs1Label=findingId cs2=T0855,T0831 cs2Label=mitre cs3=default cs3Label=tenant cat=ics_control src=10.0.7.99 dst=10.0.7.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "fc_enumeration",
+          "category": "ics_control",
+          "severity": 6,
+          "confidence": 0.6,
+          "mitre": [
+            "T0846"
+          ],
+          "why": "unit enumeration: 4 distinct unit IDs",
+          "fired_count": 3,
+          "variant_whys": [
+            "fc enumeration: 6 distinct function codes",
+            "unit enumeration: 4 distinct unit IDs",
+            "unit enumeration: 5 distinct unit IDs"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:11+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.88",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 4
+              },
+              "access": "READ",
+              "unit_id": 4
+            }
+          },
+          "finding": {
+            "finding_id": "fc_enumeration-6192455714-497107",
+            "tenant_id": "default",
+            "detector_id": "fc_enumeration",
+            "detector_version": "1.0",
+            "category": "ics_control",
+            "severity": 6,
+            "confidence": 0.6,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.88\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"unit enumeration: 4 distinct unit IDs\"}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T0846"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.7.88"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.7.10"
+              },
+              {
+                "type": "why",
+                "value": "unit enumeration: 4 distinct unit IDs"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:fc_enumeration-6192455714-497107:r2",
+              "_source": {
+                "finding_id": "fc_enumeration-6192455714-497107",
+                "tenant_id": "default",
+                "detector_id": "fc_enumeration",
+                "detector_version": "1.0",
+                "category": "ics_control",
+                "severity": 6,
+                "confidence": 0.6,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.88\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"unit enumeration: 4 distinct unit IDs\"}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T0846"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|fc_enumeration|ics_control|6|cs1=fc_enumeration-6192455714-497107 cs1Label=findingId cs2=T0846 cs2Label=mitre cs3=default cs3Label=tenant cat=ics_control src=10.0.7.88 dst=10.0.7.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "modbus_port_anomaly",
+          "category": "ics_control",
+          "severity": 6,
+          "confidence": 0.6,
+          "mitre": [
+            "T0885"
+          ],
+          "why": "modbus on port 1502 (expected 502)",
+          "fired_count": 1,
+          "variant_whys": [
+            "modbus on port 1502 (expected 502)"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:19+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.66",
+            "dest_ip": "10.0.7.11",
+            "dest_port": 1502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1
+            }
+          },
+          "finding": {
+            "finding_id": "modbus_port_anomaly-2829169827-497107",
+            "tenant_id": "default",
+            "detector_id": "modbus_port_anomaly",
+            "detector_version": "1.0",
+            "category": "ics_control",
+            "severity": 6,
+            "confidence": 0.6,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.66\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.11\"}, {\"type\": \"why\", \"value\": \"modbus on port 1502 (expected 502)\"}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T0885"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.7.66"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.7.11"
+              },
+              {
+                "type": "why",
+                "value": "modbus on port 1502 (expected 502)"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:modbus_port_anomaly-2829169827-497107:r2",
+              "_source": {
+                "finding_id": "modbus_port_anomaly-2829169827-497107",
+                "tenant_id": "default",
+                "detector_id": "modbus_port_anomaly",
+                "detector_version": "1.0",
+                "category": "ics_control",
+                "severity": 6,
+                "confidence": 0.6,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.66\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.11\"}, {\"type\": \"why\", \"value\": \"modbus on port 1502 (expected 502)\"}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T0885"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|modbus_port_anomaly|ics_control|6|cs1=modbus_port_anomaly-2829169827-497107 cs1Label=findingId cs2=T0885 cs2Label=mitre cs3=default cs3Label=tenant cat=ics_control src=10.0.7.66 dst=10.0.7.11 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "error_flag_spike",
+          "category": "ics_control",
+          "severity": 5,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "5 modbus exceptions in window",
+          "fired_count": 1,
+          "variant_whys": [
+            "5 modbus exceptions in window"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:14+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.77",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 3
+              },
+              "access": "READ",
+              "unit_id": 1,
+              "exception": "ILLEGAL_FUNCTION"
+            }
+          },
+          "finding": {
+            "finding_id": "error_flag_spike-7551433892-497107",
+            "tenant_id": "default",
+            "detector_id": "error_flag_spike",
+            "detector_version": "1.0",
+            "category": "ics_control",
+            "severity": 5,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.77\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"5 modbus exceptions in window\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.7.77"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.7.10"
+              },
+              {
+                "type": "why",
+                "value": "5 modbus exceptions in window"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:error_flag_spike-7551433892-497107:r2",
+              "_source": {
+                "finding_id": "error_flag_spike-7551433892-497107",
+                "tenant_id": "default",
+                "detector_id": "error_flag_spike",
+                "detector_version": "1.0",
+                "category": "ics_control",
+                "severity": 5,
+                "confidence": 0.5,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.77\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"5 modbus exceptions in window\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|error_flag_spike|ics_control|5|cs1=error_flag_spike-7551433892-497107 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=ics_control src=10.0.7.77 dst=10.0.7.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "new_master_pairing",
+          "category": "ics_control",
+          "severity": 5,
+          "confidence": 0.5,
+          "mitre": [
+            "T0842",
+            "T0859"
+          ],
+          "why": "master never seen for this outstation",
+          "fired_count": 4,
+          "variant_whys": [
+            "master never seen for this outstation"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "modbus",
+            "src_ip": "10.0.7.99",
+            "dest_ip": "10.0.7.10",
+            "dest_port": 502,
+            "proto": "TCP",
+            "modbus": {
+              "function": {
+                "code": 16
+              },
+              "access": "WRITE_MULTIPLE",
+              "unit_id": 1
+            }
+          },
+          "finding": {
+            "finding_id": "new_master_pairing-790643726-497107",
+            "tenant_id": "default",
+            "detector_id": "new_master_pairing",
+            "detector_version": "1.0",
+            "category": "ics_control",
+            "severity": 5,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.99\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"master never seen for this outstation\"}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T0842",
+              "T0859"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.7.99"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.7.10"
+              },
+              {
+                "type": "why",
+                "value": "master never seen for this outstation"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:new_master_pairing-790643726-497107:r2",
+              "_source": {
+                "finding_id": "new_master_pairing-790643726-497107",
+                "tenant_id": "default",
+                "detector_id": "new_master_pairing",
+                "detector_version": "1.0",
+                "category": "ics_control",
+                "severity": 5,
+                "confidence": 0.5,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.7.99\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.7.10\"}, {\"type\": \"why\", \"value\": \"master never seen for this outstation\"}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T0842",
+                  "T0859"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|new_master_pairing|ics_control|5|cs1=new_master_pairing-790643726-497107 cs1Label=findingId cs2=T0842,T0859 cs2Label=mitre cs3=default cs3Label=tenant cat=ics_control src=10.0.7.99 dst=10.0.7.10 cs4=2 cs4Label=revision"
+          }
+        }
+      ]
+    },
+    {
+      "service": "protocol-detectors",
+      "fixture": "protocol-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:32Z",
+      "suricata": {
+        "record_count": 27,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cdn1.example",
+              "ja4": "t13d_warm_1"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:02+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cdn2.example",
+              "ja4": "t13d_warm_2"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:03+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cdn3.example",
+              "ja4": "t13d_warm_3"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:04+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cdn4.example",
+              "ja4": "t13d_warm_4"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:05+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cdn5.example",
+              "ja4": "t13d_warm_5"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.11",
+            "dest_port": 443,
+            "tls": {
+              "sni": "evil.example",
+              "ja4": "t13d_never_seen_before"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:07+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.12",
+            "dest_port": 443,
+            "tls": {
+              "sni": "dl.dropboxusercontent.com",
+              "ja4": "t13d_warm_1"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:08+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.13",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cloudflare-dns.com",
+              "ja4": "t13d_warm_2"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:09+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.14",
+            "dest_port": 443,
+            "tls": {
+              "sni": "selfsigned.example",
+              "ja4": "t13d_warm_3",
+              "subject": "CN=evil",
+              "issuer": "CN=evil",
+              "notbefore": "2026-01-01T00:00:00Z",
+              "notafter": "2027-01-01T00:00:00Z"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:10+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.15",
+            "dest_port": 80,
+            "http": {
+              "http_user_agent": "curl/8.4.0",
+              "hostname": "x"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:01:01+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:02+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:03+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:04+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:05+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:06+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:07+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:08+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:09+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:10+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:11+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:12+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:13+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:14+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:01:15+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          {
+            "timestamp": "2026-01-01T00:02:00+00:00",
+            "event_type": "flow",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.20",
+            "proto": "ICMP",
+            "flow": {
+              "bytes_toserver": 2000000,
+              "bytes_toclient": 0
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:02:01+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.21",
+            "dest_port": 443
+          }
+        ]
+      },
+      "detector_count": 8,
+      "finding_count": 8,
+      "delivered_count": 6,
+      "suppressed_count": 2,
+      "detectors": [
+        {
+          "detector_id": "icmp_exfil",
+          "category": "exfil",
+          "severity": 7,
+          "confidence": 0.6,
+          "mitre": [],
+          "why": "2000000 bytes",
+          "fired_count": 1,
+          "variant_whys": [
+            "2000000 bytes"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:02:00+00:00",
+            "event_type": "flow",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.20",
+            "proto": "ICMP",
+            "flow": {
+              "bytes_toserver": 2000000,
+              "bytes_toclient": 0
+            }
+          },
+          "finding": {
+            "finding_id": "icmp_exfil-2570754831-497107",
+            "tenant_id": "default",
+            "detector_id": "icmp_exfil",
+            "detector_version": "1.0",
+            "category": "exfil",
+            "severity": 7,
+            "confidence": 0.6,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.20\"}, {\"type\": \"bytes\", \"value\": 2000000}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.20"
+              },
+              {
+                "type": "bytes",
+                "value": 2000000
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:icmp_exfil-2570754831-497107:r2",
+              "_source": {
+                "finding_id": "icmp_exfil-2570754831-497107",
+                "tenant_id": "default",
+                "detector_id": "icmp_exfil",
+                "detector_version": "1.0",
+                "category": "exfil",
+                "severity": 7,
+                "confidence": 0.6,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.20\"}, {\"type\": \"bytes\", \"value\": 2000000}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "TA0010"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|icmp_exfil|exfil|7|cs1=icmp_exfil-2570754831-497107 cs1Label=findingId cs2=TA0010 cs2Label=mitre cs3=default cs3Label=tenant cat=exfil src=10.0.0.5 dst=203.0.113.20 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "ssh_bruteforce",
+          "category": "credential_access",
+          "severity": 6,
+          "confidence": 0.6,
+          "mitre": [],
+          "why": "15 attempts",
+          "fired_count": 1,
+          "variant_whys": [
+            "15 attempts"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:01:15+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.7",
+            "dest_ip": "10.0.0.8",
+            "dest_port": 22
+          },
+          "finding": {
+            "finding_id": "ssh_bruteforce-9847450500-497107",
+            "tenant_id": "default",
+            "detector_id": "ssh_bruteforce",
+            "detector_version": "1.0",
+            "category": "credential_access",
+            "severity": 6,
+            "confidence": 0.6,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.7\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.0.8\"}, {\"type\": \"attempts\", \"value\": 15}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.7"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "10.0.0.8"
+              },
+              {
+                "type": "attempts",
+                "value": 15
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "QUEUED",
+            "revision": 1,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:ssh_bruteforce-9847450500-497107:r1",
+              "_source": {
+                "finding_id": "ssh_bruteforce-9847450500-497107",
+                "tenant_id": "default",
+                "detector_id": "ssh_bruteforce",
+                "detector_version": "1.0",
+                "category": "credential_access",
+                "severity": 6,
+                "confidence": 0.6,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.7\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"10.0.0.8\"}, {\"type\": \"attempts\", \"value\": 15}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 1,
+                "mitre": [
+                  "T1110"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "NOT_REQUIRED",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|ssh_bruteforce|credential_access|6|cs1=ssh_bruteforce-9847450500-497107 cs1Label=findingId cs2=T1110 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.7 dst=10.0.0.8 cs4=1 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "cloud_staging",
+          "category": "exfil",
+          "severity": 5,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "data-staging destination: dl.dropboxusercontent.com",
+          "fired_count": 1,
+          "variant_whys": [
+            "data-staging destination: dl.dropboxusercontent.com"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:07+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.12",
+            "dest_port": 443,
+            "tls": {
+              "sni": "dl.dropboxusercontent.com",
+              "ja4": "t13d_warm_1"
+            }
+          },
+          "finding": {
+            "finding_id": "cloud_staging-212857535-497107",
+            "tenant_id": "default",
+            "detector_id": "cloud_staging",
+            "detector_version": "1.0",
+            "category": "exfil",
+            "severity": 5,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"sni\", \"value\": \"dl.dropboxusercontent.com\"}, {\"type\": \"service\", \"value\": \"dropboxusercontent\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "sni",
+                "value": "dl.dropboxusercontent.com"
+              },
+              {
+                "type": "service",
+                "value": "dropboxusercontent"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:cloud_staging-212857535-497107:r2",
+              "_source": {
+                "finding_id": "cloud_staging-212857535-497107",
+                "tenant_id": "default",
+                "detector_id": "cloud_staging",
+                "detector_version": "1.0",
+                "category": "exfil",
+                "severity": 5,
+                "confidence": 0.5,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"sni\", \"value\": \"dl.dropboxusercontent.com\"}, {\"type\": \"service\", \"value\": \"dropboxusercontent\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "TA0010"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|cloud_staging|exfil|5|cs1=cloud_staging-212857535-497107 cs1Label=findingId cs2=TA0010 cs2Label=mitre cs3=default cs3Label=tenant cat=exfil src=10.0.0.5 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "ja4_rarity",
+          "category": "c2",
+          "severity": 5,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "never-before-seen JA4 client \u2192 evil.example",
+          "fired_count": 1,
+          "variant_whys": [
+            "never-before-seen JA4 client \u2192 evil.example"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.11",
+            "dest_port": 443,
+            "tls": {
+              "sni": "evil.example",
+              "ja4": "t13d_never_seen_before"
+            }
+          },
+          "finding": {
+            "finding_id": "ja4_rarity-4524396965-497107",
+            "tenant_id": "default",
+            "detector_id": "ja4_rarity",
+            "detector_version": "1.0",
+            "category": "c2",
+            "severity": 5,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ja4\", \"value\": \"t13d_never_seen_before\"}, {\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"sni\", \"value\": \"evil.example\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ja4",
+                "value": "t13d_never_seen_before"
+              },
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "sni",
+                "value": "evil.example"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:ja4_rarity-4524396965-497107:r2",
+              "_source": {
+                "finding_id": "ja4_rarity-4524396965-497107",
+                "tenant_id": "default",
+                "detector_id": "ja4_rarity",
+                "detector_version": "1.0",
+                "category": "c2",
+                "severity": 5,
+                "confidence": 0.5,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ja4\", \"value\": \"t13d_never_seen_before\"}, {\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"sni\", \"value\": \"evil.example\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "T1071"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|ja4_rarity|c2|5|cs1=ja4_rarity-4524396965-497107 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.5 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "tls_cert_anomaly",
+          "category": "c2",
+          "severity": 5,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "self_signed",
+          "fired_count": 1,
+          "variant_whys": [
+            "self_signed"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:09+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.14",
+            "dest_port": 443,
+            "tls": {
+              "sni": "selfsigned.example",
+              "ja4": "t13d_warm_3",
+              "subject": "CN=evil",
+              "issuer": "CN=evil",
+              "notbefore": "2026-01-01T00:00:00Z",
+              "notafter": "2027-01-01T00:00:00Z"
+            }
+          },
+          "finding": {
+            "finding_id": "tls_cert_anomaly-6800292006-497107",
+            "tenant_id": "default",
+            "detector_id": "tls_cert_anomaly",
+            "detector_version": "1.0",
+            "category": "c2",
+            "severity": 5,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.14\"}, {\"type\": \"sni\", \"value\": \"selfsigned.example\"}, {\"type\": \"why\", \"value\": \"self_signed\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.14"
+              },
+              {
+                "type": "sni",
+                "value": "selfsigned.example"
+              },
+              {
+                "type": "why",
+                "value": "self_signed"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:tls_cert_anomaly-6800292006-497107:r2",
+              "_source": {
+                "finding_id": "tls_cert_anomaly-6800292006-497107",
+                "tenant_id": "default",
+                "detector_id": "tls_cert_anomaly",
+                "detector_version": "1.0",
+                "category": "c2",
+                "severity": 5,
+                "confidence": 0.5,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.14\"}, {\"type\": \"sni\", \"value\": \"selfsigned.example\"}, {\"type\": \"why\", \"value\": \"self_signed\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "T1071"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|tls_cert_anomaly|c2|5|cs1=tls_cert_anomaly-6800292006-497107 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 dst=203.0.113.14 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "doh_detect",
+          "category": "defense_evasion",
+          "severity": 4,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "doh:cloudflare-dns.com",
+          "fired_count": 1,
+          "variant_whys": [
+            "doh:cloudflare-dns.com"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:08+00:00",
+            "event_type": "tls",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.13",
+            "dest_port": 443,
+            "tls": {
+              "sni": "cloudflare-dns.com",
+              "ja4": "t13d_warm_2"
+            }
+          },
+          "finding": {
+            "finding_id": "doh_detect-194091769-497107",
+            "tenant_id": "default",
+            "detector_id": "doh_detect",
+            "detector_version": "1.0",
+            "category": "defense_evasion",
+            "severity": 4,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"sni\", \"value\": \"cloudflare-dns.com\"}, {\"type\": \"why\", \"value\": \"doh:cloudflare-dns.com\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "sni",
+                "value": "cloudflare-dns.com"
+              },
+              {
+                "type": "why",
+                "value": "doh:cloudflare-dns.com"
+              }
+            ]
+          },
+          "delivered": false,
+          "lifecycle": {
+            "state": "SUPPRESSED",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "NONE",
+            "revision": 1,
+            "suppression_reason": "low-severity (4) non-threat finding; kept for correlation and audit, not delivered"
+          },
+          "siem": null
+        },
+        {
+          "detector_id": "port_proto_mismatch",
+          "category": "defense_evasion",
+          "severity": 4,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "ssh on port 443 (expected tls)",
+          "fired_count": 1,
+          "variant_whys": [
+            "ssh on port 443 (expected tls)"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:02:01+00:00",
+            "event_type": "ssh",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.21",
+            "dest_port": 443
+          },
+          "finding": {
+            "finding_id": "port_proto_mismatch-847898558-497107",
+            "tenant_id": "default",
+            "detector_id": "port_proto_mismatch",
+            "detector_version": "1.0",
+            "category": "defense_evasion",
+            "severity": 4,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.21\"}, {\"type\": \"why\", \"value\": \"ssh on port 443 (expected tls)\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.21"
+              },
+              {
+                "type": "why",
+                "value": "ssh on port 443 (expected tls)"
+              }
+            ]
+          },
+          "delivered": false,
+          "lifecycle": {
+            "state": "SUPPRESSED",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "NONE",
+            "revision": 1,
+            "suppression_reason": "low-severity (4) non-threat finding; kept for correlation and audit, not delivered"
+          },
+          "siem": null
+        },
+        {
+          "detector_id": "suspicious_ua",
+          "category": "c2",
+          "severity": 4,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "non-browser tooling user-agent: curl/",
+          "fired_count": 1,
+          "variant_whys": [
+            "non-browser tooling user-agent: curl/"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:10+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.15",
+            "dest_port": 80,
+            "http": {
+              "http_user_agent": "curl/8.4.0",
+              "hostname": "x"
+            }
+          },
+          "finding": {
+            "finding_id": "suspicious_ua-8710322746-497107",
+            "tenant_id": "default",
+            "detector_id": "suspicious_ua",
+            "detector_version": "1.0",
+            "category": "c2",
+            "severity": 4,
+            "confidence": 0.5,
+            "first_seen": "2026-09-16T19:50:32Z",
+            "last_seen": "2026-09-16T19:50:32Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.15\"}, {\"type\": \"ua\", \"value\": \"curl/\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.15"
+              },
+              {
+                "type": "ua",
+                "value": "curl/"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:suspicious_ua-8710322746-497107:r2",
+              "_source": {
+                "finding_id": "suspicious_ua-8710322746-497107",
+                "tenant_id": "default",
+                "detector_id": "suspicious_ua",
+                "detector_version": "1.0",
+                "category": "c2",
+                "severity": 4,
+                "confidence": 0.5,
+                "first_seen": "2026-09-16T19:50:32Z",
+                "last_seen": "2026-09-16T19:50:32Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.15\"}, {\"type\": \"ua\", \"value\": \"curl/\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "T1071"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:32Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|suspicious_ua|c2|4|cs1=suspicious_ua-8710322746-497107 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.5 dst=203.0.113.15 cs4=2 cs4Label=revision"
+          }
+        }
+      ]
+    },
+    {
+      "service": "http-detector",
+      "fixture": "http-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:33Z",
+      "suricata": {
+        "record_count": 7,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/uploads/shell.php?cmd=id",
+              "hostname": "vhost",
+              "http_content_type": "text/html"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/item?id=1' or '1'='1",
+              "hostname": "vhost"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:02+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/ping?host=8.8.8.8;cat /etc/shadow",
+              "hostname": "vhost"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:03+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/download?f=../../../../etc/passwd",
+              "hostname": "vhost"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:04+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/login?user=admin&password=hunter2",
+              "hostname": "vhost"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:05+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "PUT",
+              "url": "/webdav/x.jsp",
+              "hostname": "vhost"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/index.html",
+              "hostname": "vhost",
+              "http_content_type": "text/html"
+            }
+          }
+        ]
+      },
+      "detector_count": 6,
+      "finding_count": 6,
+      "delivered_count": 5,
+      "suppressed_count": 1,
+      "detectors": [
+        {
+          "detector_id": "http_cmd_injection",
+          "category": "exploit",
+          "severity": 8,
+          "confidence": 0.7,
+          "mitre": [],
+          "why": "command-injection pattern in URI",
+          "fired_count": 1,
+          "variant_whys": [
+            "command-injection pattern in URI"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:02+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/ping?host=8.8.8.8;cat /etc/shadow",
+              "hostname": "vhost"
+            }
+          },
+          "finding": {
+            "finding_id": "http_cmd_injection-1178650702-2982647",
+            "tenant_id": "default",
+            "detector_id": "http_cmd_injection",
+            "detector_version": "1.0",
+            "category": "exploit",
+            "severity": 8,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/ping?host=8.8.8.8;cat /etc/shadow\"}, {\"type\": \"why\", \"value\": \"command-injection pattern in URI\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "host",
+                "value": "vhost"
+              },
+              {
+                "type": "uri",
+                "value": "/ping?host=8.8.8.8;cat /etc/shadow"
+              },
+              {
+                "type": "why",
+                "value": "command-injection pattern in URI"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:http_cmd_injection-1178650702-2982647:r2",
+              "_source": {
+                "finding_id": "http_cmd_injection-1178650702-2982647",
+                "tenant_id": "default",
+                "detector_id": "http_cmd_injection",
+                "detector_version": "1.0",
+                "category": "exploit",
+                "severity": 8,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/ping?host=8.8.8.8;cat /etc/shadow\"}, {\"type\": \"why\", \"value\": \"command-injection pattern in URI\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|http_cmd_injection|exploit|8|cs1=http_cmd_injection-1178650702-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=exploit src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "http_webshell",
+          "category": "malware",
+          "severity": 8,
+          "confidence": 0.7,
+          "mitre": [],
+          "why": "webshell / backdoor URI",
+          "fired_count": 1,
+          "variant_whys": [
+            "webshell / backdoor URI"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/uploads/shell.php?cmd=id",
+              "hostname": "vhost",
+              "http_content_type": "text/html"
+            }
+          },
+          "finding": {
+            "finding_id": "http_webshell-662598296-2982647",
+            "tenant_id": "default",
+            "detector_id": "http_webshell",
+            "detector_version": "1.0",
+            "category": "malware",
+            "severity": 8,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/uploads/shell.php?cmd=id\"}, {\"type\": \"why\", \"value\": \"webshell / backdoor URI\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "host",
+                "value": "vhost"
+              },
+              {
+                "type": "uri",
+                "value": "/uploads/shell.php?cmd=id"
+              },
+              {
+                "type": "why",
+                "value": "webshell / backdoor URI"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:http_webshell-662598296-2982647:r2",
+              "_source": {
+                "finding_id": "http_webshell-662598296-2982647",
+                "tenant_id": "default",
+                "detector_id": "http_webshell",
+                "detector_version": "1.0",
+                "category": "malware",
+                "severity": 8,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/uploads/shell.php?cmd=id\"}, {\"type\": \"why\", \"value\": \"webshell / backdoor URI\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|http_webshell|malware|8|cs1=http_webshell-662598296-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=malware src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "http_path_traversal",
+          "category": "exploit",
+          "severity": 7,
+          "confidence": 0.7,
+          "mitre": [],
+          "why": "path-traversal / LFI pattern",
+          "fired_count": 1,
+          "variant_whys": [
+            "path-traversal / LFI pattern"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:03+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/download?f=../../../../etc/passwd",
+              "hostname": "vhost"
+            }
+          },
+          "finding": {
+            "finding_id": "http_path_traversal-1902775401-2982647",
+            "tenant_id": "default",
+            "detector_id": "http_path_traversal",
+            "detector_version": "1.0",
+            "category": "exploit",
+            "severity": 7,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/download?f=../../../../etc/passwd\"}, {\"type\": \"why\", \"value\": \"path-traversal / LFI pattern\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "host",
+                "value": "vhost"
+              },
+              {
+                "type": "uri",
+                "value": "/download?f=../../../../etc/passwd"
+              },
+              {
+                "type": "why",
+                "value": "path-traversal / LFI pattern"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:http_path_traversal-1902775401-2982647:r2",
+              "_source": {
+                "finding_id": "http_path_traversal-1902775401-2982647",
+                "tenant_id": "default",
+                "detector_id": "http_path_traversal",
+                "detector_version": "1.0",
+                "category": "exploit",
+                "severity": 7,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/download?f=../../../../etc/passwd\"}, {\"type\": \"why\", \"value\": \"path-traversal / LFI pattern\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|http_path_traversal|exploit|7|cs1=http_path_traversal-1902775401-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=exploit src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "http_sqli",
+          "category": "exploit",
+          "severity": 7,
+          "confidence": 0.7,
+          "mitre": [],
+          "why": "SQL-injection pattern in URI",
+          "fired_count": 1,
+          "variant_whys": [
+            "SQL-injection pattern in URI"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/item?id=1' or '1'='1",
+              "hostname": "vhost"
+            }
+          },
+          "finding": {
+            "finding_id": "http_sqli-1187673266-2982647",
+            "tenant_id": "default",
+            "detector_id": "http_sqli",
+            "detector_version": "1.0",
+            "category": "exploit",
+            "severity": 7,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/item?id=1' or '1'='1\"}, {\"type\": \"why\", \"value\": \"SQL-injection pattern in URI\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "host",
+                "value": "vhost"
+              },
+              {
+                "type": "uri",
+                "value": "/item?id=1' or '1'='1"
+              },
+              {
+                "type": "why",
+                "value": "SQL-injection pattern in URI"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:http_sqli-1187673266-2982647:r2",
+              "_source": {
+                "finding_id": "http_sqli-1187673266-2982647",
+                "tenant_id": "default",
+                "detector_id": "http_sqli",
+                "detector_version": "1.0",
+                "category": "exploit",
+                "severity": 7,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/item?id=1' or '1'='1\"}, {\"type\": \"why\", \"value\": \"SQL-injection pattern in URI\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|http_sqli|exploit|7|cs1=http_sqli-1187673266-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=exploit src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "http_cred_in_url",
+          "category": "credential_access",
+          "severity": 5,
+          "confidence": 0.7,
+          "mitre": [],
+          "why": "credential in URL query",
+          "fired_count": 1,
+          "variant_whys": [
+            "credential in URL query"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:04+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "GET",
+              "url": "/login?user=admin&password=hunter2",
+              "hostname": "vhost"
+            }
+          },
+          "finding": {
+            "finding_id": "http_cred_in_url-267487105-2982647",
+            "tenant_id": "default",
+            "detector_id": "http_cred_in_url",
+            "detector_version": "1.0",
+            "category": "credential_access",
+            "severity": 5,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/login?user=admin&password=hunter2\"}, {\"type\": \"why\", \"value\": \"credential in URL query\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "host",
+                "value": "vhost"
+              },
+              {
+                "type": "uri",
+                "value": "/login?user=admin&password=hunter2"
+              },
+              {
+                "type": "why",
+                "value": "credential in URL query"
+              }
+            ]
+          },
+          "delivered": false,
+          "lifecycle": {
+            "state": "SUPPRESSED",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "NONE",
+            "revision": 1,
+            "suppression_reason": "low-severity (5) non-threat finding; kept for correlation and audit, not delivered"
+          },
+          "siem": null
+        },
+        {
+          "detector_id": "http_suspicious_method",
+          "category": "c2",
+          "severity": 5,
+          "confidence": 0.7,
+          "mitre": [],
+          "why": "uncommon HTTP method PUT",
+          "fired_count": 1,
+          "variant_whys": [
+            "uncommon HTTP method PUT"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:05+00:00",
+            "event_type": "http",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "dest_port": 80,
+            "http": {
+              "http_method": "PUT",
+              "url": "/webdav/x.jsp",
+              "hostname": "vhost"
+            }
+          },
+          "finding": {
+            "finding_id": "http_suspicious_method-9149090492-2982647",
+            "tenant_id": "default",
+            "detector_id": "http_suspicious_method",
+            "detector_version": "1.0",
+            "category": "c2",
+            "severity": 5,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/webdav/x.jsp\"}, {\"type\": \"why\", \"value\": \"uncommon HTTP method PUT\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "host",
+                "value": "vhost"
+              },
+              {
+                "type": "uri",
+                "value": "/webdav/x.jsp"
+              },
+              {
+                "type": "why",
+                "value": "uncommon HTTP method PUT"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:http_suspicious_method-9149090492-2982647:r2",
+              "_source": {
+                "finding_id": "http_suspicious_method-9149090492-2982647",
+                "tenant_id": "default",
+                "detector_id": "http_suspicious_method",
+                "detector_version": "1.0",
+                "category": "c2",
+                "severity": 5,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/webdav/x.jsp\"}, {\"type\": \"why\", \"value\": \"uncommon HTTP method PUT\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "T1071"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|http_suspicious_method|c2|5|cs1=http_suspicious_method-9149090492-2982647 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+          }
+        }
+      ]
+    },
+    {
+      "service": "dns-detector",
+      "fixture": "dns-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:33Z",
+      "suricata": {
+        "record_count": 21,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "query",
+              "rrname": "vhrtbxlqkm.net"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-1-random-1.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:02+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-2-random-2.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:03+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-3-random-3.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:04+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-4-random-4.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:05+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-5-random-5.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:06+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-6-random-6.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:07+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-7-random-7.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:08+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-8-random-8.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:09+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-9-random-9.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:10+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-10-random-10.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:11+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-11-random-11.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:12+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-12-random-12.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:13+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-13-random-13.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:14+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-14-random-14.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:15+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-15-random-15.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:16+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-16-random-16.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:17+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-17-random-17.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:18+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-18-random-18.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:19+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-19-random-19.example",
+              "rcode": "NXDOMAIN"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:20+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "answer",
+              "rrname": "nx-20-random-20.example",
+              "rcode": "NXDOMAIN"
+            }
+          }
+        ]
+      },
+      "detector_count": 2,
+      "finding_count": 2,
+      "delivered_count": 2,
+      "suppressed_count": 0,
+      "detectors": [
+        {
+          "detector_id": "dga_domain",
+          "category": "c2",
+          "severity": 6,
+          "confidence": 0.741,
+          "mitre": [],
+          "why": "DGA score 0.741",
+          "fired_count": 1,
+          "variant_whys": [
+            "DGA score 0.741"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "query",
+              "rrname": "vhrtbxlqkm.net"
+            }
+          },
+          "finding": {
+            "finding_id": "dga_domain-3453270880-2982647",
+            "tenant_id": "default",
+            "detector_id": "dga_domain",
+            "detector_version": "1.0",
+            "category": "c2",
+            "severity": 6,
+            "confidence": 0.741,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"domain\", \"value\": \"vhrtbxlqkm.net\"}, {\"type\": \"dga_label\", \"value\": \"vhrtbxlqkm\"}, {\"type\": \"dga_score\", \"value\": 0.741}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.9"
+              },
+              {
+                "type": "domain",
+                "value": "vhrtbxlqkm.net"
+              },
+              {
+                "type": "dga_label",
+                "value": "vhrtbxlqkm"
+              },
+              {
+                "type": "dga_score",
+                "value": 0.741
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:dga_domain-3453270880-2982647:r2",
+              "_source": {
+                "finding_id": "dga_domain-3453270880-2982647",
+                "tenant_id": "default",
+                "detector_id": "dga_domain",
+                "detector_version": "1.0",
+                "category": "c2",
+                "severity": 6,
+                "confidence": 0.741,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"domain\", \"value\": \"vhrtbxlqkm.net\"}, {\"type\": \"dga_label\", \"value\": \"vhrtbxlqkm\"}, {\"type\": \"dga_score\", \"value\": 0.741}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "T1071"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|dga_domain|c2|6|cs1=dga_domain-3453270880-2982647 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.9 cs4=2 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "nxdomain_burst",
+          "category": "c2",
+          "severity": 6,
+          "confidence": 0.6,
+          "mitre": [],
+          "why": "20 NXDOMAIN in window",
+          "fired_count": 1,
+          "variant_whys": [
+            "20 NXDOMAIN in window"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.9",
+            "dest_ip": "10.0.0.1",
+            "dns": {
+              "type": "query",
+              "rrname": "vhrtbxlqkm.net"
+            }
+          },
+          "finding": {
+            "finding_id": "nxdomain_burst-3150726969-2982647",
+            "tenant_id": "default",
+            "detector_id": "nxdomain_burst",
+            "detector_version": "1.0",
+            "category": "c2",
+            "severity": 6,
+            "confidence": 0.6,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"nxdomain_count\", \"value\": 20}, {\"type\": \"window_secs\", \"value\": 300}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.9"
+              },
+              {
+                "type": "nxdomain_count",
+                "value": 20
+              },
+              {
+                "type": "window_secs",
+                "value": 300
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:nxdomain_burst-3150726969-2982647:r2",
+              "_source": {
+                "finding_id": "nxdomain_burst-3150726969-2982647",
+                "tenant_id": "default",
+                "detector_id": "nxdomain_burst",
+                "detector_version": "1.0",
+                "category": "c2",
+                "severity": 6,
+                "confidence": 0.6,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"nxdomain_count\", \"value\": 20}, {\"type\": \"window_secs\", \"value\": 300}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [
+                  "T1071"
+                ],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|nxdomain_burst|c2|6|cs1=nxdomain_burst-3150726969-2982647 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.9 cs4=2 cs4Label=revision"
+          }
+        }
+      ]
+    },
+    {
+      "service": "east-west-detectors",
+      "fixture": "east-west-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:33Z",
+      "suricata": {
+        "record_count": 25,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.10",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "WPAD"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.11",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "FILESERVER"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:02+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.12",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "PRINTSRV"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:03+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.13",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "SQLPROD"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:04+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.14",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "DC01"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:05+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.15",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "BACKUP"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:10+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "MSSQLSvc/sql01",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:11+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "MSSQLSvc/sql02",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:12+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "HTTP/web01",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:13+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "CIFS/file01",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:14+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "LDAP/dc01",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:15+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "TERMSRV/rdp01",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:16+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "MSSQLSvc/sql03",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:17+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "HTTP/web02",
+              "encryption": "23"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:20+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "alice"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:21+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "bob"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:22+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "carol"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:23+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "dave"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:24+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "erin"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:25+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "frank"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:26+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "grace"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:27+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "heidi"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:28+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "ivan"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:29+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "judy"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:30+00:00",
+            "event_type": "smb",
+            "src_ip": "10.0.0.88",
+            "dest_ip": "10.0.0.20",
+            "smb": {
+              "command": "SMB2_CREATE",
+              "named_pipe": "\\PIPE\\svcctl",
+              "status": "STATUS_SUCCESS"
+            }
+          }
+        ]
+      },
+      "detector_count": 4,
+      "finding_count": 4,
+      "delivered_count": 4,
+      "suppressed_count": 0,
+      "detectors": [
+        {
+          "detector_id": "kerberoasting",
+          "category": "credential_access",
+          "severity": 8,
+          "confidence": 0.8,
+          "mitre": [
+            "T1558.003"
+          ],
+          "why": "8 distinct SPNs requested, RC4",
+          "fired_count": 1,
+          "variant_whys": [
+            "8 distinct SPNs requested, RC4"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:10+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.77",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "msg_type": "KRB_TGS_REQ",
+              "sname": "MSSQLSvc/sql01",
+              "encryption": "23"
+            }
+          },
+          "finding": {
+            "finding_id": "kerberoasting-679941760-2982647",
+            "tenant_id": "default",
+            "detector_id": "kerberoasting",
+            "detector_version": "1.0",
+            "category": "credential_access",
+            "severity": 8,
+            "confidence": 0.8,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "observed": false,
+            "emitted_at": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.77\"}, {\"type\": \"kerberoast\", \"distinct_spns\": 8, \"rc4\": true}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T1558.003"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.77"
+              },
+              {
+                "type": "kerberoast",
+                "distinct_spns": 8,
+                "rc4": true
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "QUEUED",
+            "revision": 1,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:kerberoasting-679941760-2982647:r1",
+              "_source": {
+                "finding_id": "kerberoasting-679941760-2982647",
+                "tenant_id": "default",
+                "detector_id": "kerberoasting",
+                "detector_version": "1.0",
+                "category": "credential_access",
+                "severity": 8,
+                "confidence": 0.8,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "observed": false,
+                "emitted_at": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.77\"}, {\"type\": \"kerberoast\", \"distinct_spns\": 8, \"rc4\": true}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T1558.003"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 1,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "NOT_REQUIRED",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|kerberoasting|credential_access|8|cs1=kerberoasting-679941760-2982647 cs1Label=findingId cs2=T1558.003 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.77 cs4=1 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "lateral_exec",
+          "category": "lateral",
+          "severity": 7,
+          "confidence": 0.75,
+          "mitre": [
+            "T1021.002"
+          ],
+          "why": "pipe:svcctl (service control (PsExec))",
+          "fired_count": 1,
+          "variant_whys": [
+            "pipe:svcctl (service control (PsExec))"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:30+00:00",
+            "event_type": "smb",
+            "src_ip": "10.0.0.88",
+            "dest_ip": "10.0.0.20",
+            "smb": {
+              "command": "SMB2_CREATE",
+              "named_pipe": "\\PIPE\\svcctl",
+              "status": "STATUS_SUCCESS"
+            }
+          },
+          "finding": {
+            "finding_id": "lateral_exec-9089190519-2982647",
+            "tenant_id": "default",
+            "detector_id": "lateral_exec",
+            "detector_version": "1.0",
+            "category": "lateral",
+            "severity": 7,
+            "confidence": 0.75,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "observed": false,
+            "emitted_at": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.88\"}, {\"type\": \"lateral_exec\", \"signals\": [\"pipe:svcctl (service control (PsExec))\"]}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T1021.002"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.88"
+              },
+              {
+                "type": "lateral_exec",
+                "signals": [
+                  "pipe:svcctl (service control (PsExec))"
+                ]
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "QUEUED",
+            "revision": 1,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:lateral_exec-9089190519-2982647:r1",
+              "_source": {
+                "finding_id": "lateral_exec-9089190519-2982647",
+                "tenant_id": "default",
+                "detector_id": "lateral_exec",
+                "detector_version": "1.0",
+                "category": "lateral",
+                "severity": 7,
+                "confidence": 0.75,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "observed": false,
+                "emitted_at": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.88\"}, {\"type\": \"lateral_exec\", \"signals\": [\"pipe:svcctl (service control (PsExec))\"]}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T1021.002"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 1,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "NOT_REQUIRED",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|lateral_exec|lateral|7|cs1=lateral_exec-9089190519-2982647 cs1Label=findingId cs2=T1021.002 cs2Label=mitre cs3=default cs3Label=tenant cat=lateral src=10.0.0.88 cs4=1 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "llmnr_poison",
+          "category": "credential_access",
+          "severity": 7,
+          "confidence": 0.6,
+          "mitre": [
+            "T1557.001"
+          ],
+          "why": "6 names answered (not owned)",
+          "fired_count": 1,
+          "variant_whys": [
+            "6 names answered (not owned)"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "dns",
+            "src_ip": "10.0.0.66",
+            "dest_ip": "10.0.0.10",
+            "dest_port": 5355,
+            "proto": "UDP",
+            "dns": {
+              "type": "answer",
+              "rrname": "WPAD"
+            }
+          },
+          "finding": {
+            "finding_id": "llmnr_poison-2289960405-2982647",
+            "tenant_id": "default",
+            "detector_id": "llmnr_poison",
+            "detector_version": "1.0",
+            "category": "credential_access",
+            "severity": 7,
+            "confidence": 0.6,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "observed": false,
+            "emitted_at": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"responder\", \"value\": \"10.0.0.66\"}, {\"type\": \"llmnr\", \"answered_names\": 6}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T1557.001"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "responder",
+                "value": "10.0.0.66"
+              },
+              {
+                "type": "llmnr",
+                "answered_names": 6
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "QUEUED",
+            "revision": 1,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:llmnr_poison-2289960405-2982647:r1",
+              "_source": {
+                "finding_id": "llmnr_poison-2289960405-2982647",
+                "tenant_id": "default",
+                "detector_id": "llmnr_poison",
+                "detector_version": "1.0",
+                "category": "credential_access",
+                "severity": 7,
+                "confidence": 0.6,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "observed": false,
+                "emitted_at": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"responder\", \"value\": \"10.0.0.66\"}, {\"type\": \"llmnr\", \"answered_names\": 6}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T1557.001"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 1,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "NOT_REQUIRED",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|llmnr_poison|credential_access|7|cs1=llmnr_poison-2289960405-2982647 cs1Label=findingId cs2=T1557.001 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.66 cs4=1 cs4Label=revision"
+          }
+        },
+        {
+          "detector_id": "password_spraying",
+          "category": "credential_access",
+          "severity": 7,
+          "confidence": 0.7,
+          "mitre": [
+            "T1110.003"
+          ],
+          "why": "10 distinct accounts failed auth",
+          "fired_count": 1,
+          "variant_whys": [
+            "10 distinct accounts failed auth"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:20+00:00",
+            "event_type": "krb5",
+            "src_ip": "10.0.0.99",
+            "dest_ip": "10.0.0.14",
+            "krb5": {
+              "error_code": "KDC_ERR_PREAUTH_FAILED",
+              "cname": "alice"
+            }
+          },
+          "finding": {
+            "finding_id": "password_spraying-5892380474-2982647",
+            "tenant_id": "default",
+            "detector_id": "password_spraying",
+            "detector_version": "1.0",
+            "category": "credential_access",
+            "severity": 7,
+            "confidence": 0.7,
+            "first_seen": "2026-09-16T19:50:33Z",
+            "last_seen": "2026-09-16T19:50:33Z",
+            "observed": false,
+            "emitted_at": "2026-09-16T19:50:33Z",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.99\"}, {\"type\": \"spray\", \"distinct_accounts\": 10}]",
+            "state": "CANDIDATE",
+            "mitre": [
+              "T1110.003"
+            ],
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.99"
+              },
+              {
+                "type": "spray",
+                "distinct_accounts": 10
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "NOT_REQUIRED",
+            "devo_delivery_state": "QUEUED",
+            "revision": 1,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:password_spraying-5892380474-2982647:r1",
+              "_source": {
+                "finding_id": "password_spraying-5892380474-2982647",
+                "tenant_id": "default",
+                "detector_id": "password_spraying",
+                "detector_version": "1.0",
+                "category": "credential_access",
+                "severity": 7,
+                "confidence": 0.7,
+                "first_seen": "2026-09-16T19:50:33Z",
+                "last_seen": "2026-09-16T19:50:33Z",
+                "observed": false,
+                "emitted_at": "2026-09-16T19:50:33Z",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.99\"}, {\"type\": \"spray\", \"distinct_accounts\": 10}]",
+                "state": "FINAL",
+                "mitre": [
+                  "T1110.003"
+                ],
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 1,
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "NOT_REQUIRED",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-09-16T19:50:33Z"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|password_spraying|credential_access|7|cs1=password_spraying-5892380474-2982647 cs1Label=findingId cs2=T1110.003 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.99 cs4=1 cs4Label=revision"
+          }
+        }
+      ]
+    },
+    {
+      "service": "coverage-detector",
+      "fixture": "coverage-stats-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:33Z",
+      "suricata": {
+        "record_count": 2,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "stats",
+            "host": "sensor-a",
+            "stats": {
+              "capture": {
+                "kernel_packets": 1000000,
+                "kernel_drops": 100000
+              },
+              "decoder": {
+                "pkts": 1000000
+              },
+              "app_layer": {
+                "flow": {
+                  "http": 1200,
+                  "tls": 3400,
+                  "dns": 5000
+                }
+              }
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:30+00:00",
+            "event_type": "stats",
+            "host": "sensor-b",
+            "stats": {
+              "decoder": {
+                "pkts": 200000
+              },
+              "app_layer": {
+                "flow": {
+                  "http": 0,
+                  "tls": 0,
+                  "dns": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "detector_count": 1,
+      "finding_count": 2,
+      "delivered_count": 2,
+      "suppressed_count": 0,
+      "detectors": [
+        {
+          "detector_id": "coverage_degraded",
+          "category": "coverage",
+          "severity": 6,
+          "confidence": 0.8,
+          "mitre": [],
+          "why": "Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor",
+          "fired_count": 2,
+          "variant_whys": [
+            "Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor",
+            "packets are flowing but Suricata reassembles almost no application-layer traffic; the mirror is likely lossy or half-duplex, so the protocol and file detection tier is blind"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "stats",
+            "host": "sensor-a",
+            "stats": {
+              "capture": {
+                "kernel_packets": 1000000,
+                "kernel_drops": 100000
+              },
+              "decoder": {
+                "pkts": 1000000
+              },
+              "app_layer": {
+                "flow": {
+                  "http": 1200,
+                  "tls": 3400,
+                  "dns": 5000
+                }
+              }
+            }
+          },
+          "finding": {
+            "finding_id": "cov-sensor-a-capture_loss",
+            "tenant_id": "default",
+            "detector_id": "coverage_degraded",
+            "detector_version": "1.0",
+            "category": "coverage",
+            "severity": 6,
+            "confidence": 0.8,
+            "entities": "[{\"type\": \"sensor\", \"value\": \"sensor-a\"}, {\"type\": \"coverage\", \"value\": \"capture_loss\"}, {\"type\": \"metric\", \"value\": 0.0909}, {\"type\": \"why\", \"value\": \"Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "sensor",
+                "value": "sensor-a"
+              },
+              {
+                "type": "coverage",
+                "value": "capture_loss"
+              },
+              {
+                "type": "metric",
+                "value": 0.0909
+              },
+              {
+                "type": "why",
+                "value": "Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:cov-sensor-a-capture_loss:r2",
+              "_source": {
+                "finding_id": "cov-sensor-a-capture_loss",
+                "tenant_id": "default",
+                "detector_id": "coverage_degraded",
+                "detector_version": "1.0",
+                "category": "coverage",
+                "severity": 6,
+                "confidence": 0.8,
+                "entities": "[{\"type\": \"sensor\", \"value\": \"sensor-a\"}, {\"type\": \"coverage\", \"value\": \"capture_loss\"}, {\"type\": \"metric\", \"value\": 0.0909}, {\"type\": \"why\", \"value\": \"Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": null
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|coverage_degraded|coverage|6|cs1=cov-sensor-a-capture_loss cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=coverage cs4=2 cs4Label=revision"
+          }
+        }
+      ]
+    },
+    {
+      "service": "anomaly-detector",
+      "fixture": "anomaly-eve.jsonl",
+      "stage": "detector",
+      "captured_at": "2026-09-16T19:50:33Z",
+      "suricata": {
+        "record_count": 2,
+        "alerts": 0,
+        "records": [
+          {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "anomaly",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "app_proto": "http",
+            "anomaly": {
+              "type": "applayer",
+              "event": "http.unexpected_data"
+            }
+          },
+          {
+            "timestamp": "2026-01-01T00:00:01+00:00",
+            "event_type": "anomaly",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "anomaly": {
+              "type": "stream",
+              "event": "reassembly_overlap_different_data"
+            }
+          }
+        ]
+      },
+      "detector_count": 1,
+      "finding_count": 2,
+      "delivered_count": 2,
+      "suppressed_count": 0,
+      "detectors": [
+        {
+          "detector_id": "protocol_anomaly",
+          "category": "anomaly",
+          "severity": 5,
+          "confidence": 0.5,
+          "mitre": [],
+          "why": "http.unexpected_data",
+          "fired_count": 2,
+          "variant_whys": [
+            "http.unexpected_data",
+            "reassembly_overlap_different_data"
+          ],
+          "source_record": {
+            "timestamp": "2026-01-01T00:00:00+00:00",
+            "event_type": "anomaly",
+            "src_ip": "10.0.0.5",
+            "dest_ip": "203.0.113.10",
+            "app_proto": "http",
+            "anomaly": {
+              "type": "applayer",
+              "event": "http.unexpected_data"
+            }
+          },
+          "finding": {
+            "finding_id": "anom-8448545772",
+            "tenant_id": "default",
+            "detector_id": "protocol_anomaly",
+            "detector_version": "1.0",
+            "category": "anomaly",
+            "severity": 5,
+            "confidence": 0.5,
+            "first_seen": "2026-01-01T00:00:00+00:00",
+            "last_seen": "2026-01-01T00:00:00+00:00",
+            "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"anomaly\", \"value\": \"http.unexpected_data\"}, {\"type\": \"app_proto\", \"value\": \"http\"}]",
+            "state": "CANDIDATE",
+            "entities_decoded": [
+              {
+                "type": "ip",
+                "role": "src",
+                "value": "10.0.0.5"
+              },
+              {
+                "type": "ip",
+                "role": "dst",
+                "value": "203.0.113.10"
+              },
+              {
+                "type": "anomaly",
+                "value": "http.unexpected_data"
+              },
+              {
+                "type": "app_proto",
+                "value": "http"
+              }
+            ]
+          },
+          "delivered": true,
+          "lifecycle": {
+            "state": "FINAL",
+            "enrichment_state": "TIMEOUT",
+            "devo_delivery_state": "QUEUED",
+            "revision": 2,
+            "suppression_reason": ""
+          },
+          "siem": {
+            "elasticsearch": {
+              "_index": "ndr-findings-2026.09.16",
+              "_id": "default:anom-8448545772:r2",
+              "_source": {
+                "finding_id": "anom-8448545772",
+                "tenant_id": "default",
+                "detector_id": "protocol_anomaly",
+                "detector_version": "1.0",
+                "category": "anomaly",
+                "severity": 5,
+                "confidence": 0.5,
+                "first_seen": "2026-01-01T00:00:00+00:00",
+                "last_seen": "2026-01-01T00:00:00+00:00",
+                "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"anomaly\", \"value\": \"http.unexpected_data\"}, {\"type\": \"app_proto\", \"value\": \"http\"}]",
+                "state": "FINAL",
+                "sensor_ids": [],
+                "evidence_refs": [],
+                "revision": 2,
+                "mitre": [],
+                "capture_job_ids": [],
+                "suppression_reason": "",
+                "enrichment_state": "TIMEOUT",
+                "devo_delivery_state": "QUEUED",
+                "@timestamp": "2026-01-01T00:00:00+00:00"
+              }
+            },
+            "cef": "CEF:0|Cernity|NDR|1.0|protocol_anomaly|anomaly|5|cs1=anom-8448545772 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=anomaly src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+          }
+        }
+      ]
+    }
+  ]
+}

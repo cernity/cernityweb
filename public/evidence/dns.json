@@ -1,0 +1,159 @@
+{
+  "bundle": "synthetic-dns-tunnel",
+  "completion": "not established in legacy bundle",
+  "filter": {
+    "src_ip": "10.0.0.9"
+  },
+  "summary": {
+    "baseline_records": 200,
+    "baseline_alerts": 0,
+    "finding_documents": 1
+  },
+  "provenance": {
+    "export_hashes_verified": false,
+    "baseline_matches_source_except_ingestion_timestamp": true,
+    "limitation": "No contemporaneous export manifest or qualified completion/replay metadata. Current local file hashes establish file identity only.",
+    "baseline_export_sha256": "f08dbd3082cd11e312bc8e54c020c840b5f5c2f573cdd2ff0dbd8ad52d490511",
+    "finding_export_sha256": "8bbfa5a396e2f672ef8812cfb6ad34431bde7631dc49cc5577e642b18b1add71"
+  },
+  "suricata": {
+    "@timestamp": "2026-09-13T15:44:00.204Z",
+    "community_id": "1:vO5nblg0hr+mP4tx/1f1Ltkvai0=",
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "dns": {
+      "flags": "100",
+      "id": 0,
+      "opcode": 0,
+      "queries": [
+        {
+          "rrname": "o5mug226bbdd3kad7tvbe18biwo2.iasu3z93yp0f7l070wen.data.t.example.net",
+          "rrtype": "A"
+        }
+      ],
+      "rcode": "NOERROR",
+      "rd": true,
+      "tx_id": 0,
+      "type": "request",
+      "version": 3
+    },
+    "event_type": "dns",
+    "flow_id": 360428953925896,
+    "ip_v": 4,
+    "pcap_cnt": 2,
+    "pkt_src": "wire/pcap",
+    "proto": "UDP",
+    "src_ip": "10.0.0.9",
+    "src_port": 24424,
+    "timestamp": "2023-11-14T22:13:21.280526+0000"
+  },
+  "cernity": {
+    "@timestamp": "2026-09-13T15:45:19Z",
+    "capture_job_ids": [],
+    "category": "dns_tunnel",
+    "confidence": 1.0,
+    "detector_id": "dns_tunnel",
+    "detector_version": "1.0",
+    "devo_delivery_state": "QUEUED",
+    "enrichment_state": "NOT_REQUIRED",
+    "entities": "[{\"type\": \"ip\", \"role\": \"client\", \"value\": \"10.0.0.9\"}]",
+    "evidence_refs": [],
+    "finding_id": "dns_tunnel-570347381-2982190",
+    "first_seen": "2026-09-13T15:45:19Z",
+    "last_seen": "2026-09-13T15:45:19Z",
+    "mitre": [
+      "T1071.004"
+    ],
+    "sensor_ids": [],
+    "severity": 6,
+    "state": "FINAL",
+    "suppression_reason": "",
+    "tenant_id": "default"
+  },
+  "additional_alert": null,
+  "cernity_matching_records": [
+    {
+      "@timestamp": "2026-09-13T15:45:19Z",
+      "capture_job_ids": [],
+      "category": "dns_tunnel",
+      "confidence": 1.0,
+      "detector_id": "dns_tunnel",
+      "detector_version": "1.0",
+      "devo_delivery_state": "QUEUED",
+      "enrichment_state": "NOT_REQUIRED",
+      "entities": "[{\"type\": \"ip\", \"role\": \"client\", \"value\": \"10.0.0.9\"}]",
+      "evidence_refs": [],
+      "finding_id": "dns_tunnel-570347381-2982190",
+      "first_seen": "2026-09-13T15:45:19Z",
+      "last_seen": "2026-09-13T15:45:19Z",
+      "mitre": [
+        "T1071.004"
+      ],
+      "sensor_ids": [],
+      "severity": 6,
+      "state": "FINAL",
+      "suppression_reason": "",
+      "tenant_id": "default"
+    }
+  ],
+  "suricata_excerpt": {
+    "@timestamp": "2026-09-13T15:44:00.204Z",
+    "community_id": "1:vO5nblg0hr+mP4tx/1f1Ltkvai0=",
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "dns": {
+      "flags": "100",
+      "id": 0,
+      "opcode": 0,
+      "queries": [
+        {
+          "rrname": "o5mug226bbdd3kad7tvbe18biwo2.iasu3z93yp0f7l070wen.data.t.example.net",
+          "rrtype": "A"
+        }
+      ],
+      "rcode": "NOERROR",
+      "rd": true,
+      "tx_id": 0,
+      "type": "request",
+      "version": 3
+    },
+    "event_type": "dns",
+    "flow_id": 360428953925896,
+    "ip_v": 4,
+    "pcap_cnt": 2,
+    "pkt_src": "wire/pcap",
+    "proto": "UDP",
+    "src_ip": "10.0.0.9",
+    "src_port": 24424,
+    "timestamp": "2023-11-14T22:13:21.280526+0000"
+  },
+  "cernity_excerpt": {
+    "@timestamp": "2026-09-13T15:45:19Z",
+    "capture_job_ids": [],
+    "category": "dns_tunnel",
+    "confidence": 1.0,
+    "detector_id": "dns_tunnel",
+    "detector_version": "1.0",
+    "devo_delivery_state": "QUEUED",
+    "enrichment_state": "NOT_REQUIRED",
+    "entities": [
+      {
+        "type": "ip",
+        "role": "client",
+        "value": "10.0.0.9"
+      }
+    ],
+    "evidence_refs": [],
+    "finding_id": "dns_tunnel-570347381-2982190",
+    "first_seen": "2026-09-13T15:45:19Z",
+    "last_seen": "2026-09-13T15:45:19Z",
+    "mitre": [
+      "T1071.004"
+    ],
+    "sensor_ids": [],
+    "severity": 6,
+    "state": "FINAL",
+    "suppression_reason": "",
+    "tenant_id": "default"
+  }
+}

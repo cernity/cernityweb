@@ -1,15 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-const docs = (await getCollection('docs')).sort((a,b) => a.data.order-b.data.order);
-const groups = [
-  {title:'Understand the platform', label:'01 / FOUNDATIONS', slugs:['getting-started','how-it-works','ndr-coverage']},
-  {title:'Deploy & configure', label:'02 / INFRASTRUCTURE', slugs:['placement','deploy-sensor','suricata-config','suricata-zeek-parity']},
-  {title:'Extend & operate', label:'03 / OPERATIONS', slugs:['enrichment','ml-detection','siem-integrations','logging','development']},
-];
+import { guideGroups } from '../../data/guides';
+const docs = await getCollection('docs');
+const bySlug = new Map(docs.map(d=>[d.slug,d]));
 ---
-<Base title="Documentation — Cernity" description="Deploy Cernity, configure your Suricata sensors, and deliver explained security findings to your SIEM.">
-  <section class="hero page-hero"><span class="pill">CERNITY / DOCUMENTATION</span><h1>From first sensor<br />to explained findings.</h1><p class="lede">Understand the architecture, connect your telemetry, and bring Cernity into your security workflow.</p></section>
-  <section class="docs-intro"><div><span class="eyebrow">START HERE</span><h2>Your first deployment.</h2><p>Set up the central stack, connect a Suricata sensor, and verify that findings reach your SIEM.</p></div><div><a class="btn primary" href="/docs/getting-started/">Open the getting started guide ↗</a><a class="text-link" href="/docs/how-it-works/">Read the architecture first →</a></div></section>
-  <div class="docs-groups">{groups.map(group => <section class="docs-group"><div><span class="pill">{group.label}</span><h2>{group.title}</h2></div><div>{docs.filter(d=>group.slugs.includes(d.slug)).map(d=><a class="doc-link" href={`/docs/${d.slug}/`}>{d.data.nav}<span aria-hidden="true">↗</span></a>)}</div></section>)}</div>
+<Base title="Learn, deploy, investigate — Cernity documentation" description="A practical guide to Suricata records, Cernity architecture, sensor transport, installation, optional enrichment, and SIEM investigation.">
+  <section class="hero page-hero"><span class="pill">CERNITY / THE PRACTICAL GUIDE</span><h1>Understand the signal.<br />Follow it all the way.</h1><p class="lede">From your first EVE record to a working deployment and an analyst's investigation. Learn what each component does, how the data moves, and what the evidence can actually tell you.</p></section>
+  <section class="learning-path"><a href="/docs/reading-records/"><span class="eyebrow">I WANT TO UNDERSTAND</span><h2>Start with a record.</h2><p>Learn the difference between an observation, an alert, and a finding.</p><span class="text-link">Read the field guide →</span></a><a href="/docs/getting-started/"><span class="eyebrow">I WANT TO INSTALL</span><h2>Connect the pipeline.</h2><p>Work through the central host, sensor configuration, shipper, and SIEM.</p><span class="text-link">Start the installation →</span></a><a href="/proof/"><span class="eyebrow">I WANT TO EVALUATE</span><h2>Inspect the evidence.</h2><p>Compare actual records, including false leads and missing context.</p><span class="text-link">Open the case studies →</span></a></section>
+  <div class="docs-groups">{guideGroups.map(group=><section class="docs-group"><div><span class="pill">{group.label}</span><h2>{group.title}</h2><p class="group-description">{group.description}</p></div><div>{group.guides.map(guide=>{const doc=bySlug.get(guide.slug);return doc&&<a class="doc-link" href={`/docs/${guide.slug}/`}><div><strong>{doc.data.nav}</strong><p>{guide.description}</p></div><span aria-hidden="true">↗</span></a>})}</div></section>)}</div>
 </Base>

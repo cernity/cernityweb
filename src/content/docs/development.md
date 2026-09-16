@@ -24,7 +24,7 @@ tools/, tests/      dev tooling and the end-to-end test
 
 ## How a service is built
 
-Every service is small and single-purpose:
+Most services separate detection or mapping logic from their I/O:
 - **Pure logic** lives in its own module (e.g. `detectors.py`, `state_machine.py`,
   `adapters.py`) and is unit-tested without a broker.
 - **`app.py`** is the thin I/O shell: build a consumer/producer via `ndr_runtime`,
@@ -34,14 +34,15 @@ Every service is small and single-purpose:
 
 ## Tests
 
+The installation guide documents secure-bus and replay prerequisites. Passing unit tests or a local image build does not establish successful delivery to a SIEM. Validate the actual runtime and received records separately.
+
 Tests are plain assert-based scripts named `test_*.py` — no framework, run directly:
 
 ```bash
 python services/behavioral-detectors/test_detectors.py
 ```
 
-Each service's Docker image **runs its tests as a build gate** (`RUN python test_*.py`
-in the Dockerfile), so an image cannot be built if its tests fail.
+Several service Dockerfiles run selected tests as build gates. Inspect the specific Dockerfile for coverage; a successful image build is not proof that the full pipeline or SIEM integration works.
 
 Run the whole unit suite (uses a local interpreter via `PYBIN`, puts `shared/` on the
 path automatically):
@@ -89,8 +90,7 @@ When you rebuild after editing `shared/` (or anything), two things can silently 
 a **stale image**, so the container keeps running old code even though your rebuild
 "succeeded":
 
-1. **Docker layer cache** can reuse the `COPY shared/…` layer. Force it with
-   `docker compose build --no-cache <svc>` when in doubt.
+1. **Source and build context:** confirm the build includes the changed files and the container is recreated from the resulting image. Docker normally invalidates a COPY layer when its inputs change.
 2. **buildx builder stores differ.** A bare `docker build -t cernity/foo:latest …` may
    land the image in a *different* builder's store (e.g. `desktop-linux`) than the one
    Compose resolves the tag from — so Compose recreates the container from an *older*
@@ -126,11 +126,11 @@ can't see — a shared-module change that crash-loops a detector shows up here i
 Add an adapter class to `services/findings-forwarder/adapters.py` exposing
 `emit_batch(findings)`, register it in `_make()`, and add a unit test that asserts the
 payload/format it builds (no live SIEM needed). Use `cef.py` for syslog-family targets.
-See `docs/siem-integrations.md`.
+See [SIEM delivery and formats](/docs/siem-integrations/).
 
 ## Conventions
 
 - Small, focused files; one responsibility each.
-- `:latest` image tags by default; pin only with a concrete reason.
+- The repository uses `:latest` in several places. Record resolved image digests and pin tested versions for reproducible deployment.
 - Health-level logging (INFO = startup + heartbeat, DEBUG = detail); never flood.
 - Every non-trivial change leaves a runnable test behind.

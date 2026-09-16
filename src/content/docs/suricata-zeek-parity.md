@@ -1,52 +1,40 @@
 ---
-title: "Suricata logging vs Zeek — capability parity"
-nav: "Suricata vs Zeek parity"
+title: "Suricata and Zeek: overlapping visibility, different records"
+nav: "Suricata & Zeek"
 order: 7
 ---
 
-# Suricata logging vs Zeek — capability parity
+# Suricata and Zeek: overlapping visibility, different records
 
-A common objection to a Suricata-based NDR is "but Zeek gives richer protocol logs." This page
-maps, log type by log type, what **Zeek** produces standalone against the **Suricata EVE**
-output Cernity configures (see [suricata-config.md](/docs/suricata-config)). The goal is to show
-that a properly-configured Suricata gives Cernity essentially the same protocol telemetry Zeek
-does — and to be honest about the two places it doesn't.
+Suricata and Zeek can both describe network activity, but their record formats, parsers, scripts, and field availability differ. Cernity's architecture does not require claiming complete parity between them.
 
-The table below is generated from `benchmarks/parity.py` (the source of truth, unit-tested);
-the [benchmark](https://github.com/cernity/cernityndr/tree/main/benchmarks) runs Zeek as a reference arm over the same PCAP so this parity
-is *demonstrated*, not just asserted.
+## Compare the concepts, not just the field names
 
-## Parity map
+| Investigation question | Suricata source | Zeek source when configured and observed |
+|---|---|---|
+| Who connected to whom? | EVE flow endpoints and counters. | Connection logs and identifiers. |
+| What name was queried? | EVE DNS records. | DNS logs. |
+| What TLS metadata was visible? | EVE TLS records and enabled fingerprints. | TLS/certificate logs and installed fingerprint packages. |
+| What HTTP request was observed? | EVE HTTP metadata. | HTTP logs. |
+| What file was reconstructed? | File metadata and optional file store. | File-analysis logs and configured extraction/hashing. |
+| What condition was flagged? | Signature alerts and anomaly events. | Notices and script-specific output. |
 
-| Zeek log | Suricata EVE equivalent | Coverage | Note |
-|---|---|---|---|
-| `conn` | flow (+ community-id) | full | connection records + flow hash |
-| `dns` | dns (version 3) | full | queries and answers |
-| `http` | http (extended) | full | method / host / user-agent / status |
-| `ssl` | tls (extended) | full | version / SNI / cipher |
-| `x509` | tls subject/issuer/notbefore/notafter | partial | cert fields, not the full DER chain |
-| `files` | files (force-hash) | full | file extraction + hashes |
-| `ssh` | ssh | full | client/server banners |
-| `smb` | smb | partial | command/filename; op granularity varies by Suricata version |
-| `kerberos` | krb5 | partial | sname/encryption/error_code; no pre-auth flag exposed |
-| `dce_rpc` | dcerpc | full | interface UUIDs |
-| `ntlm` | smb.ntlmssp | partial | surfaced inside smb events |
-| `ja4` | tls.ja4 / ja4s | full | client + server fingerprints |
-| `weird` | anomaly | partial | Suricata anomaly events cover some Zeek "weird"s |
-| `notice` | (none — Cernity findings) | none | Zeek's scripted notices have no direct EVE analog; **Cernity's detectors ARE that behavioral layer** — the point of the whole comparison |
+A Zeek connection record is not automatically an alert, just as a Suricata flow record is not an alert. A logger may be enabled but still lack the data if the capture missed a handshake or the content was encrypted.
 
-## Reading it
+## Cernity's core path uses EVE
 
-- **Full coverage** on the workhorse protocol logs (conn/dns/http/ssl/files/ssh/dce_rpc) plus
-  JA4 fingerprinting: Suricata EVE feeds Cernity the same connection and protocol structure
-  Zeek would.
-- **Partial** on `x509`, `smb`, `kerberos`, `ntlm`, `weird`: Suricata surfaces the fields
-  Cernity's detectors need, but with less depth than Zeek in places (full cert chains,
-  fine-grained SMB ops, Kerberos pre-auth state). These are documented telemetry limits, not
-  detection gaps in Cernity's logic — the [Suricata config notes](/docs/suricata-config) call out
-  exactly where.
-- **`notice` is the honest gap — and the thesis.** Zeek's value beyond raw logs is its scripted
-  `notice` layer (behavioral judgments). Suricata has no equivalent. That behavioral layer is
-  precisely what **Cernity** adds on top of Suricata: stateful detectors, a findings lifecycle,
-  correlation. So "Suricata + Cernity" occupies the same space as "Zeek + its notice scripts",
-  and the benchmark measures whether it does so as well or better.
+The normal pipeline ships Suricata EVE to central detectors. It can produce behavioral leads without running Zeek continuously on the sensor. This keeps the basic input path explicit: Suricata → files → Fluent Bit → broker → analytics.
+
+## The optional Zeek path uses captured packets
+
+Cernity's optional worker runs Zeek over a packet slice and builds summaries from the logs that were produced. Richer parser output is conditional on the captured bytes, enabled scripts, packages, and successful execution.
+
+The reviewed worker computes summaries and indicators, but the finding lifecycle currently merges evidence references and status rather than copying all those details to the final finding. The [integration audit](/proof/#integration-zeek) describes this propagation gap. Do not infer that a Zeek field is available to the SOC merely because it exists inside the worker.
+
+## Pivot using supported evidence
+
+Community ID can help connect records from tools observing compatible flow tuples with the same seed. It does not recover a missing capture or remove NAT and observation-point differences. Preserve source identifiers and observation bounds alongside it.
+
+For a claimed capability, compare actual records from your deployed builds. A source implementation or a unit test is useful engineering evidence, but is different from a successful SIEM ingestion record.
+
+Continue with [reading records](/docs/reading-records/) and [sensor dependencies](/docs/sensor-dependencies/).

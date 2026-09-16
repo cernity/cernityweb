@@ -1,0 +1,201 @@
+{
+  "bundle": "factorial-scan",
+  "filter": {
+    "src_ip": "172.31.0.5",
+    "dest_ip": null,
+    "detector_id": null
+  },
+  "summary": {
+    "source_records": 48,
+    "baseline_records": 48,
+    "baseline_all_alerts": 0,
+    "matching_flows": 48,
+    "matching_alerts": 0,
+    "matching_toserver_bytes": 3072,
+    "matching_unique_destinations": 12,
+    "median_flow_start_interval": 7.152557373046875e-06,
+    "b_all_documents": 2,
+    "matching_b_documents": 2,
+    "matching_b_unique_ids": 2
+  },
+  "completion": "reconciled",
+  "replay": {
+    "replay_offset_seconds": 59.393231,
+    "anchor": "end",
+    "recorded_at": "2026-09-14T17:22:20.703076+00:00"
+  },
+  "provenance": {
+    "export_hashes_verified": true,
+    "baseline_matches_source_except_ingestion_timestamp": true,
+    "source_export_sha256": "19e56330f7fe8db449084631cfd8bff5a553d384c8d388f56f794a929fc7f82e",
+    "baseline_export_sha256": "3838e39580125b6547865d1607164fd96b0d0e36b565ad0b107901fcdd243ed1",
+    "finding_export_sha256": "d43b4476ef6a127ebec74e3fcdf25cf648cdd56ea0c6ddf838baeb18f62179dc",
+    "selection": "Original exported document bodies; not SIEM UI screenshots or search-result wrappers. Only selected synthetic records are included."
+  },
+  "suricata": {
+    "@timestamp": "2026-09-14T17:22:54.525Z",
+    "community_id": "1:8RjL9udTAkey+5RA4EdkOb4Smlk=",
+    "dest_ip": "172.31.0.23",
+    "dest_port": 3389,
+    "event_type": "flow",
+    "flow": {
+      "age": 0,
+      "alerted": false,
+      "bytes_toclient": 60,
+      "bytes_toserver": 64,
+      "end": "2026-09-14T17:21:21.309074+0000",
+      "pkts_toclient": 1,
+      "pkts_toserver": 1,
+      "reason": "shutdown",
+      "start": "2026-09-14T17:21:21.309071+0000",
+      "state": "closed"
+    },
+    "flow_id": 483025116006194,
+    "ip_v": 4,
+    "proto": "TCP",
+    "src_ip": "172.31.0.5",
+    "src_port": 42354,
+    "tcp": {
+      "ack": true,
+      "rst": true,
+      "state": "closed",
+      "syn": true,
+      "tc_max_regions": 1,
+      "tcp_flags": "16",
+      "tcp_flags_tc": "14",
+      "tcp_flags_ts": "02",
+      "ts_max_regions": 1
+    },
+    "timestamp": "2026-09-14T17:21:21.232858+0000"
+  },
+  "cernity": {
+    "@timestamp": "2026-09-14T17:22:20.702484Z",
+    "capture_job_ids": [],
+    "category": "lateral",
+    "confidence": 0.7,
+    "detector_id": "lateral_movement",
+    "detector_version": "1.0",
+    "devo_delivery_state": "QUEUED",
+    "emitted_at": "2026-09-14T17:22:41Z",
+    "enrichment_state": "NOT_REQUIRED",
+    "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"172.31.0.5\"}, {\"type\": \"count\", \"internal_targets\": 12}]",
+    "evidence_refs": [],
+    "finding_id": "lateral_movement-7352423717-2982344",
+    "first_seen": "2026-09-14T17:22:20.701995Z",
+    "last_seen": "2026-09-14T17:22:20.702484Z",
+    "mitre": [
+      "T1021"
+    ],
+    "observed": true,
+    "revision": 1,
+    "sensor_ids": [],
+    "severity": 7,
+    "state": "FINAL",
+    "suppression_reason": "",
+    "tenant_id": "default"
+  },
+  "additional_alert": null,
+  "cernity_matching_records": [
+    {
+      "@timestamp": "2026-09-14T17:22:20.702484Z",
+      "capture_job_ids": [],
+      "category": "lateral",
+      "confidence": 0.7,
+      "detector_id": "lateral_movement",
+      "detector_version": "1.0",
+      "devo_delivery_state": "QUEUED",
+      "emitted_at": "2026-09-14T17:22:41Z",
+      "enrichment_state": "NOT_REQUIRED",
+      "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"172.31.0.5\"}, {\"type\": \"count\", \"internal_targets\": 12}]",
+      "evidence_refs": [],
+      "finding_id": "lateral_movement-7352423717-2982344",
+      "first_seen": "2026-09-14T17:22:20.701995Z",
+      "last_seen": "2026-09-14T17:22:20.702484Z",
+      "mitre": [
+        "T1021"
+      ],
+      "observed": true,
+      "revision": 1,
+      "sensor_ids": [],
+      "severity": 7,
+      "state": "FINAL",
+      "suppression_reason": "",
+      "tenant_id": "default"
+    },
+    {
+      "@timestamp": "2026-09-14T17:22:20.702457Z",
+      "capture_job_ids": [],
+      "category": "lateral",
+      "confidence": 0.6,
+      "detector_id": "rdp_fanout",
+      "detector_version": "1.0",
+      "devo_delivery_state": "QUEUED",
+      "emitted_at": "2026-09-14T17:22:41Z",
+      "enrichment_state": "NOT_REQUIRED",
+      "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"172.31.0.5\"}, {\"type\": \"count\", \"rdp_targets\": 12}]",
+      "evidence_refs": [],
+      "finding_id": "rdp_fanout-7656693629-2982344",
+      "first_seen": "2026-09-14T17:22:20.702277Z",
+      "last_seen": "2026-09-14T17:22:20.702457Z",
+      "mitre": [
+        "T1021"
+      ],
+      "observed": true,
+      "revision": 1,
+      "sensor_ids": [],
+      "severity": 6,
+      "state": "FINAL",
+      "suppression_reason": "",
+      "tenant_id": "default"
+    }
+  ],
+  "suricata_excerpt": {
+    "event_type": "flow",
+    "timestamp": "2026-09-14T17:21:21.232858+0000",
+    "flow_id": 483025116006194,
+    "community_id": "1:8RjL9udTAkey+5RA4EdkOb4Smlk=",
+    "src_ip": "172.31.0.5",
+    "src_port": 42354,
+    "dest_ip": "172.31.0.23",
+    "dest_port": 3389,
+    "flow": {
+      "age": 0,
+      "alerted": false,
+      "bytes_toclient": 60,
+      "bytes_toserver": 64,
+      "end": "2026-09-14T17:21:21.309074+0000",
+      "pkts_toclient": 1,
+      "pkts_toserver": 1,
+      "reason": "shutdown",
+      "start": "2026-09-14T17:21:21.309071+0000",
+      "state": "closed"
+    }
+  },
+  "cernity_excerpt": {
+    "category": "lateral",
+    "confidence": 0.7,
+    "detector_id": "lateral_movement",
+    "enrichment_state": "NOT_REQUIRED",
+    "entities": [
+      {
+        "type": "ip",
+        "role": "src",
+        "value": "172.31.0.5"
+      },
+      {
+        "type": "count",
+        "internal_targets": 12
+      }
+    ],
+    "evidence_refs": [],
+    "finding_id": "lateral_movement-7352423717-2982344",
+    "first_seen": "2026-09-14T17:22:20.701995Z",
+    "last_seen": "2026-09-14T17:22:20.702484Z",
+    "mitre": [
+      "T1021"
+    ],
+    "revision": 1,
+    "severity": 7,
+    "state": "FINAL"
+  }
+}

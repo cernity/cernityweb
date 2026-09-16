@@ -1,0 +1,11 @@
+---
+import { integrations } from '../content/proof/integrations';
+import inventory from '../../public/evidence/inventory.json';
+---
+<section id="optional-integrations" class="integration-evidence">
+  <span class="pill">OPTIONAL INTEGRATIONS / FIELD DELIVERY AUDIT</span><h2>What actually reaches the SIEM?</h2><p class="lede">An enabled add-on is not proof of a delivered field. This inventory separates captured output from source-supported capabilities and identifies the records still needed to demonstrate each integration.</p>
+  <div class="evidence-audit"><strong>{inventory.bundles.length} saved bundles inspected.</strong><p>No nonempty <code>geo</code>, <code>intel</code>, <code>iocs</code>, or <code>summary</code> objects were present in those finding exports. No nDPI, fingerprint-rarity, or SLIPS detector findings were found. This describes the available evidence, not every possible Cernity deployment.</p><a href="/evidence/inventory.json" download>Download the per-bundle detector inventory ↓</a></div>
+  <nav class="integration-jump" aria-label="Optional integration details">{integrations.map(item=><a href={`#integration-${item.id}`}>{item.name}</a>)}</nav>
+  {integrations.map(item=><article class="integration-detail" id={`integration-${item.id}`}><header><h3>{item.name}</h3><span class="evidence-status">{item.status}</span></header><div class="integration-sides"><section><span class="eyebrow">SURICATA → SIEM</span><p>{item.baseline}</p></section><section><span class="eyebrow">CERNITY → SIEM · SOURCE-REVIEWED PATH</span><p>{item.output}</p></section></div><dl><div><dt>Required configuration</dt><dd>{item.requirements}</dd></div><div><dt>Evidence limitation</dt><dd>{item.caveat}</dd></div><div><dt>What a complete demonstration needs</dt><dd>{item.acceptance}</dd></div></dl><a class="text-link" href={item.href}>Inspect the implementation or captured case ↗</a></article>)}
+  <div class="case-limit"><strong>These descriptions are not substitute SIEM records.</strong><p>No mocked JSON is presented as successful optional integration output. The missing demonstrations require a configured test deployment and retrieval from its actual receiving SIEM. <a href="/docs/evidence-capture/">See the evidence collection procedure →</a></p></div>
+</section>

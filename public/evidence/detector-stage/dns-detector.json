@@ -1,0 +1,402 @@
+{
+  "service": "dns-detector",
+  "fixture": "dns-eve.jsonl",
+  "capture_stage": "detector (candidate findings; full lifecycle/SIEM delivery validated separately)",
+  "captured_at": "2026-09-16T19:50:33Z",
+  "suricata_baseline": {
+    "source_event_count": 21,
+    "alerts": 0,
+    "note": "Suricata parsed these events to EVE. Alerts fire only on signature matches; the behavior below is not a signature, so Suricata raises 0 alert(s) on it.",
+    "records": [
+      {
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "query",
+          "rrname": "vhrtbxlqkm.net"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:01+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-1-random-1.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:02+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-2-random-2.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:03+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-3-random-3.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:04+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-4-random-4.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:05+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-5-random-5.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:06+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-6-random-6.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:07+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-7-random-7.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:08+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-8-random-8.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:09+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-9-random-9.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:10+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-10-random-10.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:11+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-11-random-11.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:12+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-12-random-12.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:13+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-13-random-13.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:14+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-14-random-14.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:15+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-15-random-15.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:16+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-16-random-16.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:17+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-17-random-17.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:18+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-18-random-18.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:19+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-19-random-19.example",
+          "rcode": "NXDOMAIN"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:20+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.9",
+        "dest_ip": "10.0.0.1",
+        "dns": {
+          "type": "answer",
+          "rrname": "nx-20-random-20.example",
+          "rcode": "NXDOMAIN"
+        }
+      }
+    ]
+  },
+  "cernity": {
+    "detectors_fired": [
+      "dga_domain",
+      "nxdomain_burst"
+    ],
+    "finding_count": 2,
+    "findings": [
+      {
+        "finding_id": "dga_domain-3453270880-2982647",
+        "tenant_id": "default",
+        "detector_id": "dga_domain",
+        "detector_version": "1.0",
+        "category": "c2",
+        "severity": 6,
+        "confidence": 0.741,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"domain\", \"value\": \"vhrtbxlqkm.net\"}, {\"type\": \"dga_label\", \"value\": \"vhrtbxlqkm\"}, {\"type\": \"dga_score\", \"value\": 0.741}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.9"
+          },
+          {
+            "type": "domain",
+            "value": "vhrtbxlqkm.net"
+          },
+          {
+            "type": "dga_label",
+            "value": "vhrtbxlqkm"
+          },
+          {
+            "type": "dga_score",
+            "value": 0.741
+          }
+        ]
+      },
+      {
+        "finding_id": "nxdomain_burst-3150726969-2982647",
+        "tenant_id": "default",
+        "detector_id": "nxdomain_burst",
+        "detector_version": "1.0",
+        "category": "c2",
+        "severity": 6,
+        "confidence": 0.6,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"nxdomain_count\", \"value\": 20}, {\"type\": \"window_secs\", \"value\": 300}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.9"
+          },
+          {
+            "type": "nxdomain_count",
+            "value": 20
+          },
+          {
+            "type": "window_secs",
+            "value": 300
+          }
+        ]
+      }
+    ],
+    "delivered": [
+      {
+        "finding_id": "dga_domain-3453270880-2982647",
+        "detector_id": "dga_domain",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:dga_domain-3453270880-2982647:r2",
+            "_source": {
+              "finding_id": "dga_domain-3453270880-2982647",
+              "tenant_id": "default",
+              "detector_id": "dga_domain",
+              "detector_version": "1.0",
+              "category": "c2",
+              "severity": 6,
+              "confidence": 0.741,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"domain\", \"value\": \"vhrtbxlqkm.net\"}, {\"type\": \"dga_label\", \"value\": \"vhrtbxlqkm\"}, {\"type\": \"dga_score\", \"value\": 0.741}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [
+                "T1071"
+              ],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|dga_domain|c2|6|cs1=dga_domain-3453270880-2982647 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.9 cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "nxdomain_burst-3150726969-2982647",
+        "detector_id": "nxdomain_burst",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:nxdomain_burst-3150726969-2982647:r2",
+            "_source": {
+              "finding_id": "nxdomain_burst-3150726969-2982647",
+              "tenant_id": "default",
+              "detector_id": "nxdomain_burst",
+              "detector_version": "1.0",
+              "category": "c2",
+              "severity": 6,
+              "confidence": 0.6,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.9\"}, {\"type\": \"nxdomain_count\", \"value\": 20}, {\"type\": \"window_secs\", \"value\": 300}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [
+                "T1071"
+              ],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|nxdomain_burst|c2|6|cs1=nxdomain_burst-3150726969-2982647 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.9 cs4=2 cs4Label=revision"
+        }
+      }
+    ]
+  }
+}

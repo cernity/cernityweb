@@ -1,148 +1,57 @@
 ---
-title: "How Cernity completes Suricata into a full NDR"
-nav: "NDR coverage"
+title: "What Cernity adds, and where its boundaries are"
+nav: "Coverage & boundaries"
 order: 3
 ---
 
-# How Cernity completes Suricata into a full NDR
+# What Cernity adds, and where its boundaries are
 
-Suricata is a world-class **IDS and edge sensor**: it inspects packets at line rate,
-matches known-bad signatures, and emits rich protocol/flow telemetry (EVE JSON). What it
-is *not* — on its own — is a full **Network Detection and Response (NDR)** platform. An
-IDS has no memory of what a host did over the last ten minutes, no central analytics, no
-findings lifecycle, no enrichment, and no response path.
+Cernity is a central analytics and finding-delivery layer built around Suricata telemetry. Its source includes behavioral detectors, signature promotion, finding lifecycle, optional enrichment, and SIEM adapters. Which capabilities work in your deployment depends on the collected fields, running services, configuration, and delivery path.
 
-**Cernity is the add-on that supplies exactly those missing NDR capabilities.** Suricata
-inspects; Cernity remembers, analyzes, correlates, enriches, prioritizes, and hands
-finished findings to your SIEM. Together they are a complete, self-hosted NDR.
+## What Suricata already provides
 
-This page maps the recognized NDR capability areas (aligned with the Gartner NDR
-definition and common vendor requirement lists) to **what Suricata provides**, **what
-Cernity adds**, and **how**. It is deliberately honest about the boundaries — where a
-capability is delegated to your SIEM by design, and where Cernity does not play.
+Suricata tracks state, parses protocols, applies signatures and other rule conditions, and emits useful telemetry. It can provide meaningful classifications, priorities, connection metadata, and flow correlation identifiers. It is incorrect to describe it as having no state or producing only unclassified packets.
 
----
+Its saved baseline records in this website are raw EVE documents ingested into a test SIEM. That comparison does not include every analytic a production SIEM could run over those records.
 
-## Detection breadth — known *and* unknown threats
+## What the saved evidence demonstrates
 
-**NDR needs multiple detection methods, not just signatures.**
-
-| Method | Suricata alone | How Cernity covers it |
+| Function | Observed example | Qualification |
 |---|---|---|
-| **Signature / known-bad** | ✅ native | `ids-alerts` promotes Suricata signature hits into the same finding pipeline, so they correlate with everything else |
-| **Behavioral (unknown threats)** | ❌ (no state) | `behavioral-detectors` — stateful, per-host rolling windows in Redis: **beaconing** (RITA-style timing regularity + jitter), **data exfiltration** (volume + sustained low-and-slow), **DNS tunneling / DGA** (query volume + entropy), **long connections**, **rare-destination / first-seen**, **fleet-prevalence** |
-| **Protocol / fingerprint anomalies** | logs the metadata | `protocol-detectors` — JA3/JA4 client + server fingerprint rarity, DoH to unapproved resolvers, cloud-staging, TLS cert anomalies, SSH brute force, port/protocol mismatch |
-| **Encrypted-traffic analysis** | emits JA3/JA4 | Cernity turns those fingerprints into detections (rarity, known-bad matching) and extracts the **full JA4+ suite** (JA4S/JA4H/JA4X/JA4SSH) on captured flows via `zeek-central` — visibility *without* decryption |
-| **Lateral movement (east-west)** | logs SMB/RDP/Kerberos | `east-west-detectors` — SMB/RDP/DCE-RPC fan-out, Kerberoasting, internal scanning |
-| **Application-risk (nDPI)** | optional plugin | `behavioral-detectors` consumes Suricata's nDPI `flow_risk` verdict (malicious JA3/JA4, DGA, cleartext creds, bad TLS) as a detection input |
-| **IoC / threat-intel matching** | ❌ | `threat-intel` matches live traffic against abuse.ch blocklists (C2 IPs, malicious certs, bad JA3) |
+| Cross-flow regularity | A five-second beacon pattern over twenty connections. | Three findings were emitted as the observed window developed; this is not one universally deduplicated incident. |
+| Signature consolidation | Forty-five alerts, two document revisions, one finding ID. | The signature was already a Suricata detection; enrichment timed out. |
+| Internal destination aggregation | Forty-eight flows to twelve internal targets. | Label-file problems prevent an attack-recall claim. |
+| Transfer aggregation | Eleven flows and 5,933,840 outgoing bytes. | An investigation lead, not proof of theft; run reconciliation was incomplete. |
+| Unfavorable output | Beacon findings on a declared benign transfer. | A real false lead in that scenario, not a population false-positive rate. |
 
-Both **east-west (internal)** and **north-south (routed)** traffic are covered — the
-behavioral and protocol detectors watch north-south; the east-west detectors watch
-lateral movement.
+Read the [original records and case explanations](/proof/) before using these findings in product evaluation.
 
-> **Honest boundary — detection is heuristic/statistical, not ML.** Cernity's methods are
-> threshold-, rarity-, and entropy-based (the proven RITA/Zeek approach), which makes them
-> **explainable by construction**. Cernity does *not* currently ship machine-learning
-> baseline models. ML-based behavioral detection is a deliberate future track, not a
-> shipped capability.
+## Implementation is broader than the captured proof
 
----
+The repository includes protocol fingerprint analysis, nDPI risk handling, DNS analysis, optional GeoIP and reputation, an optional SLIPS integration, packet forensics, file inspection, and correlation components. Source-visible functions are not interchangeable with exported successful SIEM records.
 
-## Explainable findings with evidence
+The [capability matrix](/docs/sensor-dependencies/) lists prerequisites. The [optional integration evidence](/proof/#optional-integrations) states which delivered fields were found and which remain unverified.
 
-**NDR findings must be transparent — an analyst has to see *why*.**
+Core behavior is predominantly heuristic/statistical. The SLIPS overlay is an optional integration, not a guarantee that every SLIPS alert originates from a trained model. The adapter separates known lookup modules, but its label alone does not establish model provenance.
 
-Suricata gives you an alert. Cernity gives you an **explained finding**: `finding-service`
-attaches **MITRE ATT&CK** technique tags, the involved **entities**, the **detection math**
-that fired it (e.g. a beacon's exact interval, jitter, and connection count), and an
-**enrichment block** — GeoIP/ASN, reverse DNS, domain age / newly-registered-domain flag,
-JA3/JA4 fingerprint names, and optional IP reputation (VirusTotal / GreyNoise). When a
-finding is worth proving, Cernity fetches the **actual packets** on demand (the
-`capture-agent` → `zeek-central` loop) and carves files — evidence, not just an assertion.
+## What your existing stack still owns
 
----
+- The physical or virtual traffic mirror and its coverage.
+- Suricata operation, parser configuration, rules, and packet-loss monitoring.
+- SIEM ingestion, retention, field parsing, analyst searches, dashboards, and case management.
+- Asset ownership, identity, endpoint evidence, and the business context needed to assess intent.
+- Validation of optional components, storage, delivery, and recovery in your environment.
 
-## High-fidelity response triggers (noise reduction)
+Cernity does not make TLS contents visible without the necessary observation or decryption arrangement, prove that every absence is benign, or establish compromise from a category label.
 
-**NDR must send the SIEM *findings*, not a firehose of raw events.**
+## Source availability and deployment scope
 
-This is Cernity's core thesis:
+The product documentation identifies the project as source available under PolyForm Perimeter. Review the repository's license for the applicable permissions. The architecture is self hosted; optional reputation, registration, threat-intelligence, and upstream image retrieval can require external services.
 
-> **Raw network telemetry is analytics input. Security findings are SIEM input.**
+The basic central Compose uses in-memory detector state and does not deploy every optional datastore. A production architecture needs its own measured capacity, persistence, isolation, and recovery validation.
 
-`finding-service` de-duplicates candidates (a beacon seen 500 times becomes *one*
-finding), gates severity by how hostile the destination looks (`gated_severity` +
-fleet-prevalence), and applies a **delivery-suppression ceiling** so low-severity,
-un-anchored findings are kept for correlation but never delivered to the analyst plane.
-The result is a small stream of high-fidelity, ready-to-act findings — the opposite of
-alert fatigue.
+## How to evaluate it fairly
 
----
+Compare identical source input with explicit rules, settings, and SIEM parsing. Count raw records, alerts, documents, revisions, and finding identities separately. Include benign controls, missing enrichment, suppression, delivery failures, and resources consumed.
 
-## Network forensics & retention (historical investigation)
-
-**NDR must let you investigate the past.**
-
-Suricata's telemetry is ephemeral. Cernity retains it: `normalizer` writes typed rows to
-**ClickHouse** for hunting and pivoting ("show me everything this host did"), captured
-**pcaps and carved files** live in **MinIO**, `correlation-service` links related findings
-into a kill-chain, and `reconstruction` builds a per-host timeline and entity graph.
-
----
-
-## Automated response & integration
-
-**NDR must be able to act, and fit your stack.**
-
-`soar-forwarder` runs response playbooks on final findings and can notify or drive a SOAR
-(TheHive, Shuffle, n8n). `findings-forwarder` delivers findings to **your SIEM** through a
-pluggable adapter — Elasticsearch/OpenSearch, Splunk, Devo, syslog/CEF, or webhook — and
-can **fan out to several at once**.
-
----
-
-## Openness & extensibility
-
-**NDR should be open, not a black box.**
-
-Cernity is **broker-agnostic** (anything speaking the Kafka API), its `contracts/` JSON
-schemas are the public interface for writing your own producers/consumers, its SIEM
-adapters and threat-intel/fingerprint sources are pluggable, and it is **source-available**
-(PolyForm Perimeter) — you can read, audit, and extend every detector.
-
----
-
-## Complete data sovereignty
-
-**NDR should keep your data yours.**
-
-Cernity is **100% self-hosted** — no SaaS, no cloud dependency, no phone-home. Enrichment
-runs offline where possible (GeoIP from mounted MaxMind DBs), and the online reputation
-lookups are **opt-in and external-IP-only** (internal addresses are never sent to a third
-party). You own the ClickHouse store, the MinIO pcaps, and every finding.
-
----
-
-## What Cernity deliberately leaves to your stack
-
-Being honest about the seams keeps the architecture clean:
-
-- **The analyst console & guided threat-hunting UI** — Cernity is a *findings engine*, not
-  a UI platform. It provides the **hunting substrate** (queryable ClickHouse telemetry,
-  correlation, reconstruction) and delivers findings **into your SIEM**, which is where the
-  dashboards, hunting queries, and case management live.
-- **Deep packet inspection is tiered, by design** — DPI happens at the **edge** (Suricata +
-  nDPI) and **on demand** (`zeek-central` over captured pcaps), never continuously in the
-  center. That is the whole point of the tiered model: inspect once at line rate, ship
-  lightweight telemetry, analyze centrally on hardware that has room for it.
-- **Not in scope:** machine-learning baseline models (a future track) and network
-  vulnerability scanning (Cernity detects behavior and threats, it does not assess CVEs).
-
----
-
-## In one sentence
-
-**Suricata sees the packets; Cernity turns what it sees into remembered, explained,
-prioritized, self-hosted NDR findings — the analytics, correlation, enrichment, and
-response tier a standalone IDS doesn't have.**
+The practical question is whether the added findings and context improve your analysts' decisions at an acceptable operating cost. The currently published records demonstrate mechanisms and limitations; they do not settle that question for every SOC.

@@ -1,0 +1,600 @@
+{
+  "service": "east-west-detectors",
+  "fixture": "east-west-eve.jsonl",
+  "capture_stage": "detector (candidate findings; full lifecycle/SIEM delivery validated separately)",
+  "captured_at": "2026-09-16T19:50:33Z",
+  "suricata_baseline": {
+    "source_event_count": 25,
+    "alerts": 0,
+    "note": "Suricata parsed these events to EVE. Alerts fire only on signature matches; the behavior below is not a signature, so Suricata raises 0 alert(s) on it.",
+    "records": [
+      {
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.66",
+        "dest_ip": "10.0.0.10",
+        "dest_port": 5355,
+        "proto": "UDP",
+        "dns": {
+          "type": "answer",
+          "rrname": "WPAD"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:01+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.66",
+        "dest_ip": "10.0.0.11",
+        "dest_port": 5355,
+        "proto": "UDP",
+        "dns": {
+          "type": "answer",
+          "rrname": "FILESERVER"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:02+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.66",
+        "dest_ip": "10.0.0.12",
+        "dest_port": 5355,
+        "proto": "UDP",
+        "dns": {
+          "type": "answer",
+          "rrname": "PRINTSRV"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:03+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.66",
+        "dest_ip": "10.0.0.13",
+        "dest_port": 5355,
+        "proto": "UDP",
+        "dns": {
+          "type": "answer",
+          "rrname": "SQLPROD"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:04+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.66",
+        "dest_ip": "10.0.0.14",
+        "dest_port": 5355,
+        "proto": "UDP",
+        "dns": {
+          "type": "answer",
+          "rrname": "DC01"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:05+00:00",
+        "event_type": "dns",
+        "src_ip": "10.0.0.66",
+        "dest_ip": "10.0.0.15",
+        "dest_port": 5355,
+        "proto": "UDP",
+        "dns": {
+          "type": "answer",
+          "rrname": "BACKUP"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:10+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "MSSQLSvc/sql01",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:11+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "MSSQLSvc/sql02",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:12+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "HTTP/web01",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:13+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "CIFS/file01",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:14+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "LDAP/dc01",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:15+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "TERMSRV/rdp01",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:16+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "MSSQLSvc/sql03",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:17+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.77",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "msg_type": "KRB_TGS_REQ",
+          "sname": "HTTP/web02",
+          "encryption": "23"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:20+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "alice"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:21+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "bob"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:22+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "carol"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:23+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "dave"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:24+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "erin"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:25+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "frank"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:26+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "grace"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:27+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "heidi"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:28+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "ivan"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:29+00:00",
+        "event_type": "krb5",
+        "src_ip": "10.0.0.99",
+        "dest_ip": "10.0.0.14",
+        "krb5": {
+          "error_code": "KDC_ERR_PREAUTH_FAILED",
+          "cname": "judy"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:30+00:00",
+        "event_type": "smb",
+        "src_ip": "10.0.0.88",
+        "dest_ip": "10.0.0.20",
+        "smb": {
+          "command": "SMB2_CREATE",
+          "named_pipe": "\\PIPE\\svcctl",
+          "status": "STATUS_SUCCESS"
+        }
+      }
+    ]
+  },
+  "cernity": {
+    "detectors_fired": [
+      "kerberoasting",
+      "lateral_exec",
+      "llmnr_poison",
+      "password_spraying"
+    ],
+    "finding_count": 4,
+    "findings": [
+      {
+        "finding_id": "kerberoasting-679941760-2982647",
+        "tenant_id": "default",
+        "detector_id": "kerberoasting",
+        "detector_version": "1.0",
+        "category": "credential_access",
+        "severity": 8,
+        "confidence": 0.8,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "observed": false,
+        "emitted_at": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.77\"}, {\"type\": \"kerberoast\", \"distinct_spns\": 8, \"rc4\": true}]",
+        "state": "CANDIDATE",
+        "mitre": [
+          "T1558.003"
+        ],
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.77"
+          },
+          {
+            "type": "kerberoast",
+            "distinct_spns": 8,
+            "rc4": true
+          }
+        ]
+      },
+      {
+        "finding_id": "password_spraying-5892380474-2982647",
+        "tenant_id": "default",
+        "detector_id": "password_spraying",
+        "detector_version": "1.0",
+        "category": "credential_access",
+        "severity": 7,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "observed": false,
+        "emitted_at": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.99\"}, {\"type\": \"spray\", \"distinct_accounts\": 10}]",
+        "state": "CANDIDATE",
+        "mitre": [
+          "T1110.003"
+        ],
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.99"
+          },
+          {
+            "type": "spray",
+            "distinct_accounts": 10
+          }
+        ]
+      },
+      {
+        "finding_id": "lateral_exec-9089190519-2982647",
+        "tenant_id": "default",
+        "detector_id": "lateral_exec",
+        "detector_version": "1.0",
+        "category": "lateral",
+        "severity": 7,
+        "confidence": 0.75,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "observed": false,
+        "emitted_at": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.88\"}, {\"type\": \"lateral_exec\", \"signals\": [\"pipe:svcctl (service control (PsExec))\"]}]",
+        "state": "CANDIDATE",
+        "mitre": [
+          "T1021.002"
+        ],
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.88"
+          },
+          {
+            "type": "lateral_exec",
+            "signals": [
+              "pipe:svcctl (service control (PsExec))"
+            ]
+          }
+        ]
+      },
+      {
+        "finding_id": "llmnr_poison-2289960405-2982647",
+        "tenant_id": "default",
+        "detector_id": "llmnr_poison",
+        "detector_version": "1.0",
+        "category": "credential_access",
+        "severity": 7,
+        "confidence": 0.6,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "observed": false,
+        "emitted_at": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"responder\", \"value\": \"10.0.0.66\"}, {\"type\": \"llmnr\", \"answered_names\": 6}]",
+        "state": "CANDIDATE",
+        "mitre": [
+          "T1557.001"
+        ],
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "responder",
+            "value": "10.0.0.66"
+          },
+          {
+            "type": "llmnr",
+            "answered_names": 6
+          }
+        ]
+      }
+    ],
+    "delivered": [
+      {
+        "finding_id": "kerberoasting-679941760-2982647",
+        "detector_id": "kerberoasting",
+        "route": "final",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "NOT_REQUIRED",
+          "devo_delivery_state": "QUEUED",
+          "revision": 1,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:kerberoasting-679941760-2982647:r1",
+            "_source": {
+              "finding_id": "kerberoasting-679941760-2982647",
+              "tenant_id": "default",
+              "detector_id": "kerberoasting",
+              "detector_version": "1.0",
+              "category": "credential_access",
+              "severity": 8,
+              "confidence": 0.8,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "observed": false,
+              "emitted_at": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.77\"}, {\"type\": \"kerberoast\", \"distinct_spns\": 8, \"rc4\": true}]",
+              "state": "FINAL",
+              "mitre": [
+                "T1558.003"
+              ],
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 1,
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "NOT_REQUIRED",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|kerberoasting|credential_access|8|cs1=kerberoasting-679941760-2982647 cs1Label=findingId cs2=T1558.003 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.77 cs4=1 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "password_spraying-5892380474-2982647",
+        "detector_id": "password_spraying",
+        "route": "final",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "NOT_REQUIRED",
+          "devo_delivery_state": "QUEUED",
+          "revision": 1,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:password_spraying-5892380474-2982647:r1",
+            "_source": {
+              "finding_id": "password_spraying-5892380474-2982647",
+              "tenant_id": "default",
+              "detector_id": "password_spraying",
+              "detector_version": "1.0",
+              "category": "credential_access",
+              "severity": 7,
+              "confidence": 0.7,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "observed": false,
+              "emitted_at": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.99\"}, {\"type\": \"spray\", \"distinct_accounts\": 10}]",
+              "state": "FINAL",
+              "mitre": [
+                "T1110.003"
+              ],
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 1,
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "NOT_REQUIRED",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|password_spraying|credential_access|7|cs1=password_spraying-5892380474-2982647 cs1Label=findingId cs2=T1110.003 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.99 cs4=1 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "lateral_exec-9089190519-2982647",
+        "detector_id": "lateral_exec",
+        "route": "final",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "NOT_REQUIRED",
+          "devo_delivery_state": "QUEUED",
+          "revision": 1,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:lateral_exec-9089190519-2982647:r1",
+            "_source": {
+              "finding_id": "lateral_exec-9089190519-2982647",
+              "tenant_id": "default",
+              "detector_id": "lateral_exec",
+              "detector_version": "1.0",
+              "category": "lateral",
+              "severity": 7,
+              "confidence": 0.75,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "observed": false,
+              "emitted_at": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.88\"}, {\"type\": \"lateral_exec\", \"signals\": [\"pipe:svcctl (service control (PsExec))\"]}]",
+              "state": "FINAL",
+              "mitre": [
+                "T1021.002"
+              ],
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 1,
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "NOT_REQUIRED",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|lateral_exec|lateral|7|cs1=lateral_exec-9089190519-2982647 cs1Label=findingId cs2=T1021.002 cs2Label=mitre cs3=default cs3Label=tenant cat=lateral src=10.0.0.88 cs4=1 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "llmnr_poison-2289960405-2982647",
+        "detector_id": "llmnr_poison",
+        "route": "final",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "NOT_REQUIRED",
+          "devo_delivery_state": "QUEUED",
+          "revision": 1,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:llmnr_poison-2289960405-2982647:r1",
+            "_source": {
+              "finding_id": "llmnr_poison-2289960405-2982647",
+              "tenant_id": "default",
+              "detector_id": "llmnr_poison",
+              "detector_version": "1.0",
+              "category": "credential_access",
+              "severity": 7,
+              "confidence": 0.6,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "observed": false,
+              "emitted_at": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"responder\", \"value\": \"10.0.0.66\"}, {\"type\": \"llmnr\", \"answered_names\": 6}]",
+              "state": "FINAL",
+              "mitre": [
+                "T1557.001"
+              ],
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 1,
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "NOT_REQUIRED",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|llmnr_poison|credential_access|7|cs1=llmnr_poison-2289960405-2982647 cs1Label=findingId cs2=T1557.001 cs2Label=mitre cs3=default cs3Label=tenant cat=credential_access src=10.0.0.66 cs4=1 cs4Label=revision"
+        }
+      }
+    ]
+  }
+}

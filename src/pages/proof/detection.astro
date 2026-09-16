@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProofCapture from '../../components/ProofCapture.astro';
+import { captureServices, captureSummary } from '../../content/proof/captures';
+---
+<Base title="Detection coverage — live Suricata-vs-Cernity captures" description="For each Cernity detector, the exact Suricata EVE record that triggered it beside the real finding it produced — across OT/Modbus, encrypted-traffic, HTTP, DNS, Windows/AD lateral movement, sensor coverage, and protocol anomalies.">
+  <section class="hero page-hero">
+    <span class="pill">CERNITY / DETECTION COVERAGE</span>
+    <h1>Same traffic.<br />This is the SIEM record.</h1>
+    <p class="lede">For every detector below, the exact Suricata EVE record that triggered it sits beside the record a SOC analyst actually queries — the Elasticsearch document and the CEF event Cernity delivered. Across all of it, Suricata raised <strong>zero</strong> signature alerts.</p>
+  </section>
+
+  <section class="disclaimer-band">
+    <span class="pill pill-warn">HOW THESE WERE PRODUCED</span>
+    <p>Each record is produced by running the <strong>real</strong> detector, finding-service lifecycle, and findings-forwarder over a fixture of Suricata EVE — the right-hand pane is the finalized finding as it reaches the SIEM (Elasticsearch <code>_source</code> and CEF), not a mock-up. It runs <strong>in-process over synthetic fixtures</strong>, so it is not a live Elasticsearch cluster or a customer incident, and the finding gate’s <strong>SUPPRESSED</strong> decisions and <code>enrichment_state: TIMEOUT</code> (no forensics overlay attached) are shown exactly as they occur. For end-to-end runs against a live SIEM with export hashes, see the <a href="/proof/#optional-integrations">full-pipeline cases and the optional-integration audit</a>.</p>
+  </section>
+
+  <div class="capture-summary">
+    <div><strong>{captureSummary.detectors}</strong><span>detectors</span></div>
+    <div><strong>{captureSummary.delivered}</strong><span>delivered to SIEM</span></div>
+    <div><strong>{captureSummary.suppressed}</strong><span>suppressed as noise</span></div>
+    <div><strong>{captureSummary.suricataAlerts}</strong><span>Suricata alerts</span></div>
+  </div>
+
+  <nav class="case-index" aria-label="Detector coverage by service">
+    {captureServices.map((s) => <a href={`#capture-${s.service}`}><span>{s.title}</span><span aria-hidden="true">↓</span></a>)}
+  </nav>
+
+  {captureServices.map((s) => <ProofCapture s={s} />)}
+
+  <section id="detection-method" class="proof-methodology">
+    <span class="pill">METHOD & PROVENANCE</span>
+    <h2>How these captures were produced.</h2>
+    <div class="method-grid">
+      <div>
+        <h3>What was run</h3>
+        <p>Each fixture of Suricata EVE was replayed through the real detector, the finding-service lifecycle, and the findings-forwarder (<code>tools/proof-capture/capture.py</code>). The source record on the left is the unmodified EVE that triggered the detector; the SIEM document on the right is what the forwarder emitted (Elasticsearch <code>_id</code> = <code>tenant:finding_id:rN</code>, and the CEF event). Only the plain-language explanations are hand-authored.</p>
+      </div>
+      <div>
+        <h3>What it is not</h3>
+        <p>This is an in-process pipeline over synthetic fixtures — not a live Elasticsearch cluster, not a customer incident, and not a claim of precision, recall, calibrated confidence, or production scale. A configured SIEM might derive some of these patterns from raw telemetry; the point is the finalized, explained record Cernity delivers that a bare Suricata alert stream does not.</p>
+      </div>
+    </div>
+    <a class="text-link" href="/proof/">← Back to the record-by-record field guide</a>
+  </section>
+</Base>

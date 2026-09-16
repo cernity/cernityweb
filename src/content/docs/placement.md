@@ -1,83 +1,42 @@
 ---
-title: "Placing Cernity across your own servers"
-nav: "Placement"
+title: "Where the services run and what scaling changes"
+nav: "Placement & state"
 order: 4
 ---
 
-# Placing Cernity across your own servers
+# Where the services run and what scaling changes
 
-Cernity lets **you decide what runs where**. Every service is stateless and reaches
-the others only through the shared bus, so you can spread the pieces across as many
-servers as you like — matching each piece to the hardware that suits it — with no
-orchestrator. This is the manual, you-choose model; for Kubernetes see `deploy/helm/`.
+Start with one sensor and one central host to understand the boundaries. Moving services to multiple machines introduces network, authentication, state, storage, and partitioning requirements; it is not simply a matter of running more identical containers.
 
-## The idea
+## The initial topology
 
-- **Shared infra** (bus, state, storage) lives on a host — or a cluster — everyone can
-  reach. `deploy/scale/infra.yml` runs it, or point at your own Redpanda/Redis/ClickHouse.
-- **Workers** (`deploy/scale/workers.yml`) are placed by you: on each server you start
-  exactly the services you want there, by **role profile** or by **name**.
-- Every host's `.env` points at the shared infra. Services self-arm off the bus — no
-  central key-holder, no per-host coordination.
+| Location | Responsibilities | State to retain |
+|---|---|---|
+| Sensor | Suricata capture and EVE logging; Fluent Bit shipping. | Logger retention and shipper offsets. |
+| Central core | Broker, detectors, finding lifecycle, delivery. | Broker data; configured detector state; delivery ledger and failed records. |
+| SIEM | Ingestion, search, dashboards, case workflow. | Original documents and intended retention. |
+| Optional storage/forensics hosts | Raw telemetry retention, captures, files, offline analysis. | Store-specific persistence and access controls. |
 
-Two knobs: **placement** (which services on which host) and **replicas** (how many
-copies of a service, bounded by that topic's partition count — see
-`deploy/scale/README.md`).
+The core Compose defaults detector state to memory. Those services are not all stateless: a process restart can lose its rolling analysis window. Broker persistence and detector-state persistence solve different problems.
 
-## Selecting services on a host
+## What changes when workers move off-host
 
-```bash
-# a whole role:
-docker compose -f deploy/scale/workers.yml --profile detection up -d
-# specific services (naming overrides the profile gate):
-docker compose -f deploy/scale/workers.yml up -d behavioral-detectors dns-detector
-# scale a placed service:
-docker compose -f deploy/scale/workers.yml up -d --scale behavioral-detectors=8
-```
+A remote worker needs a reachable advertised broker listener, suitable authentication, and trust for TLS. It must also reach any shared state or storage service it uses. A Docker service name on one machine is not automatically resolvable from another machine.
 
-Role profiles: `ingest` (ids-alerts), `detection` (the eight detectors),
-`findings` (finding-service + findings-forwarder). Storage and forensics are their own
-overlays (`clickhouse.yml`, `forensics.yml`) — run them on the host you dedicate to
-disk or packets.
+Do not reuse a produce-only sensor credential for a central consumer. Keep central pipeline credentials restricted to trusted central services or define appropriately scoped worker principals.
 
-## A worked topology (heterogeneous hardware)
+## Replicas require partition and state planning
 
-Say you have six boxes with different strengths. One way to lay it out:
+Kafka consumer groups assign partitions among consumers. More replicas than useful partitions do not create more independent input lanes. Per-host analysis also depends on consistent keys and state ownership.
 
-| Box | Hardware strength | Runs | Command |
-|---|---|---|---|
-| **infra-1** | fast disk, steady | Redpanda + Redis | `docker compose -f deploy/scale/infra.yml up -d redpanda redis` |
-| **store-1** | big disk | ClickHouse + MinIO | `docker compose -f deploy/scale/infra.yml up -d clickhouse minio` |
-| **det-1** | many CPU cores | heavy detectors, scaled | `... workers.yml up -d --scale behavioral-detectors=8 behavioral-detectors dns-detector` |
-| **det-2** | many CPU cores | the rest of detection | `... workers.yml --profile detection up -d` (or name the remaining detectors) |
-| **forensics-1** | NIC + disk for pcaps | Zeek loop + file scanning | `... -f deploy/overlays/forensics.yml up -d` |
-| **out-1** | small | ingest + findings out | `... workers.yml --profile ingest --profile findings up -d` |
+Shared Redis implementations exist, but every participating service must actually receive its backend and endpoint configuration. Merely placing `NDR_REDIS_URL` in a file does not prove the container receives it. Review the selected Compose environment mappings.
 
-Each box's `.env` points at the shared infra:
+The repository includes `deploy/scale` and Helm resources as starting points. Their existence does not establish measured throughput, fault tolerance, or secure compatibility with every overlay.
 
-```bash
-# .env on every worker/forensics/out box
-REDPANDA_BOOTSTRAP=infra-1:19092
-NDR_REDIS_URL=redis://infra-1:6379/0
-CLICKHOUSE_HOST=store-1
-CLICKHOUSE_PASSWORD=•••
-MINIO_ENDPOINT=http://store-1:9002
-```
+## What to measure before expanding
 
-Add capacity by starting more copies (`--scale`) or by bringing up the same services on
-another box — new copies join the consumer group and take a share of the partitions
-automatically. Nothing else needs to change.
+Track source event production, shipper delivery failures, broker consumer lag, detector state growth, finding lifecycle backlog, SIEM delivery outcomes, and packet drops. Test a restart and an outage with traceable input before depending on a recovery claim.
 
-## Rules of thumb
+A successful single-host replay demonstrates that specific path. It does not validate a clustered deployment or an analyst workload reduction.
 
-- **Match piece to hardware:** detection is CPU-bound (fast cores), ClickHouse/MinIO are
-  disk-bound (big disk), the Zeek loop is NIC/disk-bound. Place accordingly.
-- **Partitions cap parallelism:** a detector's useful replica count across all hosts is
-  ≤ its topic's partition count. Give busy topics plenty of partitions up front.
-- **Watch consumer-group lag** (`rpk group describe ndr-<detector>`): rising lag on a
-  topic means add replicas/hosts for that detector (up to the partition ceiling) or add
-  partitions.
-- **Infra can split or cluster:** run bus and storage on separate boxes by naming their
-  services, or replace `infra.yml` with real clusters — the workers only need the address.
-- **Health per host:** each service exposes `/healthz` `/readyz` `/metrics`; point
-  Prometheus at them to see load per box (see `docs/logging.md`).
+Continue with [sensor transport](/docs/sensor-transport/), [capability dependencies](/docs/sensor-dependencies/), and [recorded evidence](/proof/).

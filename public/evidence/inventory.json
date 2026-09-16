@@ -1,0 +1,129 @@
+{
+  "scope": "All cernity-findings.jsonl exports in the 15 available historical bundles; overlapping runs are not independent trials.",
+  "bundles": [
+    {
+      "bundle": "benign-control",
+      "documents": 0,
+      "detectors": {}
+    },
+    {
+      "bundle": "distributed-exfil",
+      "documents": 4,
+      "detectors": {
+        "beacon": 3,
+        "low_slow_exfil": 1
+      }
+    },
+    {
+      "bundle": "factorial-beacon",
+      "documents": 1,
+      "detectors": {
+        "beacon": 1
+      }
+    },
+    {
+      "bundle": "factorial-exfil",
+      "documents": 0,
+      "detectors": {}
+    },
+    {
+      "bundle": "factorial-scan",
+      "documents": 2,
+      "detectors": {
+        "lateral_movement": 1,
+        "rdp_fanout": 1
+      }
+    },
+    {
+      "bundle": "final-beacon",
+      "documents": 8,
+      "detectors": {
+        "beacon": 3,
+        "suspicious_ua": 5
+      }
+    },
+    {
+      "bundle": "final-benign",
+      "documents": 0,
+      "detectors": {}
+    },
+    {
+      "bundle": "preservation3",
+      "documents": 6,
+      "detectors": {
+        "beacon": 1,
+        "lateral_movement": 1,
+        "rdp_fanout": 1,
+        "low_slow_exfil": 1,
+        "ids_signature": 2
+      }
+    },
+    {
+      "bundle": "rt-qual-rules4",
+      "documents": 4,
+      "detectors": {
+        "lateral_movement": 1,
+        "rdp_fanout": 1,
+        "beacon": 1,
+        "low_slow_exfil": 1
+      }
+    },
+    {
+      "bundle": "synthetic-beacon",
+      "documents": 9,
+      "detectors": {
+        "beacon": 4,
+        "suspicious_ua": 5
+      }
+    },
+    {
+      "bundle": "synthetic-beacon-jitter",
+      "documents": 1,
+      "detectors": {
+        "beacon": 1
+      }
+    },
+    {
+      "bundle": "synthetic-dedup",
+      "documents": 4,
+      "detectors": {
+        "beacon": 4
+      }
+    },
+    {
+      "bundle": "synthetic-dns-tunnel",
+      "documents": 1,
+      "detectors": {
+        "dns_tunnel": 1
+      }
+    },
+    {
+      "bundle": "synthetic-fqdn-beacon",
+      "documents": 1,
+      "detectors": {
+        "beacon_fqdn": 1
+      }
+    },
+    {
+      "bundle": "synthetic-scan",
+      "documents": 3,
+      "detectors": {
+        "lateral_movement": 1,
+        "internal_scan": 1,
+        "rdp_fanout": 1
+      }
+    }
+  ],
+  "detector_counts": {
+    "beacon": 18,
+    "low_slow_exfil": 3,
+    "lateral_movement": 4,
+    "rdp_fanout": 4,
+    "suspicious_ua": 10,
+    "ids_signature": 2,
+    "dns_tunnel": 1,
+    "beacon_fqdn": 1,
+    "internal_scan": 1
+  },
+  "nonempty_context_fields": {}
+}

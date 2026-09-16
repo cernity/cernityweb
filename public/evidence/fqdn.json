@@ -1,0 +1,168 @@
+{
+  "bundle": "synthetic-fqdn-beacon",
+  "completion": "not established in legacy bundle",
+  "filter": {
+    "src_ip": "10.0.0.5"
+  },
+  "summary": {
+    "baseline_records": 124,
+    "baseline_alerts": 0,
+    "finding_documents": 1
+  },
+  "provenance": {
+    "export_hashes_verified": false,
+    "baseline_matches_source_except_ingestion_timestamp": true,
+    "limitation": "No contemporaneous export manifest or qualified completion/replay metadata. Current local file hashes establish file identity only.",
+    "baseline_export_sha256": "35158180753d8bbe749c72ecbd41171c4d8c573329dbbc386eb6f99ef2f3e476",
+    "finding_export_sha256": "f5ca06458bf3fe08d9b062487be1f8eb02eac2e2e131d962f47cac6f3f20760f"
+  },
+  "suricata": {
+    "@timestamp": "2026-09-13T17:12:09.870Z",
+    "community_id": "1:0zRFNsXVoTILf+bimFa1tAIzmEg=",
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "dns": {
+      "flags": "100",
+      "id": 0,
+      "opcode": 0,
+      "queries": [
+        {
+          "rrname": "cdn.evil.example",
+          "rrtype": "A"
+        }
+      ],
+      "rcode": "NOERROR",
+      "rd": true,
+      "tx_id": 0,
+      "type": "request",
+      "version": 3
+    },
+    "event_type": "dns",
+    "flow_id": 2133370037,
+    "ip_v": 4,
+    "pcap_cnt": 1,
+    "pkt_src": "wire/pcap",
+    "proto": "UDP",
+    "src_ip": "10.0.0.5",
+    "src_port": 3098,
+    "timestamp": "2023-11-14T22:13:20.000000+0000"
+  },
+  "cernity": {
+    "@timestamp": "2026-09-13T17:12:58Z",
+    "capture_job_ids": [],
+    "category": "c2",
+    "confidence": 0.972,
+    "detector_id": "beacon_fqdn",
+    "detector_version": "1.0",
+    "devo_delivery_state": "QUEUED",
+    "enrichment_state": "NOT_REQUIRED",
+    "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"domain\", \"role\": \"c2\", \"value\": \"evil.example\"}, {\"type\": \"rotating_ips\", \"value\": 4}]",
+    "evidence_refs": [],
+    "finding_id": "beacon_fqdn-124813250-2982199",
+    "first_seen": "2026-09-13T17:12:58Z",
+    "last_seen": "2026-09-13T17:12:58Z",
+    "mitre": [
+      "T1071"
+    ],
+    "sensor_ids": [],
+    "severity": 8,
+    "state": "FINAL",
+    "suppression_reason": "",
+    "tenant_id": "default"
+  },
+  "additional_alert": null,
+  "cernity_matching_records": [
+    {
+      "@timestamp": "2026-09-13T17:12:58Z",
+      "capture_job_ids": [],
+      "category": "c2",
+      "confidence": 0.972,
+      "detector_id": "beacon_fqdn",
+      "detector_version": "1.0",
+      "devo_delivery_state": "QUEUED",
+      "enrichment_state": "NOT_REQUIRED",
+      "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"domain\", \"role\": \"c2\", \"value\": \"evil.example\"}, {\"type\": \"rotating_ips\", \"value\": 4}]",
+      "evidence_refs": [],
+      "finding_id": "beacon_fqdn-124813250-2982199",
+      "first_seen": "2026-09-13T17:12:58Z",
+      "last_seen": "2026-09-13T17:12:58Z",
+      "mitre": [
+        "T1071"
+      ],
+      "sensor_ids": [],
+      "severity": 8,
+      "state": "FINAL",
+      "suppression_reason": "",
+      "tenant_id": "default"
+    }
+  ],
+  "suricata_excerpt": {
+    "@timestamp": "2026-09-13T17:12:09.870Z",
+    "community_id": "1:0zRFNsXVoTILf+bimFa1tAIzmEg=",
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "dns": {
+      "flags": "100",
+      "id": 0,
+      "opcode": 0,
+      "queries": [
+        {
+          "rrname": "cdn.evil.example",
+          "rrtype": "A"
+        }
+      ],
+      "rcode": "NOERROR",
+      "rd": true,
+      "tx_id": 0,
+      "type": "request",
+      "version": 3
+    },
+    "event_type": "dns",
+    "flow_id": 2133370037,
+    "ip_v": 4,
+    "pcap_cnt": 1,
+    "pkt_src": "wire/pcap",
+    "proto": "UDP",
+    "src_ip": "10.0.0.5",
+    "src_port": 3098,
+    "timestamp": "2023-11-14T22:13:20.000000+0000"
+  },
+  "cernity_excerpt": {
+    "@timestamp": "2026-09-13T17:12:58Z",
+    "capture_job_ids": [],
+    "category": "c2",
+    "confidence": 0.972,
+    "detector_id": "beacon_fqdn",
+    "detector_version": "1.0",
+    "devo_delivery_state": "QUEUED",
+    "enrichment_state": "NOT_REQUIRED",
+    "entities": [
+      {
+        "type": "ip",
+        "role": "src",
+        "value": "10.0.0.5"
+      },
+      {
+        "type": "domain",
+        "role": "c2",
+        "value": "evil.example"
+      },
+      {
+        "type": "rotating_ips",
+        "value": 4
+      }
+    ],
+    "evidence_refs": [],
+    "finding_id": "beacon_fqdn-124813250-2982199",
+    "first_seen": "2026-09-13T17:12:58Z",
+    "last_seen": "2026-09-13T17:12:58Z",
+    "mitre": [
+      "T1071"
+    ],
+    "sensor_ids": [],
+    "severity": 8,
+    "state": "FINAL",
+    "suppression_reason": "",
+    "tenant_id": "default"
+  }
+}

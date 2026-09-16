@@ -1,237 +1,113 @@
 ---
-title: "Finding enrichment — giving the analyst more context"
-nav: "Enrichment"
+title: "Configure enrichment and verify the received fields"
+nav: "Enrichment & context"
 order: 8
 ---
 
-# Finding enrichment — giving the analyst more context
+# Configure enrichment and verify the received fields
 
-A raw Cernity finding tells you *what* happened ("this host looks like C2") and *who*
-was involved (the IPs, domains, fingerprints). **Enrichment** adds the context an analyst
-needs to triage it fast: where in the world that IP is, who owns the network, how old the
-domain is, whether a fingerprint matches a known tool, and a flow key to pivot into other
-tools. All of it is attached to the finding before it reaches your SIEM.
+Enrichment adds context to a finding: a PTR hostname, network owner, registration age, or reputation result. It is separate from the original observed event and from proof of compromise.
 
-Enrichment happens in **finding-service**, in two tiers:
+**No nonempty `geo` or `intel` object appears in the 15 saved finding exports reviewed for the website.** The paths below are source-supported configuration guidance, not claims that the published benchmarks exercised them. See [the integration evidence audit](/proof/#optional-integrations).
 
-- **Tier 1 — offline, zero external dependencies.** Runs on every finding once the local
-  databases are mounted. Nothing leaves your network.
-- **Tier 2 — opt-in adapters.** Off by default. Each is enabled by a config toggle or an
-  API key. Some make outbound lookups (RDAP, GreyNoise); all are cached and best-effort —
-  a slow or failed lookup never blocks or drops a finding.
+## Where each field comes from
 
-Everything is configured through `cernity.env` (copied from `cernity.env.example`). **No
-image rebuild is needed** — set the variables, restart finding-service, done.
+| Received JSON path | Source | Important limitation |
+|---|---|---|
+| `community_id` | An entity retained from the originating detection. | Not every aggregate finding has a single flow key. |
+| `geo[IP].country` | Local GeoIP database. | Network geolocation is not a person's location. |
+| `geo[IP].asn`, `as_org` | Local ASN database. | Network ownership is not attribution. |
+| `intel.rdns[IP]` | PTR lookup using the container's resolver. | A hostname is not an authorization or trust assertion. |
+| `intel.domains[domain].age_days`, `nrd` | RDAP registration lookup. | Domain age is not the same as first-seen age. |
+| `intel.fingerprints[fingerprint]` | Operator-maintained local mapping. | A label can be stale or shared by unrelated software. |
+| `intel.reputation[IP]` | GreyNoise adapter. | Provider-specific context, not a definitive Cernity verdict. |
+| `intel.virustotal[IP]` | VirusTotal analysis counts. | Vendor counts are not calibrated probabilities. |
 
----
+The IP-indexed notation above describes a JSON map key, not a literal field named `IP`. Fields are added only when the corresponding input and lookup produce a result.
 
-## What gets added to a finding
+## Pass configuration into finding-service
 
-Enrichment adds these top-level fields to the finding JSON your SIEM receives:
-
-```jsonc
-{
-  "finding_id": "beacon-1234-...",
-  "category": "c2",
-  "entities": [ ... ],
-  "community_id": "1:LQU9qZlK+B5F3KDmev6m5PMibrg=",   // Tier 1: cross-tool flow key
-  "geo": {                                             // Tier 1: per external IP
-    "203.0.113.9": { "country": "NL", "asn": 14061, "as_org": "DigitalOcean" }
-  },
-  "intel": {                                           // Tier 2: only enabled adapters appear
-    "rdns":        { "203.0.113.9": "vps-abc.example.net" },
-    "domains":     { "brand-new.evil.com": { "age_days": 3, "nrd": true } },
-    "fingerprints":{ "t13d1516h2_...": "Cobalt Strike (default)" },
-    "reputation":  { "203.0.113.9": "malicious" }
-  }
-}
-```
-
----
-
-## Tier 1 — GeoIP + ASN + community ID (offline)
-
-### GeoIP + ASN
-
-Every external (globally-routable) IP in a finding gets a `geo` block: country, ASN
-number, and the AS organization. Internal/RFC1918 addresses are skipped.
-
-This uses **MaxMind GeoLite2** databases, which are free but require a (free) account:
-
-1. **Create a free MaxMind account:** <https://www.maxmind.com/en/geolite2/signup>.
-2. In the account portal, **generate a license key** (Account → Manage License Keys).
-3. **Download** `GeoLite2-Country.mmdb` (or `GeoLite2-City.mmdb`) and `GeoLite2-ASN.mmdb`.
-   The download endpoint issues a 302 redirect, so **`curl` needs `-L`** (without it you
-   get a 0-byte file):
-
-   ```bash
-   KEY=your-license-key
-   for ed in GeoLite2-Country GeoLite2-ASN; do
-     curl -sL "https://download.maxmind.com/app/geoip_download?edition_id=$ed&license_key=$KEY&suffix=tar.gz" \
-       | tar xz --strip-components=1 --wildcards '*/'"$ed"'.mmdb'
-   done
-   ```
-   Or automate refresh with MaxMind's official
-   [`geoipupdate`](https://github.com/maxmind/geoipupdate) tool using your key.
-4. **Mount them** into the finding-service container and point the env vars at them:
-
-   ```yaml
-   # in your finding-service service definition (compose overlay or values)
-   volumes:
-     - /srv/geoip:/geoip:ro
-   ```
-   ```bash
-   # cernity.env
-   GEOIP_DB=/geoip/GeoLite2-Country.mmdb
-   GEOIP_ASN_DB=/geoip/GeoLite2-ASN.mmdb
-   ```
-5. Restart finding-service. On startup it logs `geoip=geo+asn` (or `geoip=off` if the DBs
-   weren't found). That's it — no key lives in Cernity, only the downloaded DB files.
-
-> MaxMind's license permits this use, but you accept their GeoLite2 EULA when you sign up.
-> If you can't use MaxMind, any `.mmdb` in the same format works (e.g. DB-IP's free files).
-
-### Community ID (flow pivot key)
-
-[Community ID](https://github.com/corelight/community-id-spec) is a standard hash of a
-flow's 5-tuple that Suricata, Zeek, and Arkime all compute the same way — so you can take
-the `community_id` on a Cernity finding and search for the exact same flow in any of them.
-
-**Enable it in Suricata** (it's the only step; Cernity carries it through automatically):
+The reviewed central Compose passes some enrichment variables, but not every variable listed in `cernity.env.example`. For explicit wiring, create `deploy/central/enrichment.local.yml`:
 
 ```yaml
-# suricata.yaml
-outputs:
-  - eve-log:
-      community-id: true
-      community-id-seed: 0        # keep 0 across all sensors so hashes match
+services:
+  finding-service:
+    environment:
+      INTEL_RDNS: ${INTEL_RDNS:-}
+      INTEL_RDAP: ${INTEL_RDAP:-}
+      INTEL_NRD_DAYS: ${INTEL_NRD_DAYS:-30}
+      INTEL_HTTP_TIMEOUT: ${INTEL_HTTP_TIMEOUT:-3}
+      INTEL_FP_MAP: ${INTEL_FP_MAP:-}
+      GREYNOISE_API_KEY: ${GREYNOISE_API_KEY:-}
+      VIRUSTOTAL_API_KEY: ${VIRUSTOTAL_API_KEY:-}
+      GEOIP_DB: ${GEOIP_DB:-}
+      GEOIP_ASN_DB: ${GEOIP_ASN_DB:-}
 ```
 
-Cernity surfaces it on per-flow findings (e.g. TLS fingerprint / certificate anomalies).
-See `docs/suricata-config.md` for the full Suricata setup.
+Set only the adapters you intend to use in central `.env`. For reverse DNS through the configured resolver:
 
----
-
-## Tier 2 — opt-in enrichment adapters
-
-All of these are **off until you turn them on**. Enable only what you want.
-
-### Reverse DNS — `INTEL_RDNS`
-
-PTR lookup on external IPs via the resolver the container already uses. No account, no key.
-
-```bash
+```dotenv
 INTEL_RDNS=1
 ```
 
-The only cost is a DNS query per new IP (cached for an hour). If your finding-service
-host has no outbound DNS, leave it off.
-
-### Domain age / newly-registered-domain — `INTEL_RDAP`
-
-Looks up a domain's registration date via **RDAP** (the modern, free, keyless successor to
-WHOIS) and flags domains younger than `INTEL_NRD_DAYS` as `nrd: true`. Freshly-registered
-domains are one of the strongest phishing/C2 signals there is.
+Recreate the service with the override:
 
 ```bash
-INTEL_RDAP=1
-INTEL_NRD_DAYS=30        # tune to taste; 30 is a common threshold
+docker compose --project-name cernity --env-file .env \
+  -f deploy/central/docker-compose.yml \
+  -f deploy/central/enrichment.local.yml up -d finding-service
 ```
 
-No sign-up. It queries the public `rdap.org` redirector, which routes to the right
-registry. Results are cached 24h (registration dates don't change). Some ccTLDs don't
-expose RDAP registration events — those simply return no age, which is fine.
+Retain this override in later deployment commands; omitting it can recreate the service without your added configuration.
 
-### JA3/JA4 → known-tool naming — `INTEL_FP_MAP`
+## GeoIP and ASN databases
 
-Turns a raw fingerprint into a name ("Cobalt Strike", "Sliver", "Chrome 120") using a
-JSON map **you supply**. Cernity ships an empty map on purpose — we don't hard-code
-fingerprint→malware claims we can't keep current. Populate it from a source you trust.
+Obtain compatible databases from the provider under its applicable terms and keep them updated. The code can use a GeoLite2 Country or City database and an ASN database. Store them on central, for example under `/srv/cernity/geoip`.
 
-**Format** — a flat JSON object of `fingerprint: label`:
+Add this mount under the same finding-service override:
 
-```json
-{
-  "t13d1516h2_8daaf6152771_02713d6af862": "Cobalt Strike (default profile)",
-  "51c64c77e60f3980eea90869b68c58a8": "Empire agent"
-}
+```yaml
+    volumes:
+      - /srv/cernity/geoip:/geoip:ro
 ```
 
-Point at your file and mount it:
+Set the corresponding **container** paths in central `.env`:
 
-```bash
-INTEL_FP_MAP=/intel/fingerprints.json
+```dotenv
+GEOIP_DB=/geoip/GeoLite2-Country.mmdb
+GEOIP_ASN_DB=/geoip/GeoLite2-ASN.mmdb
 ```
 
-**Where to get fingerprints:** the [abuse.ch JA3 fingerprint blocklist](https://sslbl.abuse.ch/ja3-fingerprints/)
-(which Cernity's `threat-intel` service already consumes for *matching*) lists malicious
-JA3s with malware names — a good seed. For JA4, FoxIO maintains a
-[JA4+ database](https://ja4db.com/). Keep the file updated on whatever cadence suits you;
-Cernity reloads it on restart.
+The code skips non-global addresses and tolerates absent/unreadable databases. An empty `geo` result can therefore mean the feature did not run successfully. The documentation IP ranges used in the historical examples should not be assigned made-up countries or ASNs.
 
-### IP reputation — `GREYNOISE_API_KEY` (example adapter)
+## Reverse DNS and registration age are different
 
-Tells you whether an external IP is internet-background-noise using
-[GreyNoise](https://www.greynoise.io/) — great for cutting mass scanners out of your
-triage queue. Returns `noise` (seen scanning) and `riot` (known benign service) always,
-plus `classification` (`benign`/`malicious`/`unknown`), `name` (e.g. `Shodan.io`), and
-`last_seen` when GreyNoise has observed the IP.
+Reverse DNS maps an IP to a PTR name. The reviewed code can look up internal IPs through its configured resolver too. Whether a lookup stays local depends on that resolver's configuration.
 
-1. **Sign up** for a free GreyNoise Community account: <https://viz.greynoise.io/signup>.
-2. **Copy your API key** from the account page.
-3. Set it (store it in Vault / your secret manager, not in git):
+Registration lookup starts from a domain or SNI entity and queries RDAP when `INTEL_RDAP=1`. The source computes a registrable candidate using the last two labels, which is not correct for every public suffix. Validate multi-label suffixes and missing registry dates before relying on `nrd` for decisions.
 
-   ```bash
-   GREYNOISE_API_KEY=your-key-here
-   ```
+The HTTP timeout setting applies to HTTP lookups; the socket-based reverse-DNS lookup uses resolver behavior and is not bounded by that HTTP setting.
 
-The GreyNoise Community endpoint is free with generous limits.
+## Fingerprint labels
 
-### IP reputation — `VIRUSTOTAL_API_KEY`
+Supply a JSON map whose keys are exact observed JA3/JA4 values and whose values are your reviewed labels. Mount the file read-only and pass `INTEL_FP_MAP` to its container path. Record the map's provenance and version.
 
-Attaches VirusTotal's last-analysis stats (`malicious` / `suspicious` / `harmless` vendor
-counts) for an external IP — a quick "how many engines flag this?" read.
+The shipped map does not establish a maintained malware attribution service. The enrichment function handles `ja3` and `ja4` entity types; a generic fingerprint string elsewhere in a record does not automatically get labeled.
 
-1. **Sign up** for a free VirusTotal account: <https://www.virustotal.com/gui/join-us>.
-2. **Copy your API key** (Profile → API key).
-3. Set it (store it in Vault / your secret manager, not in git):
+## External reputation
 
-   ```bash
-   VIRUSTOTAL_API_KEY=your-key-here
-   ```
+Configure the relevant provider key in the central secret-managed environment and pass it through. The reviewed adapters restrict reputation lookups to globally routable IPs. Availability, provider terms, quotas, and results depend on the configured account and service.
 
-The free tier is rate-limited (**4 requests/min, 500/day**), so the built-in 1h per-IP
-cache matters — enrichment only queries each IP once an hour. GreyNoise and VirusTotal are
-independent; enable either, both, or neither.
+GreyNoise and VirusTotal results have separate fields. A failure or missing response can leave the corresponding field absent. Do not rewrite absence as a benign reputation result.
 
-> **Privacy — reputation lookups are external-only.** GreyNoise and VirusTotal are only
-> ever queried for *globally-routable* IPs. Internal/RFC1918 addresses in a finding are
-> never sent to a third-party reputation service — that would be pointless and would leak
-> your internal addressing. (Reverse DNS still runs for internal IPs, since it uses your
-> own resolver and stays on your network.)
+## Verify a field at the SIEM boundary
 
-**Adding another reputation source** (AlienVault OTX, AbuseIPDB, …) is the same shape: copy
-`virustotal()` in `services/finding-service/intel.py`, change the URL, header, and the field
-you read, gate it on its own key variable, and add it to `enrich()`.
+Use permitted test inputs with a known expected lookup result. Retrieve the final finding from your JSON sink and then retrieve its actual SIEM document. Match the tenant, finding ID, and revision, then compare the exact field and value.
 
-### Timeouts
+CEF is a reduced mapping and omits this detailed context in the reviewed implementation. For full enrichment inspection, use a JSON-preserving delivery path and verify receiving-side parsing. See [SIEM formats](/docs/siem-integrations/).
 
-`INTEL_HTTP_TIMEOUT` (default 3s) bounds every online lookup. If a service is slow, the
-lookup is skipped and the finding still ships with whatever else succeeded.
+## Packet forensics is a separate enrichment path
 
----
+The optional Zeek worker creates summaries and indicators, but the reviewed lifecycle merge retains evidence references and status rather than copying all those objects into the finding. Do not expect every Zeek JA4+ or file detail in the SIEM without an explicitly verified propagation path.
 
-## Cost / privacy summary
-
-| Adapter | Sign-up | API key | Outbound traffic | Default |
-|---|---|---|---|---|
-| GeoIP + ASN | MaxMind (free) | key to *download DBs* only | none at runtime | on if DBs mounted |
-| Community ID | none | none | none | on if Suricata sends it |
-| Reverse DNS | none | none | DNS PTR per IP | off |
-| Domain age / NRD | none | none | RDAP query per domain | off |
-| Fingerprint naming | none | none | none (local file) | off (empty map) |
-| GreyNoise reputation | GreyNoise (free) | yes | HTTPS per IP | off |
-| VirusTotal reputation | VirusTotal (free) | yes | HTTPS per IP | off |
-
-Turn on only what fits your privacy posture. For a fully-offline deployment, use Tier 1
-(GeoIP + ASN + community ID) and the fingerprint map — none of those leave your network.
+References: [enrichment implementation](https://github.com/cernity/cernityndr/blob/18174b8c2d8e29e2312d4f27064a2baa3456d9e3/services/finding-service/intel.py), [GeoIP implementation](https://github.com/cernity/cernityndr/blob/18174b8c2d8e29e2312d4f27064a2baa3456d9e3/services/finding-service/geoenrich.py), and [field-delivery acceptance checks](/docs/evidence-capture/).

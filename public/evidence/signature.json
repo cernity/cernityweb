@@ -1,0 +1,259 @@
+{
+  "bundle": "preservation3",
+  "filter": {
+    "src_ip": "203.0.113.5",
+    "dest_ip": "203.0.113.10",
+    "detector_id": "ids_signature"
+  },
+  "summary": {
+    "source_records": 111,
+    "baseline_records": 111,
+    "baseline_all_alerts": 46,
+    "matching_flows": 16,
+    "matching_alerts": 45,
+    "matching_toserver_bytes": 7958507,
+    "matching_unique_destinations": 1,
+    "median_flow_start_interval": 5.0002899169921875,
+    "b_all_documents": 6,
+    "matching_b_documents": 2,
+    "matching_b_unique_ids": 1
+  },
+  "completion": "reconciled",
+  "replay": {
+    "replay_offset_seconds": 7286.064735,
+    "anchor": "end",
+    "recorded_at": "2026-09-14T16:34:32.264531+00:00"
+  },
+  "provenance": {
+    "export_hashes_verified": true,
+    "baseline_matches_source_except_ingestion_timestamp": true,
+    "source_export_sha256": "a6b9861ebf9eb0f454c0b87e8001688a17d03d5aaa009040de4c369bead425ae",
+    "baseline_export_sha256": "ac527837ffe6e230137b717e91526e68d29c2b518be081be016e43c5048e21df",
+    "finding_export_sha256": "1c8671439dec5bacf4f54ab3d679c55414b96fde0f7e3b57d1212cc1e7c98204",
+    "selection": "Original exported document bodies; not SIEM UI screenshots or search-result wrappers. Only selected synthetic records are included."
+  },
+  "suricata": {
+    "@timestamp": "2026-09-14T16:35:04.525Z",
+    "alert": {
+      "action": "allowed",
+      "category": "A Network Trojan was detected",
+      "gid": 1,
+      "rev": 1,
+      "severity": 1,
+      "signature": "CERNITY-BENCH-PRESERVATION C2 beacon",
+      "signature_id": 9000003
+    },
+    "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+    "dest_ip": "203.0.113.10",
+    "dest_port": 4444,
+    "direction": "to_server",
+    "event_type": "alert",
+    "flow": {
+      "bytes_toclient": 80,
+      "bytes_toserver": 261,
+      "dest_ip": "203.0.113.10",
+      "dest_port": 4444,
+      "pkts_toclient": 1,
+      "pkts_toserver": 3,
+      "src_ip": "203.0.113.5",
+      "src_port": 50252,
+      "start": "2026-09-14T14:31:51.172755+0000"
+    },
+    "flow_id": 2149354879718064,
+    "ip_v": 4,
+    "pcap_cnt": 124,
+    "pkt_src": "wire/pcap",
+    "proto": "TCP",
+    "src_ip": "203.0.113.5",
+    "src_port": 50252,
+    "timestamp": "2026-09-14T14:31:51.172853+0000"
+  },
+  "cernity": {
+    "@timestamp": "2026-09-14T16:33:17.237588+00:00",
+    "capture_job_ids": [],
+    "category": "c2",
+    "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+    "confidence": 0.9,
+    "detector_id": "ids_signature",
+    "detector_version": "1.0",
+    "devo_delivery_state": "QUEUED",
+    "enrichment_state": "TIMEOUT",
+    "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"203.0.113.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"signature\", \"value\": \"CERNITY-BENCH-PRESERVATION C2 beacon\"}, {\"type\": \"signature_id\", \"value\": 9000003}, {\"type\": \"community_id\", \"value\": \"1:MchUkHUaw7kt1QD8RpT46cJ2+yY=\"}, {\"type\": \"flow_id\", \"value\": 2149354879718064}]",
+    "evidence_refs": [],
+    "finding_id": "idsig-9000003-6264501210",
+    "first_seen": "2026-09-14T16:33:17.237588+00:00",
+    "last_seen": "2026-09-14T16:33:17.237588+00:00",
+    "mitre": [
+      "T1071"
+    ],
+    "revision": 2,
+    "sensor_ids": [],
+    "severity": 9,
+    "state": "FINAL",
+    "suppression_reason": "",
+    "tenant_id": "default"
+  },
+  "additional_alert": {
+    "@timestamp": "2026-09-14T16:35:04.525Z",
+    "alert": {
+      "action": "allowed",
+      "category": "A Network Trojan was detected",
+      "gid": 1,
+      "rev": 1,
+      "severity": 1,
+      "signature": "CERNITY-BENCH-PRESERVATION C2 beacon",
+      "signature_id": 9000003
+    },
+    "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+    "dest_ip": "203.0.113.10",
+    "dest_port": 4444,
+    "direction": "to_server",
+    "event_type": "alert",
+    "flow": {
+      "bytes_toclient": 80,
+      "bytes_toserver": 261,
+      "dest_ip": "203.0.113.10",
+      "dest_port": 4444,
+      "pkts_toclient": 1,
+      "pkts_toserver": 3,
+      "src_ip": "203.0.113.5",
+      "src_port": 50252,
+      "start": "2026-09-14T14:31:51.172755+0000"
+    },
+    "flow_id": 2149354879718064,
+    "ip_v": 4,
+    "pcap_cnt": 124,
+    "pkt_src": "wire/pcap",
+    "proto": "TCP",
+    "src_ip": "203.0.113.5",
+    "src_port": 50252,
+    "timestamp": "2026-09-14T14:31:51.172853+0000"
+  },
+  "cernity_matching_records": [
+    {
+      "@timestamp": "2026-09-14T16:33:17.237588+00:00",
+      "capture_job_ids": [],
+      "category": "c2",
+      "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+      "confidence": 0.9,
+      "detector_id": "ids_signature",
+      "detector_version": "1.0",
+      "devo_delivery_state": "QUEUED",
+      "enrichment_state": "PENDING",
+      "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"203.0.113.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"signature\", \"value\": \"CERNITY-BENCH-PRESERVATION C2 beacon\"}, {\"type\": \"signature_id\", \"value\": 9000003}, {\"type\": \"community_id\", \"value\": \"1:MchUkHUaw7kt1QD8RpT46cJ2+yY=\"}, {\"type\": \"flow_id\", \"value\": 2149354879718064}]",
+      "evidence_refs": [],
+      "finding_id": "idsig-9000003-6264501210",
+      "first_seen": "2026-09-14T16:33:17.237588+00:00",
+      "last_seen": "2026-09-14T16:33:17.237588+00:00",
+      "mitre": [
+        "T1071"
+      ],
+      "revision": 1,
+      "sensor_ids": [],
+      "severity": 9,
+      "state": "FINAL",
+      "suppression_reason": "",
+      "tenant_id": "default"
+    },
+    {
+      "@timestamp": "2026-09-14T16:33:17.237588+00:00",
+      "capture_job_ids": [],
+      "category": "c2",
+      "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+      "confidence": 0.9,
+      "detector_id": "ids_signature",
+      "detector_version": "1.0",
+      "devo_delivery_state": "QUEUED",
+      "enrichment_state": "TIMEOUT",
+      "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"203.0.113.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"signature\", \"value\": \"CERNITY-BENCH-PRESERVATION C2 beacon\"}, {\"type\": \"signature_id\", \"value\": 9000003}, {\"type\": \"community_id\", \"value\": \"1:MchUkHUaw7kt1QD8RpT46cJ2+yY=\"}, {\"type\": \"flow_id\", \"value\": 2149354879718064}]",
+      "evidence_refs": [],
+      "finding_id": "idsig-9000003-6264501210",
+      "first_seen": "2026-09-14T16:33:17.237588+00:00",
+      "last_seen": "2026-09-14T16:33:17.237588+00:00",
+      "mitre": [
+        "T1071"
+      ],
+      "revision": 2,
+      "sensor_ids": [],
+      "severity": 9,
+      "state": "FINAL",
+      "suppression_reason": "",
+      "tenant_id": "default"
+    }
+  ],
+  "suricata_excerpt": {
+    "event_type": "alert",
+    "timestamp": "2026-09-14T14:31:51.172853+0000",
+    "flow_id": 2149354879718064,
+    "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+    "src_ip": "203.0.113.5",
+    "src_port": 50252,
+    "dest_ip": "203.0.113.10",
+    "dest_port": 4444,
+    "alert": {
+      "action": "allowed",
+      "category": "A Network Trojan was detected",
+      "gid": 1,
+      "rev": 1,
+      "severity": 1,
+      "signature": "CERNITY-BENCH-PRESERVATION C2 beacon",
+      "signature_id": 9000003
+    },
+    "flow": {
+      "bytes_toclient": 80,
+      "bytes_toserver": 261,
+      "dest_ip": "203.0.113.10",
+      "dest_port": 4444,
+      "pkts_toclient": 1,
+      "pkts_toserver": 3,
+      "src_ip": "203.0.113.5",
+      "src_port": 50252,
+      "start": "2026-09-14T14:31:51.172755+0000"
+    }
+  },
+  "cernity_excerpt": {
+    "category": "c2",
+    "community_id": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY=",
+    "confidence": 0.9,
+    "detector_id": "ids_signature",
+    "enrichment_state": "TIMEOUT",
+    "entities": [
+      {
+        "type": "ip",
+        "role": "src",
+        "value": "203.0.113.5"
+      },
+      {
+        "type": "ip",
+        "role": "dst",
+        "value": "203.0.113.10"
+      },
+      {
+        "type": "signature",
+        "value": "CERNITY-BENCH-PRESERVATION C2 beacon"
+      },
+      {
+        "type": "signature_id",
+        "value": 9000003
+      },
+      {
+        "type": "community_id",
+        "value": "1:MchUkHUaw7kt1QD8RpT46cJ2+yY="
+      },
+      {
+        "type": "flow_id",
+        "value": 2149354879718064
+      }
+    ],
+    "evidence_refs": [],
+    "finding_id": "idsig-9000003-6264501210",
+    "first_seen": "2026-09-14T16:33:17.237588+00:00",
+    "last_seen": "2026-09-14T16:33:17.237588+00:00",
+    "mitre": [
+      "T1071"
+    ],
+    "revision": 2,
+    "severity": 9,
+    "state": "FINAL"
+  }
+}

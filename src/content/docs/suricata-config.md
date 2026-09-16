@@ -1,54 +1,24 @@
 ---
-title: "Configuring Suricata for Cernity — for the best results"
-nav: "Suricata config"
+title: "Configure Suricata: the inputs each capability needs"
+nav: "Configure Suricata"
 order: 6
 ---
 
-# Configuring Suricata for Cernity — for the best results
+# Configure Suricata: the inputs each capability needs
 
-Cernity is only as good as what Suricata tells it. This page is the complete guide to
-configuring Suricata so Cernity's detectors have everything they need. You do **not**
-run any Cernity logic on the sensor — Suricata produces telemetry, and the Cernity
-shipper forwards it. Turning on the right telemetry here is what unlocks the detection.
+Cernity cannot recover a field that your sensor did not observe or log. Configure capture visibility first, event output second, and optional fields third. Then check a real record before enabling a dependent analytic.
 
-If you only do three things: **split EVE**, **community-id**, and **JA3/JA4 fingerprints**.
-Everything else below makes it better.
+This guide uses the **Suricata 8 DNS version 3 format**. Check `suricata --build-info` and the documentation matching your installed build. A configuration fragment is not a complete `suricata.yaml` and must be merged into the appropriate existing sections.
 
----
+## 1. Keep the capture and rule configuration working
 
-## The exact settings Cernity needs (at a glance)
+Retain your existing interfaces, capture mode, rules, `HOME_NET`, and other deployment settings. `HOME_NET` influences rules that reference it; it is not automatically synchronized to every Cernity detector's internal-network logic.
 
-These are the specific `suricata.yaml` keys that matter, and why. **Required** = Cernity's
-core detection depends on it; **recommended** = materially better detection.
+A sensor watching only internet egress will not see every internal SMB or RDP connection. Bidirectional visibility matters for protocol parsing. Capture drops, packet truncation, and encryption can make fields unavailable even when a logger is enabled.
 
-| Setting | Value | Req? | Enables |
-|---|---|---|---|
-| `outputs.eve-log` × 2 | split into `eve-alerts.json` + `eve-nsm.json` | **required** | the two topics Cernity reads |
-| `eve-log.community-id` | `true` (on **both** eve-logs) | **required** | flow correlation key |
-| `eve-log.types` | `flow, dns(v3), tls, http, ssh, files, anomaly` / `alert` | **required** | the detectors' inputs |
-| `app-layer.protocols.tls.ja3-fingerprints` | `yes` | **strongly rec.** | JA3 known-bad match (threat-intel) |
-| `app-layer.protocols.tls.ja4-fingerprints` | `yes` | **strongly rec.** | JA4/JA3 rarity (protocol-detectors) |
-| nDPI plugin loaded | `plugins: [ …/ndpi.so ]` | **strongly rec.** | `ndpi.flow_risk` → behavioral detector |
-| `tls.extended` / `http.extended` | `yes` | recommended | cert + HTTP detail |
-| `dns.version` | `3` | **required** | DNS-tunneling + dns-detector |
-| `files.force-hash` | `[sha256]` | recommended | file-threat hash match |
-| `file-store.enabled` | `yes` (v2, force-filestore) | overlay-only | file-yara YARA scanning |
+## 2. Enable the EVE inputs used by the supplied shipper
 
-The sections below give the full config blocks and the reasoning. A copy-paste
-`suricata.yaml` fragment with all of it is in the **Complete config fragment** section
-near the end.
-
----
-
-## 1. Split the EVE output into two files
-
-Cernity reads two files so alerts and network telemetry are shipped separately:
-
-- `eve-alerts.json` — signature alerts
-- `eve-nsm.json` — network-security-monitoring records (flow, dns, tls, http, ssh,
-  fileinfo, anomaly)
-
-In `suricata.yaml`:
+Merge these entries into the existing `outputs` list. Do not create a second top-level `outputs` key. The filenames below assume your Suricata log directory is `/var/log/suricata`.
 
 ```yaml
 outputs:
@@ -57,6 +27,7 @@ outputs:
       filetype: regular
       filename: eve-alerts.json
       community-id: true
+      community-id-seed: 0
       types:
         - alert
 
@@ -65,6 +36,7 @@ outputs:
       filetype: regular
       filename: eve-nsm.json
       community-id: true
+      community-id-seed: 0
       types:
         - flow
         - dns:
@@ -75,21 +47,38 @@ outputs:
             extended: yes
         - ssh
         - files:
-            force-magic: yes
             force-hash: [sha256]
         - anomaly
+        - stats:
+            totals: yes
+            threads: no
+        - smb
+        - krb5
+        - dcerpc
 ```
 
-## 2. community-id — the flow correlation key (essential)
+`files` is the logger name in configuration; the emitted `event_type` is `fileinfo`. `stats` supplies coverage monitoring. SMB, Kerberos, and DCE/RPC records need the corresponding visible protocols and supported parsers; adding them does not create missing traffic.
 
-`community-id: true` (shown above, on **both** outputs) adds a stable hash of the
-connection 5-tuple that is identical across tools and directions. Cernity uses it to
-line up records that belong to the same connection, and carries it onto per-flow
-findings as `community_id` so you can pivot a finding straight into Zeek/Arkime/another
-Suricata by the same key (see `docs/enrichment.md`). Keep `community-id-seed` the same
-(0) on every sensor so the hashes match fleet-wide. Turn it on everywhere.
+If you retain a separate existing `eve.json` for another consumer, ensure the Cernity shipper does not also read it and duplicate these observations.
 
-## 3. JA3 / JA4 — high-value TLS fingerprints (see §7 for why)
+## 3. Understand required versus optional inputs
+
+| Input or setting | What it contributes | What happens without it |
+|---|---|---|
+| `flow` events | Connection bounds, addresses, ports, directional counts. | Flow-based beacon, transfer, and fan-out analysis lacks its main input. |
+| `alert` events and a loaded ruleset | Existing Suricata detections for promotion and consolidation. | No signature hits can be promoted from an empty alert stream. |
+| DNS events | Query names, answers, response codes, DNS-derived context. | DNS-specific analytics and observed domain-to-IP association lose visibility. |
+| TLS events with fingerprints | Handshake metadata for rarity or intelligence matching. | A detector cannot invent a fingerprint from a plain TCP flow. |
+| `community-id` | A cross-tool flow pivot when retained on the finding. | Some correlations become harder; it is not a universal prerequisite for every detector. |
+| `stats` | Capture-drop and parser-visibility counters used by coverage-detector. | No stats-based coverage assessment from this input. Silence is not proof of healthy visibility. |
+| File hashes | Hash matching when a file is actually observed and completeness criteria are met. | No whole-file hash conclusion from an absent hash. |
+| File bytes and packet captures | Optional offline forensics and content inspection. | Logging metadata alone does not provide file contents. |
+
+See the [full capability dependency matrix](/docs/sensor-dependencies/) for central services and output limitations.
+
+## 4. Enable JA3 and JA4 only with supported builds
+
+Merge these keys into the existing TLS parser section:
 
 ```yaml
 app-layer:
@@ -99,222 +88,71 @@ app-layer:
       ja4-fingerprints: yes
 ```
 
-This puts `ja3`, `ja3s`, and `ja4` on every TLS record. Cernity uses them three
-different ways (§7). This is the single most valuable optional field for detection.
+JA3 and JA4 characterize handshake behavior. They can be shared by legitimate and malicious software, and can change with implementation or configuration. They do not uniquely identify a person, device, or malware family.
 
-## 4. nDPI — application ID + a flow-risk engine (strongly recommended)
+Observe a new TLS handshake and inspect the actual TLS record. Fingerprints may be absent when the relevant handshake was missed. Extended TLS logging and enabled fingerprint generation serve different purposes: one exposes metadata, the other enables the fingerprint computation.
 
-ntop's nDPI tags each flow with the real application (`ndpi.proto`), a safety class
-(`ndpi.breed`), and a **risk verdict** (`ndpi.flow_risk`: malicious JA3/JA4, DGA,
-cleartext credentials, self-signed/expired TLS, anonymizers, …). Cernity's
-`behavioral-detectors` reads `ndpi.flow_risk` and raises a high-precision finding when
-nDPI flags a flow malicious — free, high-signal detection.
+Suricata's [JA3/JA4 reference](https://docs.suricata.io/en/suricata-8.0.3/rules/ja-keywords.html) and [EVE format reference](https://docs.suricata.io/en/suricata-8.0.3/output/eve/eve-json-format.html) describe the supported fields. Cernity's reviewed protocol detector prefers JA4 for client rarity and falls back to JA3; server fingerprint handling is a separate path.
 
-nDPI is a Suricata **plugin** (you need a Suricata built with `--enable-ndpi`; some
-vendor images ship it). Load it and make sure the risk set lands on flow records:
+## 5. nDPI is an optional sensor integration
 
-```yaml
-plugins:
-  - /usr/lib/suricata/ndpi.so           # path from your nDPI-enabled build
+Cernity's behavioral detector contains consumers for `ndpi.flow_risk` and related nDPI metadata. That does not mean a stock Suricata package emits those fields.
 
-# then the flow output (in the eve-nsm block above) carries ndpi.proto / breed / flow_risk
-```
+Use a compatible nDPI integration for your exact Suricata build and verify its field shape in EVE. A guessed plugin path or compiler flag is not a portable installation instruction. Do not add an arbitrary `/usr/lib/suricata/ndpi.so` path to a working sensor.
 
-Consult the Suricata + nDPI docs for the exact build for your version.
+A useful acceptance check is a real `flow` record containing the expected `ndpi` object, followed by a scoped detector finding and the retrieved SIEM document. The [optional integration evidence](/proof/#optional-integrations) explains what has and has not been captured. An nDPI risk classification is evidence to assess, not automatic proof of compromise.
 
-## 5. File hashing + extraction (for the file-inspection overlay)
+## 6. Hashing is not file extraction
 
-`force-hash: [sha256]` (shown in §1) lets `file-threat` match carved files against
-hash blocklists. To also scan carved files with YARA (the `file-yara` service), enable
-file extraction so the bytes are available:
+The `files.force-hash` setting requests a hash for logged files. It does not provide a central file object for YARA to scan. Whole-file matching also needs completeness: a partial or gapped file is not the same artifact as the complete original.
+
+If you intentionally deploy file extraction, the file-store block is another entry **under `outputs`**, not a separate top-level key:
 
 ```yaml
-file-store:
-  version: 2
-  enabled: yes
-  force-filestore: yes
-```
-
-Only needed if you run the file-inspection overlay.
-
-## 6. Extended protocol logging (more for the detectors to work with)
-
-- **TLS `extended: yes`** — certificate subject/issuer, validity dates, SNI, version.
-  Feeds `protocol-detectors` (self-signed / short-lived cert detection) and the
-  threat-intel cert blocklist match.
-- **HTTP `extended: yes`** — host, URI, user-agent, method, status. Feeds `http-detector`.
-- **DNS `version: 3`** — the current record shape Cernity expects; feeds `dns-detector`
-  and the behavioral DNS-tunneling signal.
-- **SSH** — feeds SSH brute-force detection.
-- **anomaly** — Suricata's own protocol anomalies; feeds `anomaly-detector`.
-
-## 7. JA3 / JA4 — where the value comes from
-
-**What they are.** A TLS handshake has a recognizable shape — which ciphers, extensions,
-and options a client offers. **JA3** (and the newer, more robust **JA4**) hash that shape
-into a short fingerprint. Because the fingerprint comes from *how* the client speaks TLS,
-it identifies the client software **even though the traffic is encrypted** — you can't
-read the payload, but you can often tell *what made the connection*. Malware families,
-C2 frameworks, and specific tools have characteristic fingerprints.
-
-**Cernity turns that into detection three ways:**
-
-1. **Known-bad matching (`threat-intel`).** Every observed **JA3** is checked against
-   **abuse.ch's SSLBL JA3 blocklist** (`ja3_fingerprints.csv`) — a curated list of
-   fingerprints seen in malware/C2. A hit is a high-confidence C2/malware finding, on
-   encrypted traffic, with no payload inspection. (The same service matches Feodo C2 IPs
-   and SSLBL certificate SHA1s.)
-
-2. **Rarity / novelty (`protocol-detectors`).** Cernity keeps a fleet-wide set of the
-   client fingerprints it has seen — **JA4 if the record has it, otherwise JA3** (so
-   rarity works whichever you enabled), tracked in separate sets so the two types never
-   mix. After a warm-up (default 5 distinct), a fingerprint that has **never been seen
-   before** is flagged as rare — a new/unusual client appearing in your environment,
-   which is exactly how a fresh implant or tool shows up. Tunable: `JA4_WARMUP`,
-   `JA4_SEEN_TTL` (default 1 day).
-
-3. **nDPI risk (edge).** nDPI independently flags a **malicious JA3/JA4** as part of its
-   `flow_risk` set (§4), which the behavioral detector acts on.
-
-So JA3/JA4 gives you **both** sides of detection on encrypted traffic: *"this fingerprint
-is known bad"* (threat-intel) and *"this fingerprint is new/unusual here"* (rarity) —
-plus nDPI's verdict. None of it requires decrypting TLS. **This is why enabling
-`ja3-fingerprints` and `ja4-fingerprints` (§3) matters so much.**
-
-### JA4+ — the full fingerprint suite
-
-**JA4** (TLS client) is one member of FoxIO's **JA4+** suite, which also fingerprints the
-TLS **server** (JA4S), **HTTP** clients (JA4H), **certificates** (JA4X), and **SSH**
-(JA4SSH) — so you can fingerprint both ends and multiple protocols, not just the TLS
-client. That's powerful for spotting C2: a malicious server has a characteristic JA4S,
-a malware HTTP client a characteristic JA4H.
-
-Where Cernity gets JA4+:
-
-- **Edge (always on):** Suricata emits the TLS client **JA4** (and JA3). That's what the
-  rarity + known-bad detection above run on, continuously, for the whole fleet.
-- **On-demand enrichment (`zeek-central`):** the central Zeek used for packet forensics
-  loads FoxIO's JA4 package and **extracts the full JA4+ suite** — JA4 (TLS client),
-  **JA4S** (TLS server), **JA4H** (HTTP), **JA4X** (certificate), **JA4SSH** (SSH) — from
-  any flow that gets captured, and attaches them to the finding as pivotable IOCs
-  (`iocs.ja4`, `ja4s`, `ja4h`, `ja4ssh`). This is the right home for JA4+ depth: rich
-  fingerprint context on the findings worth investigating, rather than a fleet-wide
-  firehose (server-fingerprint rarity is noisy across legitimate new services, so Cernity
-  keeps always-on rarity to the client fingerprint and reserves the server/HTTP/cert/SSH
-  fingerprints for this enrichment path).
-
-## 8. Capture and performance
-
-- Sniff a **SPAN/mirror port or a tap**. The capture NIC has no IP and runs promiscuous —
-  it only receives copies, never transmits.
-- **Prompt flow emission** matters for beacon timing accuracy — Cernity scores beaconing
-  on the interval between flow records, so keep flow timeouts sane (Suricata defaults are
-  fine for most; very long timeouts blur the interval).
-- **High rate (10 Gbps+):** pair Suricata with ntop's **PF_RING (ZC)** for kernel-bypass
-  capture without drops. Watch Suricata's `capture.kernel_drops` — drops mean missed
-  detections.
-- Use up-to-date rules (e.g. ET Open via `suricata-update`) so `ids-alerts` has signal to
-  promote.
-
-## 9. Best-results checklist
-
-- [ ] Split EVE into `eve-alerts.json` + `eve-nsm.json`
-- [ ] `community-id: true` on both outputs
-- [ ] `ja3-fingerprints: yes` + `ja4-fingerprints: yes`
-- [ ] nDPI plugin loaded (flows carry `ndpi.flow_risk`)
-- [ ] TLS + HTTP `extended: yes`, DNS `version: 3`, SSH, anomaly
-- [ ] `force-hash: [sha256]` (and file-store if using the file overlay)
-- [ ] Capturing a mirror/tap, promiscuous, drops near zero
-
-## Complete config fragment (copy-paste)
-
-Merge this into your `suricata.yaml` (paths and the nDPI plugin location depend on your
-build). This is every Cernity-relevant setting in one place:
-
-```yaml
-plugins:
-  - /usr/lib/suricata/ndpi.so            # from an nDPI-enabled Suricata build (strongly recommended)
-
-app-layer:
-  protocols:
-    tls:
-      ja3-fingerprints: yes              # -> threat-intel JA3 known-bad match
-      ja4-fingerprints: yes              # -> protocol-detectors JA4/JA3 rarity
-
 outputs:
-  - eve-log:
+  # Retain the EVE entries above in this same list.
+  - file-store:
+      version: 2
       enabled: yes
-      filetype: regular
-      filename: eve-alerts.json
-      community-id: true
-      types:
-        - alert
-
-  - eve-log:
-      enabled: yes
-      filetype: regular
-      filename: eve-nsm.json
-      community-id: true
-      types:
-        - flow                           # carries ndpi.proto / breed / flow_risk when the plugin is loaded
-        - dns:
-            version: 3
-        - tls:
-            extended: yes
-        - http:
-            extended: yes
-        - ssh
-        - files:
-            force-magic: yes
-            force-hash: [sha256]
-        - anomaly
-        - krb5                             # kerberoasting, AS-REP roasting, password spraying
-        - smb                              # ransomware-over-SMB, lateral-exec named pipes, SMB spray
-        - dcerpc                           # lateral movement (PsExec/WMI/scheduled-task RPC)
-
-# Only if you run the file-inspection overlay (file-yara):
-file-store:
-  version: 2
-  enabled: yes
-  force-filestore: yes
+      dir: filestore
+      force-filestore: yes
 ```
 
-### Telemetry availability notes (east-west / evasion detectors)
+This stores eligible observed files on the sensor. It can use substantial storage and can capture sensitive content. Central inspection additionally needs a supported upload path, credentials, retention, the file inspection services, and retrievable evidence. Encrypted payloads are not extracted merely by enabling this output.
 
-These detectors depend on how much of each protocol Suricata surfaces in EVE, which
-varies by version. Cernity's logic is built to fire the moment the field appears and
-to stay quiet (never false-positive) when it doesn't:
+## 7. Validate configuration before service restart
 
-- **AS-REP roasting** needs a Kerberos *pre-auth-absent* signal on the AS-REQ. Current
-  Suricata EVE does not expose a pre-auth flag, so this detector is **dormant** until a
-  build does — it never guesses.
-- **Ransomware-over-SMB** and **lateral-exec pipes** rely on SMB command/filename and
-  named-pipe fields; granularity varies by Suricata version and SMB dialect.
-- **Password spraying** reads Kerberos pre-auth-failure error codes and/or SMB
-  session-setup logon failures; account names may not always be present.
-- **Domain fronting** fires on ECH (only in very recent Suricata TLS output) or a
-  cleartext HTTP `Host` disagreeing with the flow's TLS `SNI`. Fully-encrypted HTTPS
-  fronting (no visible Host) is **not** detectable and deliberately does not fire.
-- **LLMNR/mDNS poisoning** is wired: east-west consumes DNS events and flags a host that
-  answers many names on udp/5355 (a `dns` type in your EVE, enabled by default). Suricata does
-  **not** decode NBT-NS (udp/137), so coverage is LLMNR/mDNS-leaning — the NBT-NS half is a
-  telemetry gap, not a logic gap.
+For a typical Linux package installation:
 
-## 10. Point the shipper at these files
+```bash
+suricata --build-info
+sudo suricata -T -c /etc/suricata/suricata.yaml
+```
 
-The Cernity shipper defaults to `/var/log/suricata/eve-alerts.json` and
-`/var/log/suricata/eve-nsm.json`. If Suricata writes elsewhere, set `SURICATA_LOG_DIR`
-(or the individual paths) when you start the sensor bundle — see `docs/deploy-sensor.md`.
+If validation fails, fix the configuration or unsupported logger option before restarting. Use the service controls appropriate to your deployment; for a systemd installation:
 
-## What Cernity does with each event type
+```bash
+sudo systemctl restart suricata
+sudo journalctl -u suricata -n 50 --no-pager
+```
 
-| EVE event | Topic | Used by |
-|---|---|---|
-| alert | `suricata.raw.v1` | ids-alerts |
-| flow (+ ndpi, community-id) | `suricata.flow.v1` | behavioral, east-west, anomaly, coverage |
-| dns (v3) | `suricata.dns.v1` | dns-detector, behavioral (tunneling) |
-| tls (+ ja3/ja4, extended) | `suricata.tls.v1` | protocol-detectors (JA4 rarity, certs), threat-intel (JA3) |
-| http (extended) | `suricata.http.v1` | http-detector |
-| ssh | `suricata.ssh.v1` | protocol-detectors (SSH brute force) |
-| fileinfo (+ hash) | `suricata.file.v1` | file-threat, file-yara |
-| anomaly | `suricata.anomaly.v1` | anomaly-detector |
+## 8. Inspect real output
+
+After fresh traffic crosses the mirror, sample the files. These commands use `jq`:
+
+```bash
+sudo tail -n 200 /var/log/suricata/eve-nsm.json \
+  | jq -r '.event_type' | sort | uniq -c
+
+sudo tail -n 500 /var/log/suricata/eve-nsm.json \
+  | jq 'select(.event_type == "tls") | {src_ip, dest_ip, tls}'
+
+sudo tail -n 500 /var/log/suricata/eve-nsm.json \
+  | jq 'select(.event_type == "stats") | .stats'
+```
+
+These inspect only the sampled lines. A missing event type in a small sample does not prove it never occurs. Generate known permitted traffic of the relevant type and verify it specifically.
+
+A TLS record without JA4 is a sensor or visibility question before it is a SIEM question. A TLS record with JA4 on disk but no such field in the final finding may be expected: Cernity does not copy every raw field into every finding.
+
+Next: [install the shipper](/docs/deploy-sensor/) and [trace transport](/docs/sensor-transport/).

@@ -1,0 +1,199 @@
+{
+  "service": "coverage-detector",
+  "fixture": "coverage-stats-eve.jsonl",
+  "capture_stage": "detector (candidate findings; full lifecycle/SIEM delivery validated separately)",
+  "captured_at": "2026-09-16T19:50:33Z",
+  "suricata_baseline": {
+    "source_event_count": 2,
+    "alerts": 0,
+    "note": "Suricata parsed these events to EVE. Alerts fire only on signature matches; the behavior below is not a signature, so Suricata raises 0 alert(s) on it.",
+    "records": [
+      {
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "event_type": "stats",
+        "host": "sensor-a",
+        "stats": {
+          "capture": {
+            "kernel_packets": 1000000,
+            "kernel_drops": 100000
+          },
+          "decoder": {
+            "pkts": 1000000
+          },
+          "app_layer": {
+            "flow": {
+              "http": 1200,
+              "tls": 3400,
+              "dns": 5000
+            }
+          }
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:30+00:00",
+        "event_type": "stats",
+        "host": "sensor-b",
+        "stats": {
+          "decoder": {
+            "pkts": 200000
+          },
+          "app_layer": {
+            "flow": {
+              "http": 0,
+              "tls": 0,
+              "dns": 1
+            }
+          }
+        }
+      }
+    ]
+  },
+  "cernity": {
+    "detectors_fired": [
+      "coverage_degraded"
+    ],
+    "finding_count": 2,
+    "findings": [
+      {
+        "finding_id": "cov-sensor-a-capture_loss",
+        "tenant_id": "default",
+        "detector_id": "coverage_degraded",
+        "detector_version": "1.0",
+        "category": "coverage",
+        "severity": 6,
+        "confidence": 0.8,
+        "entities": "[{\"type\": \"sensor\", \"value\": \"sensor-a\"}, {\"type\": \"coverage\", \"value\": \"capture_loss\"}, {\"type\": \"metric\", \"value\": 0.0909}, {\"type\": \"why\", \"value\": \"Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "sensor",
+            "value": "sensor-a"
+          },
+          {
+            "type": "coverage",
+            "value": "capture_loss"
+          },
+          {
+            "type": "metric",
+            "value": 0.0909
+          },
+          {
+            "type": "why",
+            "value": "Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor"
+          }
+        ]
+      },
+      {
+        "finding_id": "cov-sensor-b-applayer_blind",
+        "tenant_id": "default",
+        "detector_id": "coverage_degraded",
+        "detector_version": "1.0",
+        "category": "coverage",
+        "severity": 6,
+        "confidence": 0.8,
+        "entities": "[{\"type\": \"sensor\", \"value\": \"sensor-b\"}, {\"type\": \"coverage\", \"value\": \"applayer_blind\"}, {\"type\": \"metric\", \"value\": 0.0}, {\"type\": \"why\", \"value\": \"packets are flowing but Suricata reassembles almost no application-layer traffic; the mirror is likely lossy or half-duplex, so the protocol and file detection tier is blind\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "sensor",
+            "value": "sensor-b"
+          },
+          {
+            "type": "coverage",
+            "value": "applayer_blind"
+          },
+          {
+            "type": "metric",
+            "value": 0.0
+          },
+          {
+            "type": "why",
+            "value": "packets are flowing but Suricata reassembles almost no application-layer traffic; the mirror is likely lossy or half-duplex, so the protocol and file detection tier is blind"
+          }
+        ]
+      }
+    ],
+    "delivered": [
+      {
+        "finding_id": "cov-sensor-a-capture_loss",
+        "detector_id": "coverage_degraded",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:cov-sensor-a-capture_loss:r2",
+            "_source": {
+              "finding_id": "cov-sensor-a-capture_loss",
+              "tenant_id": "default",
+              "detector_id": "coverage_degraded",
+              "detector_version": "1.0",
+              "category": "coverage",
+              "severity": 6,
+              "confidence": 0.8,
+              "entities": "[{\"type\": \"sensor\", \"value\": \"sensor-a\"}, {\"type\": \"coverage\", \"value\": \"capture_loss\"}, {\"type\": \"metric\", \"value\": 0.0909}, {\"type\": \"why\", \"value\": \"Suricata is dropping packets at capture (kernel_drops); detections are being missed on this sensor\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": null
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|coverage_degraded|coverage|6|cs1=cov-sensor-a-capture_loss cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=coverage cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "cov-sensor-b-applayer_blind",
+        "detector_id": "coverage_degraded",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:cov-sensor-b-applayer_blind:r2",
+            "_source": {
+              "finding_id": "cov-sensor-b-applayer_blind",
+              "tenant_id": "default",
+              "detector_id": "coverage_degraded",
+              "detector_version": "1.0",
+              "category": "coverage",
+              "severity": 6,
+              "confidence": 0.8,
+              "entities": "[{\"type\": \"sensor\", \"value\": \"sensor-b\"}, {\"type\": \"coverage\", \"value\": \"applayer_blind\"}, {\"type\": \"metric\", \"value\": 0.0}, {\"type\": \"why\", \"value\": \"packets are flowing but Suricata reassembles almost no application-layer traffic; the mirror is likely lossy or half-duplex, so the protocol and file detection tier is blind\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": null
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|coverage_degraded|coverage|6|cs1=cov-sensor-b-applayer_blind cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=coverage cs4=2 cs4Label=revision"
+        }
+      }
+    ]
+  }
+}

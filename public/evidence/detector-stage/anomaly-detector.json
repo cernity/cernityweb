@@ -1,0 +1,194 @@
+{
+  "service": "anomaly-detector",
+  "fixture": "anomaly-eve.jsonl",
+  "capture_stage": "detector (candidate findings; full lifecycle/SIEM delivery validated separately)",
+  "captured_at": "2026-09-16T19:50:33Z",
+  "suricata_baseline": {
+    "source_event_count": 2,
+    "alerts": 0,
+    "note": "Suricata parsed these events to EVE. Alerts fire only on signature matches; the behavior below is not a signature, so Suricata raises 0 alert(s) on it.",
+    "records": [
+      {
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "event_type": "anomaly",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "app_proto": "http",
+        "anomaly": {
+          "type": "applayer",
+          "event": "http.unexpected_data"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:01+00:00",
+        "event_type": "anomaly",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "anomaly": {
+          "type": "stream",
+          "event": "reassembly_overlap_different_data"
+        }
+      }
+    ]
+  },
+  "cernity": {
+    "detectors_fired": [
+      "protocol_anomaly"
+    ],
+    "finding_count": 2,
+    "findings": [
+      {
+        "finding_id": "anom-8448545772",
+        "tenant_id": "default",
+        "detector_id": "protocol_anomaly",
+        "detector_version": "1.0",
+        "category": "anomaly",
+        "severity": 5,
+        "confidence": 0.5,
+        "first_seen": "2026-01-01T00:00:00+00:00",
+        "last_seen": "2026-01-01T00:00:00+00:00",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"anomaly\", \"value\": \"http.unexpected_data\"}, {\"type\": \"app_proto\", \"value\": \"http\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "anomaly",
+            "value": "http.unexpected_data"
+          },
+          {
+            "type": "app_proto",
+            "value": "http"
+          }
+        ]
+      },
+      {
+        "finding_id": "anom-4382778213",
+        "tenant_id": "default",
+        "detector_id": "protocol_anomaly",
+        "detector_version": "1.0",
+        "category": "anomaly",
+        "severity": 5,
+        "confidence": 0.5,
+        "first_seen": "2026-01-01T00:00:01+00:00",
+        "last_seen": "2026-01-01T00:00:01+00:00",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"anomaly\", \"value\": \"reassembly_overlap_different_data\"}, {\"type\": \"app_proto\", \"value\": null}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "anomaly",
+            "value": "reassembly_overlap_different_data"
+          },
+          {
+            "type": "app_proto",
+            "value": null
+          }
+        ]
+      }
+    ],
+    "delivered": [
+      {
+        "finding_id": "anom-8448545772",
+        "detector_id": "protocol_anomaly",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:anom-8448545772:r2",
+            "_source": {
+              "finding_id": "anom-8448545772",
+              "tenant_id": "default",
+              "detector_id": "protocol_anomaly",
+              "detector_version": "1.0",
+              "category": "anomaly",
+              "severity": 5,
+              "confidence": 0.5,
+              "first_seen": "2026-01-01T00:00:00+00:00",
+              "last_seen": "2026-01-01T00:00:00+00:00",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"anomaly\", \"value\": \"http.unexpected_data\"}, {\"type\": \"app_proto\", \"value\": \"http\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-01-01T00:00:00+00:00"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|protocol_anomaly|anomaly|5|cs1=anom-8448545772 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=anomaly src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "anom-4382778213",
+        "detector_id": "protocol_anomaly",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:anom-4382778213:r2",
+            "_source": {
+              "finding_id": "anom-4382778213",
+              "tenant_id": "default",
+              "detector_id": "protocol_anomaly",
+              "detector_version": "1.0",
+              "category": "anomaly",
+              "severity": 5,
+              "confidence": 0.5,
+              "first_seen": "2026-01-01T00:00:01+00:00",
+              "last_seen": "2026-01-01T00:00:01+00:00",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"anomaly\", \"value\": \"reassembly_overlap_different_data\"}, {\"type\": \"app_proto\", \"value\": null}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-01-01T00:00:01+00:00"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|protocol_anomaly|anomaly|5|cs1=anom-4382778213 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=anomaly src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      }
+    ]
+  }
+}

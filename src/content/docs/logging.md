@@ -1,80 +1,64 @@
 ---
-title: "Logging and health"
+title: "Operational logs, health, and delivery failures"
 nav: "Logging & health"
 order: 11
 ---
 
-# Logging and health
+# Operational logs, health, and delivery failures
 
-Every Cernity service logs the same way and exposes the same health surface, so you
-can tell at a glance whether it's working — and feed its logs into your own platform.
+A service log explains what a process is doing. A Suricata event describes observed traffic. A Cernity finding is a security assessment. These are different streams, even if you store all three in a SIEM.
 
-## Format: JSON or text
+## Start with the component owning the failed hop
 
-Set `LOG_FORMAT`:
-
-- `json` (default) — one JSON object per line with standard fields. Machine-parseable;
-  ingest it into Loki/Elastic/your SIEM and query by service or tenant.
-  ```json
-  {"ts":"2026-09-09T13:33:59Z","level":"INFO","svc":"behavioral-detectors","tenant":"acme","event":"beacon","src":"10.0.0.5","dst":"203.0.113.10","score":1.0,"msg":"beacon src=10.0.0.5 dst=203.0.113.10 score=1.0"}
-  ```
-- `text` — human-readable for `docker logs` and the quickstart (which sets it):
-  ```
-  2026-09-09 13:33:59 INFO [behavioral-detectors] beacon src=10.0.0.5 dst=203.0.113.10 score=1.0
-  ```
-
-Every line — including logs from underlying libraries — carries `ts`, `level`, `svc`,
-and `tenant`, because the shared setup configures the root logger.
-
-## Levels
-
-Set `LOG_LEVEL` (default `INFO`):
-
-| Level | What you see |
+| Question | Component to inspect |
 |---|---|
-| `ERROR` | something is broken and needs attention |
-| `WARNING` | degraded but recovering (a retryable send, a dropped malformed record) |
-| `INFO` | lifecycle (startup, ready, config), **each finding/detection**, and the heartbeat |
-| `DEBUG` | per-record detail — off by default |
+| Are packets being observed and parsed? | Suricata capture statistics, parser output, and service logs. |
+| Are EVE files being read and shipped? | Fluent Bit input and Kafka-output errors. |
+| Can the broker accept and retain messages? | Redpanda health, authentication, ACLs, storage, and topics. |
+| Are consumers processing the required events? | Detector startup, consumer lag, errors, and input event types. |
+| Did a candidate finalize, suppress, or await evidence? | finding-service and the finding's lifecycle fields. |
+| Did the selected sink accept the finding? | findings-forwarder, delivery ledger, failed-delivery records, and the actual receiving SIEM. |
 
-**Per-record detail is never logged above DEBUG.** That's the rule that keeps logs
-from filling a disk: findings are rare and log at INFO; individual flow/DNS records
-only appear at DEBUG.
+## Inspect service logs
 
-## Heartbeat — "is it alive?"
+On the sensor:
 
-Each service logs a heartbeat every `HEARTBEAT_SECS` (default 300) at INFO:
-
-```json
-{"ts":"…","level":"INFO","svc":"dns-detector","tenant":"acme","event":"heartbeat","uptime_s":300}
+```bash
+docker logs --tail 100 cernity-fluent-bit
 ```
 
-So `docker logs cernity-<svc>` always shows recent activity. It's infrequent by design
-and never a disk concern.
+On central:
 
-## Health and metrics
+```bash
+docker compose --project-name cernity --env-file .env \
+  -f deploy/central/docker-compose.yml logs --tail 100 \
+  behavioral-detectors finding-service findings-forwarder
+```
 
-Services expose (on `NDR_METRICS_PORT`, default 9108):
+Look for the specific error before changing thresholds. File-not-found, TLS failure, authentication failure, missing topic authorization, and a rejected SIEM document are different faults.
 
-- `GET /healthz` — process is up (liveness).
-- `GET /readyz` — dependencies (bus, state) are reachable (readiness). An orchestrator
-  should only route work to a service that is ready.
-- `GET /metrics` — Prometheus metrics (events processed, findings emitted, errors,
-  evaluation duration), labeled by service.
+## Shared logging settings
 
-Point Prometheus at `/metrics` and use `/healthz` / `/readyz` for container/k8s probes.
+Services using `ndr_runtime.setup_logging` support `LOG_LEVEL`, `LOG_FORMAT`, and a heartbeat controlled by `HEARTBEAT_SECS`. The reviewed defaults are INFO, JSON, and a periodic heartbeat. Third-party containers and services with their own logger can differ.
 
-## Not filling the disk
+An INFO heartbeat proves that process code is running, not that new sensor events reached it or that a SIEM accepted findings. Enable DEBUG only when the additional detail is needed and handle any exposed event data appropriately.
 
-- Logs go to **stdout** — Docker/Kubernetes capture and rotate them. The bundled
-  compose caps container logs (`max-size`/`max-file`); nothing writes log files.
-- The heartbeat is low-frequency; per-record logging is DEBUG-only.
+Compose must pass each environment variable into the target service. Changing a central `.env` entry that the service never receives has no effect.
 
-## Settings summary
+## Liveness is not readiness or end-to-end success
 
-| Variable | Default | Meaning |
-|---|---|---|
-| `LOG_FORMAT` | `json` | `json` or `text` |
-| `LOG_LEVEL` | `INFO` | `DEBUG`/`INFO`/`WARNING`/`ERROR` |
-| `HEARTBEAT_SECS` | `300` | seconds between heartbeat log lines |
-| `NDR_METRICS_PORT` | `9108` | port for `/healthz` `/readyz` `/metrics` |
+Services using the metrics helper can expose `/healthz`, `/readyz`, and `/metrics`, commonly on container port 9108. Verify the specific service and its bindings; the central Compose does not publish every metrics endpoint on the host.
+
+Liveness indicates the process is responding. Readiness reflects the checks that service actually implements. Neither alone establishes traffic coverage, detector effectiveness, or a successfully parsed SIEM event.
+
+## Retention and failure artifacts
+
+The Compose files cap container stdout logs. That does not cap every data volume: Suricata EVE retention, broker storage, shipper offsets, captures, file-sink output, and delivery ledgers have independent policies.
+
+The reviewed forwarder can write exhausted deliveries to its configured dead-letter directory. Treat those records as failed delivery, preserve them for diagnosis, and follow a tested reprocessing procedure. Restarting a service is not a guarantee that every terminal dead-letter obligation will automatically retry.
+
+## A useful success check
+
+Trace one known test observation through collection and a relevant finding through delivery. Retrieve the actual SIEM document, match its identity and revision, and inspect its fields. Keep the source record so a later field mismatch can be located at the right boundary.
+
+See [transport troubleshooting](/docs/sensor-transport/#find-the-broken-hop), [SIEM formats](/docs/siem-integrations/), and [evidence collection](/docs/evidence-capture/).

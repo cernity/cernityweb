@@ -1,0 +1,561 @@
+{
+  "service": "http-detector",
+  "fixture": "http-eve.jsonl",
+  "capture_stage": "detector (candidate findings; full lifecycle/SIEM delivery validated separately)",
+  "captured_at": "2026-09-16T19:50:33Z",
+  "suricata_baseline": {
+    "source_event_count": 7,
+    "alerts": 0,
+    "note": "Suricata parsed these events to EVE. Alerts fire only on signature matches; the behavior below is not a signature, so Suricata raises 0 alert(s) on it.",
+    "records": [
+      {
+        "timestamp": "2026-01-01T00:00:00+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "GET",
+          "url": "/uploads/shell.php?cmd=id",
+          "hostname": "vhost",
+          "http_content_type": "text/html"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:01+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "GET",
+          "url": "/item?id=1' or '1'='1",
+          "hostname": "vhost"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:02+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "GET",
+          "url": "/ping?host=8.8.8.8;cat /etc/shadow",
+          "hostname": "vhost"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:03+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "GET",
+          "url": "/download?f=../../../../etc/passwd",
+          "hostname": "vhost"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:04+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "GET",
+          "url": "/login?user=admin&password=hunter2",
+          "hostname": "vhost"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:05+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "PUT",
+          "url": "/webdav/x.jsp",
+          "hostname": "vhost"
+        }
+      },
+      {
+        "timestamp": "2026-01-01T00:00:06+00:00",
+        "event_type": "http",
+        "src_ip": "10.0.0.5",
+        "dest_ip": "203.0.113.10",
+        "dest_port": 80,
+        "http": {
+          "http_method": "GET",
+          "url": "/index.html",
+          "hostname": "vhost",
+          "http_content_type": "text/html"
+        }
+      }
+    ]
+  },
+  "cernity": {
+    "detectors_fired": [
+      "http_cmd_injection",
+      "http_cred_in_url",
+      "http_path_traversal",
+      "http_sqli",
+      "http_suspicious_method",
+      "http_webshell"
+    ],
+    "finding_count": 6,
+    "findings": [
+      {
+        "finding_id": "http_webshell-662598296-2982647",
+        "tenant_id": "default",
+        "detector_id": "http_webshell",
+        "detector_version": "1.0",
+        "category": "malware",
+        "severity": 8,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/uploads/shell.php?cmd=id\"}, {\"type\": \"why\", \"value\": \"webshell / backdoor URI\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "host",
+            "value": "vhost"
+          },
+          {
+            "type": "uri",
+            "value": "/uploads/shell.php?cmd=id"
+          },
+          {
+            "type": "why",
+            "value": "webshell / backdoor URI"
+          }
+        ]
+      },
+      {
+        "finding_id": "http_sqli-1187673266-2982647",
+        "tenant_id": "default",
+        "detector_id": "http_sqli",
+        "detector_version": "1.0",
+        "category": "exploit",
+        "severity": 7,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/item?id=1' or '1'='1\"}, {\"type\": \"why\", \"value\": \"SQL-injection pattern in URI\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "host",
+            "value": "vhost"
+          },
+          {
+            "type": "uri",
+            "value": "/item?id=1' or '1'='1"
+          },
+          {
+            "type": "why",
+            "value": "SQL-injection pattern in URI"
+          }
+        ]
+      },
+      {
+        "finding_id": "http_cmd_injection-1178650702-2982647",
+        "tenant_id": "default",
+        "detector_id": "http_cmd_injection",
+        "detector_version": "1.0",
+        "category": "exploit",
+        "severity": 8,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/ping?host=8.8.8.8;cat /etc/shadow\"}, {\"type\": \"why\", \"value\": \"command-injection pattern in URI\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "host",
+            "value": "vhost"
+          },
+          {
+            "type": "uri",
+            "value": "/ping?host=8.8.8.8;cat /etc/shadow"
+          },
+          {
+            "type": "why",
+            "value": "command-injection pattern in URI"
+          }
+        ]
+      },
+      {
+        "finding_id": "http_path_traversal-1902775401-2982647",
+        "tenant_id": "default",
+        "detector_id": "http_path_traversal",
+        "detector_version": "1.0",
+        "category": "exploit",
+        "severity": 7,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/download?f=../../../../etc/passwd\"}, {\"type\": \"why\", \"value\": \"path-traversal / LFI pattern\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "host",
+            "value": "vhost"
+          },
+          {
+            "type": "uri",
+            "value": "/download?f=../../../../etc/passwd"
+          },
+          {
+            "type": "why",
+            "value": "path-traversal / LFI pattern"
+          }
+        ]
+      },
+      {
+        "finding_id": "http_cred_in_url-267487105-2982647",
+        "tenant_id": "default",
+        "detector_id": "http_cred_in_url",
+        "detector_version": "1.0",
+        "category": "credential_access",
+        "severity": 5,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/login?user=admin&password=hunter2\"}, {\"type\": \"why\", \"value\": \"credential in URL query\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "host",
+            "value": "vhost"
+          },
+          {
+            "type": "uri",
+            "value": "/login?user=admin&password=hunter2"
+          },
+          {
+            "type": "why",
+            "value": "credential in URL query"
+          }
+        ]
+      },
+      {
+        "finding_id": "http_suspicious_method-9149090492-2982647",
+        "tenant_id": "default",
+        "detector_id": "http_suspicious_method",
+        "detector_version": "1.0",
+        "category": "c2",
+        "severity": 5,
+        "confidence": 0.7,
+        "first_seen": "2026-09-16T19:50:33Z",
+        "last_seen": "2026-09-16T19:50:33Z",
+        "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/webdav/x.jsp\"}, {\"type\": \"why\", \"value\": \"uncommon HTTP method PUT\"}]",
+        "state": "CANDIDATE",
+        "entities_decoded": [
+          {
+            "type": "ip",
+            "role": "src",
+            "value": "10.0.0.5"
+          },
+          {
+            "type": "ip",
+            "role": "dst",
+            "value": "203.0.113.10"
+          },
+          {
+            "type": "host",
+            "value": "vhost"
+          },
+          {
+            "type": "uri",
+            "value": "/webdav/x.jsp"
+          },
+          {
+            "type": "why",
+            "value": "uncommon HTTP method PUT"
+          }
+        ]
+      }
+    ],
+    "delivered": [
+      {
+        "finding_id": "http_webshell-662598296-2982647",
+        "detector_id": "http_webshell",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:http_webshell-662598296-2982647:r2",
+            "_source": {
+              "finding_id": "http_webshell-662598296-2982647",
+              "tenant_id": "default",
+              "detector_id": "http_webshell",
+              "detector_version": "1.0",
+              "category": "malware",
+              "severity": 8,
+              "confidence": 0.7,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/uploads/shell.php?cmd=id\"}, {\"type\": \"why\", \"value\": \"webshell / backdoor URI\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|http_webshell|malware|8|cs1=http_webshell-662598296-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=malware src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "http_sqli-1187673266-2982647",
+        "detector_id": "http_sqli",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:http_sqli-1187673266-2982647:r2",
+            "_source": {
+              "finding_id": "http_sqli-1187673266-2982647",
+              "tenant_id": "default",
+              "detector_id": "http_sqli",
+              "detector_version": "1.0",
+              "category": "exploit",
+              "severity": 7,
+              "confidence": 0.7,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/item?id=1' or '1'='1\"}, {\"type\": \"why\", \"value\": \"SQL-injection pattern in URI\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|http_sqli|exploit|7|cs1=http_sqli-1187673266-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=exploit src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "http_cmd_injection-1178650702-2982647",
+        "detector_id": "http_cmd_injection",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:http_cmd_injection-1178650702-2982647:r2",
+            "_source": {
+              "finding_id": "http_cmd_injection-1178650702-2982647",
+              "tenant_id": "default",
+              "detector_id": "http_cmd_injection",
+              "detector_version": "1.0",
+              "category": "exploit",
+              "severity": 8,
+              "confidence": 0.7,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/ping?host=8.8.8.8;cat /etc/shadow\"}, {\"type\": \"why\", \"value\": \"command-injection pattern in URI\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|http_cmd_injection|exploit|8|cs1=http_cmd_injection-1178650702-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=exploit src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "http_path_traversal-1902775401-2982647",
+        "detector_id": "http_path_traversal",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:http_path_traversal-1902775401-2982647:r2",
+            "_source": {
+              "finding_id": "http_path_traversal-1902775401-2982647",
+              "tenant_id": "default",
+              "detector_id": "http_path_traversal",
+              "detector_version": "1.0",
+              "category": "exploit",
+              "severity": 7,
+              "confidence": 0.7,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/download?f=../../../../etc/passwd\"}, {\"type\": \"why\", \"value\": \"path-traversal / LFI pattern\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|http_path_traversal|exploit|7|cs1=http_path_traversal-1902775401-2982647 cs1Label=findingId cs2Label=mitre cs3=default cs3Label=tenant cat=exploit src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      },
+      {
+        "finding_id": "http_cred_in_url-267487105-2982647",
+        "detector_id": "http_cred_in_url",
+        "route": "final",
+        "delivered": false,
+        "lifecycle": {
+          "state": "SUPPRESSED",
+          "enrichment_state": "NOT_REQUIRED",
+          "devo_delivery_state": "NONE",
+          "revision": 1,
+          "suppression_reason": "low-severity (5) non-threat finding; kept for correlation and audit, not delivered"
+        }
+      },
+      {
+        "finding_id": "http_suspicious_method-9149090492-2982647",
+        "detector_id": "http_suspicious_method",
+        "route": "capture",
+        "delivered": true,
+        "lifecycle": {
+          "state": "FINAL",
+          "enrichment_state": "TIMEOUT",
+          "devo_delivery_state": "QUEUED",
+          "revision": 2,
+          "suppression_reason": ""
+        },
+        "siem": {
+          "elasticsearch": {
+            "_index": "ndr-findings-2026.09.16",
+            "_id": "default:http_suspicious_method-9149090492-2982647:r2",
+            "_source": {
+              "finding_id": "http_suspicious_method-9149090492-2982647",
+              "tenant_id": "default",
+              "detector_id": "http_suspicious_method",
+              "detector_version": "1.0",
+              "category": "c2",
+              "severity": 5,
+              "confidence": 0.7,
+              "first_seen": "2026-09-16T19:50:33Z",
+              "last_seen": "2026-09-16T19:50:33Z",
+              "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"10.0.0.5\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"203.0.113.10\"}, {\"type\": \"host\", \"value\": \"vhost\"}, {\"type\": \"uri\", \"value\": \"/webdav/x.jsp\"}, {\"type\": \"why\", \"value\": \"uncommon HTTP method PUT\"}]",
+              "state": "FINAL",
+              "sensor_ids": [],
+              "evidence_refs": [],
+              "revision": 2,
+              "mitre": [
+                "T1071"
+              ],
+              "capture_job_ids": [],
+              "suppression_reason": "",
+              "enrichment_state": "TIMEOUT",
+              "devo_delivery_state": "QUEUED",
+              "@timestamp": "2026-09-16T19:50:33Z"
+            }
+          },
+          "cef": "CEF:0|Cernity|NDR|1.0|http_suspicious_method|c2|5|cs1=http_suspicious_method-9149090492-2982647 cs1Label=findingId cs2=T1071 cs2Label=mitre cs3=default cs3Label=tenant cat=c2 src=10.0.0.5 dst=203.0.113.10 cs4=2 cs4Label=revision"
+        }
+      }
+    ]
+  }
+}
