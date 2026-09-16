@@ -3,12 +3,9 @@ const { ndrRepo } = Astro.props;
 const year = new Date().getFullYear();
 ---
 <footer>
-  <div class="wrap">
-    <span>© {year} Cernity · behavioural NDR for Suricata sensors</span>
-    <nav>
-      <a href="/proof/">Proof of value</a>
-      <a href="/docs/">Docs</a>
-      <a href={ndrRepo}>cernityndr on GitHub ↗</a>
-    </nav>
+  <div class="wrap footer-main">
+    <div><a class="brand" href="/">cernity<span class="brand-dot">.</span></a><p>Network telemetry.<br />Security findings.</p></div>
+    <nav aria-label="Footer navigation"><div><span class="eyebrow">Explore</span><a href="/#platform">The platform</a><a href="/proof/">Detection evidence</a><a href="/docs/">Documentation</a></div><div><span class="eyebrow">Build</span><a href="/docs/getting-started/">Get started</a><a href="/docs/siem-integrations/">Integrations</a><a href={ndrRepo}>Source on GitHub ↗</a></div></nav>
   </div>
+  <div class="wrap footer-bottom"><span>© {year} Cernity</span><span>Self hosted. Source available. Built around Suricata.</span></div>
 </footer>

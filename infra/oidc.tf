@@ -23,10 +23,14 @@ data "aws_iam_policy_document" "deploy_trust" {
       values   = ["sts.amazonaws.com"]
     }
     # Pinned to this repo's main branch only — no other repo/branch/PR can assume it.
+    # The cernity org enables GitHub's immutable OIDC subject claims, so the token sub is
+    # "repo:cernity@<org_id>/cernityweb@<repo_id>:ref:refs/heads/main" (numeric IDs appended),
+    # not the plain "repo:cernity/cernityweb:...". StringLike pins the org (name+id) and repo
+    # name + branch while tolerating a repo-id change (e.g. repo recreation).
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/main"]
+      values   = [var.oidc_subject]
     }
   }
 }

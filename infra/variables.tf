@@ -27,3 +27,9 @@ variable "acm_certificate_arn" {
   type        = string
   default     = ""
 }
+
+variable "oidc_subject" {
+  description = "GitHub OIDC token sub to trust. The cernity org uses immutable subject claims (org/repo numeric IDs appended), so this pins repo:cernity@<org_id>/cernityweb@*:ref:refs/heads/main."
+  type        = string
+  default     = "repo:cernity@326747386/cernityweb@*:ref:refs/heads/main"
+}

@@ -1,25 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-const NDR_REPO = 'https://github.com/cernity/cernityndr';
-const docs = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
+const docs = (await getCollection('docs')).sort((a,b) => a.data.order-b.data.order);
+const groups = [
+  {title:'Understand the platform', label:'01 / FOUNDATIONS', slugs:['getting-started','how-it-works','ndr-coverage']},
+  {title:'Deploy & configure', label:'02 / INFRASTRUCTURE', slugs:['placement','deploy-sensor','suricata-config','suricata-zeek-parity']},
+  {title:'Extend & operate', label:'03 / OPERATIONS', slugs:['enrichment','ml-detection','siem-integrations','logging','development']},
+];
 ---
-<Base title="Docs — Cernity NDR" description="Product documentation for Cernity NDR — deploy, configure, and integrate the behavioural detection tier.">
-  <section class="hero" style="padding-bottom: 8px;">
-    <h1>Documentation</h1>
-    <p class="lede">
-      Everything to deploy Cernity onto a Suricata sensor and wire it into your SIEM. The
-      product is open source — the code lives at <a href={NDR_REPO}>cernity/cernityndr</a>.
-    </p>
-  </section>
-  <section>
-    <div class="grid">
-      {docs.map((d) => (
-        <a class="card" href={`/docs/${d.slug}`}>
-          <h3>{d.data.nav}</h3>
-          <p class="muted">{d.data.title}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+<Base title="Documentation — Cernity" description="Deploy Cernity, configure your Suricata sensors, and deliver explained security findings to your SIEM.">
+  <section class="hero page-hero"><span class="pill">CERNITY / DOCUMENTATION</span><h1>From first sensor<br />to explained findings.</h1><p class="lede">Understand the architecture, connect your telemetry, and bring Cernity into your security workflow.</p></section>
+  <section class="docs-intro"><div><span class="eyebrow">START HERE</span><h2>Your first deployment.</h2><p>Set up the central stack, connect a Suricata sensor, and verify that findings reach your SIEM.</p></div><div><a class="btn primary" href="/docs/getting-started/">Open the getting started guide ↗</a><a class="text-link" href="/docs/how-it-works/">Read the architecture first →</a></div></section>
+  <div class="docs-groups">{groups.map(group => <section class="docs-group"><div><span class="pill">{group.label}</span><h2>{group.title}</h2></div><div>{docs.filter(d=>group.slugs.includes(d.slug)).map(d=><a class="doc-link" href={`/docs/${d.slug}/`}>{d.data.nav}<span aria-hidden="true">↗</span></a>)}</div></section>)}</div>
 </Base>

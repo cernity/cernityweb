@@ -2,8 +2,9 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-const { title = 'Cernity NDR', description = 'A behavioural network-detection tier that turns a signature-only Suricata sensor into an NDR.' } = Astro.props;
+const { title = 'Cernity — Network detection, built on Suricata', description = 'Turn Suricata telemetry into explained security findings. Cernity adds self-hosted behavioral detection, enrichment, and alert consolidation to your existing SIEM.' } = Astro.props;
 const NDR_REPO = 'https://github.com/cernity/cernityndr';
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="en">
@@ -15,13 +16,15 @@ const NDR_REPO = 'https://github.com/cernity/cernityndr';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#171b1b" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" />
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <Nav ndrRepo={NDR_REPO} />
-    <main class="wrap">
-      <slot />
-    </main>
+    <main id="main" class="wrap"><slot /></main>
     <Footer ndrRepo={NDR_REPO} />
   </body>
 </html>

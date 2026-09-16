@@ -13,7 +13,7 @@ that a properly-configured Suricata gives Cernity essentially the same protocol 
 does — and to be honest about the two places it doesn't.
 
 The table below is generated from `benchmarks/parity.py` (the source of truth, unit-tested);
-the [benchmark](../benchmarks/) runs Zeek as a reference arm over the same PCAP so this parity
+the [benchmark](https://github.com/cernity/cernityndr/tree/main/benchmarks) runs Zeek as a reference arm over the same PCAP so this parity
 is *demonstrated*, not just asserted.
 
 ## Parity map

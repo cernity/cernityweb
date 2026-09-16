@@ -1,14 +1,16 @@
 ---
 const { ndrRepo } = Astro.props;
+const path = Astro.url.pathname;
 ---
 <header class="nav">
-  <div class="wrap">
-    <a class="brand" href="/">Cern<span>ity</span></a>
-    <nav>
-      <a href="/#value" class="hide-sm">Why Cernity</a>
-      <a href="/proof/">Proof</a>
-      <a href="/docs/" class="hide-sm">Docs</a>
-      <a href={ndrRepo} class="btn">GitHub ↗</a>
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="Cernity home"><svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M25 8H12L5 16l7 8h13M25 16H14" stroke="currentColor" stroke-width="3"/></svg>cernity<span class="brand-dot">.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="/#platform">Platform</a>
+      <a href="/proof/" aria-current={path.startsWith('/proof') ? 'page' : undefined}>Evidence</a>
+      <a href="/docs/" aria-current={path.startsWith('/docs') ? 'page' : undefined}>Documentation</a>
+      <a href={ndrRepo} class="nav-source">GitHub <span aria-hidden="true">↗</span></a>
     </nav>
+    <a href="/docs/getting-started/" class="btn primary nav-start">Get started <span aria-hidden="true">↗</span></a>
   </div>
 </header>

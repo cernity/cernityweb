@@ -2,33 +2,10 @@
 import Base from '../../layouts/Base.astro';
 import SideBySide from '../../components/SideBySide.astro';
 import figures from '../../content/proof/figures.json';
-const NDR_REPO = 'https://github.com/cernity/cernityndr';
 ---
-<Base title="Proof of value — Cernity vs Suricata alone" description="Verified side-by-side records: the same packets, what Suricata alone shows versus what Cernity derives.">
-  <section class="hero" style="padding-bottom: 12px;">
-    <span class="pill">Verified · same PCAP through both paths · only Cernity differs</span>
-    <h1>The same packets. Radically different output.</h1>
-    <p class="lede">
-      Each comparison below is drawn from an independently verified, hash-checked benchmark: an identical
-      capture replayed through Suricata→SIEM and through Suricata→Cernity→SIEM. Only Cernity is added.
-    </p>
-  </section>
-
-  <section>
-    {figures.comparisons.map((c) => <SideBySide c={c} />)}
-  </section>
-
-  <section>
-    <div class="caveat">
-      <h3>{figures.caveat.title}</h3>
-      <ul>
-        {figures.caveat.points.map((p) => <li>{p}</li>)}
-      </ul>
-    </div>
-    <p class="muted">
-      These figures are derived from a verified evidence package retained privately. The claims here are
-      deliberately bounded to what those records support. The product is open source —
-      <a href={NDR_REPO}>read the code and the benchmark harness on GitHub ↗</a>.
-    </p>
-  </section>
+<Base title="Detection evidence — Cernity" description="Four curated benchmark comparisons showing how Cernity derives security findings from Suricata telemetry, with test scope and limitations.">
+  <section class="hero page-hero"><span class="pill">CERNITY / DETECTION EVIDENCE</span><h1>Same traffic.<br />More to investigate.</h1><p class="lede">What Suricata records. What Cernity derives. Four comparisons from the project's synthetic replay benchmarks, with the measurements and limitations alongside the results.</p></section>
+  <nav class="proof-index" aria-label="Benchmark comparisons">{figures.comparisons.map((c,i)=><a href={`#${c.id}`}>0{i+1} / {c.title}</a>)}</nav>
+  <section aria-label="Comparison results">{figures.comparisons.map(c=><SideBySide c={c}/>)}</section>
+  <section id="limitations"><div class="caveat"><h3>Scope and limitations</h3><ul>{figures.caveat.points.map(p=><li>{p}</li>)}</ul></div><p class="proof-method">These curated figures come from the project's privately retained evidence package. The raw captures and audits are not published here, so this page is a summary rather than a publicly reproducible validation report. Review the <a href="https://github.com/cernity/cernityndr">source and benchmark harness on GitHub ↗</a> to evaluate the implementation.</p></section>
 </Base>

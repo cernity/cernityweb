@@ -4,7 +4,7 @@ const { c } = Astro.props;
 const s = c.suricata, cer = c.cernity;
 const fmt = (v) => typeof v === 'number' ? v.toLocaleString() : v;
 ---
-<div class="sbs">
+<div class="sbs" id={c.id}>
   <div class="head">
     <strong>{c.title}</strong> <span class="pair">{c.pair}</span>
   </div>

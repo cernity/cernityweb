@@ -1,33 +1,17 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-
 export async function getStaticPaths() {
-  const docs = (await getCollection('docs')).sort((a, b) => a.data.order - b.data.order);
-  return docs.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry, docs },
-  }));
+  const docs = (await getCollection('docs')).sort((a,b) => a.data.order-b.data.order);
+  return docs.map(entry=>({params:{slug:entry.slug},props:{entry,docs}}));
 }
-
-const { entry, docs } = Astro.props;
-const { Content } = await entry.render();
+const {entry,docs}=Astro.props;
+const {Content,headings}=await entry.render();
 ---
 <Base title={`${entry.data.title} — Cernity docs`} description={entry.data.title}>
   <div class="docs-layout">
-    <aside class="docs-nav">
-      <div class="docs-nav-head">Documentation</div>
-      <ul>
-        {docs.map((d) => (
-          <li>
-            <a href={`/docs/${d.slug}`} class={d.slug === entry.slug ? 'active' : ''}>{d.data.nav}</a>
-          </li>
-        ))}
-      </ul>
-    </aside>
-    <article class="docs-content">
-      <Content />
-      <p class="docs-back"><a href="/docs/">← All documentation</a></p>
-    </article>
+    <aside class="docs-nav"><nav aria-label="Documentation"><div class="docs-nav-head"><a href="/docs/">Documentation</a></div><ul>{docs.map(d=><li><a href={`/docs/${d.slug}/`} class={d.slug===entry.slug?'active':''} aria-current={d.slug===entry.slug?'page':undefined}>{d.data.nav}</a></li>)}</ul></nav></aside>
+    <article class="docs-content"><div class="breadcrumbs"><a href="/docs/">DOCS</a> / {entry.data.nav.toUpperCase()}</div><Content /><p class="docs-back"><a href="/docs/">← All documentation</a></p></article>
+    <aside class="docs-toc"><nav aria-label="On this page"><div class="docs-nav-head">On this page</div><ul>{headings.filter(h=>h.depth===2).map(h=><li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul></nav></aside>
   </div>
 </Base>

@@ -107,4 +107,4 @@ The defaults are meant to be adjusted against your traffic:
 
 SLIPS is **GPLv2**. This overlay pulls it as its own upstream image; it is **not**
 part of Cernity's PolyForm-licensed code. See
-[THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md).
+[THIRD-PARTY-NOTICES.md](https://github.com/cernity/cernityndr/blob/main/THIRD-PARTY-NOTICES.md).

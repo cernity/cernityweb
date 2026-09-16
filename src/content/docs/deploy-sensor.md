@@ -15,7 +15,7 @@ The sensor bundle runs on the box already running Suricata. It has two parts:
   local command socket, and ships bounded PCAP/file slices to the central object store.
 
 Both authenticate to the bus with the **produce-only sensor credential** — never a
-superuser (see [SECURITY.md](../SECURITY.md) and `deploy/security`). A compromised sensor
+superuser (see [SECURITY.md](https://github.com/cernity/cernityndr/blob/main/SECURITY.md) and `deploy/security`). A compromised sensor
 cannot forge findings, read another tenant's traffic, or alter the cluster.
 
 ## Prerequisites

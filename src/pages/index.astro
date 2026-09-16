@@ -1,70 +1,41 @@
 ---
 import Base from '../layouts/Base.astro';
 import figures from '../content/proof/figures.json';
-const NDR_REPO = 'https://github.com/cernity/cernityndr';
-const highlight = figures.comparisons.find((c) => c.id === 'beacon');
+const beacon = figures.comparisons.find(c => c.id === 'beacon')!;
+const outcomes = [
+  { number: '01', title: 'Find the pattern across the packets.', text: 'Identify beaconing, distributed transfers, and internal fan-out through stateful analysis of the telemetry your sensors already produce.', label: 'Behavioral detection', href: '/docs/how-it-works/' },
+  { number: '02', title: 'Give each finding a reason.', text: 'Bring the source, destination, detection measurements, and ATT&CK context together so an analyst can see what triggered a finding.', label: 'Context & enrichment', href: '/docs/enrichment/' },
+  { number: '03', title: 'Keep repeating alerts together.', text: 'Consolidate repeated detections under a stable finding identity, then deliver the findings into the SIEM your team already uses.', label: 'Finding lifecycle', href: '/docs/siem-integrations/' },
+];
 ---
-<Base title="Cernity NDR — behavioural detection for Suricata sensors">
-  <section class="hero">
-    <span class="pill">Open-source · sits between Suricata and your SIEM</span>
-    <h1>Turn a signature-only Suricata sensor into a behavioural NDR.</h1>
-    <p class="lede">
-      Suricata sees the packets. It does not see the <em>behaviour</em> — the beacon, the low-and-slow
-      exfil, the internal fan-out. Cernity reads the same flows and turns them into named,
-      MITRE-tagged, entity-scoped findings, and folds repeating alerts into single incidents.
-    </p>
-    <div class="cta-row">
-      <a class="btn primary" href="/proof/">See the evidence →</a>
-      <a class="btn" href={NDR_REPO}>View on GitHub ↗</a>
+<Base>
+  <section class="hero home-hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="status-dot"></span> NETWORK DETECTION & RESPONSE</div>
+      <h1>Your network<br />has a story.<br /><span>Find the threat.</span></h1>
+      <p class="lede">Turn Suricata telemetry into explained security findings. Behavioral detection, context, and consolidation. Delivered to your SIEM.</p>
+      <div class="cta-row"><a class="btn primary" href="/docs/getting-started/">Get started <span aria-hidden="true">↗</span></a><a class="text-link" href="/proof/">Explore the evidence <span aria-hidden="true">→</span></a></div>
+      <p class="hero-note">Self hosted <span> / </span> Source available <span> / </span> Built on Suricata</p>
     </div>
+    <figure class="signal-panel">
+      <figcaption><span class="eyebrow">FROM TELEMETRY TO FINDING</span><span class="sample-label">BENCHMARK EXAMPLE</span></figcaption>
+      <div class="signal-input"><span class="mono muted">01 / SURICATA EVE</span><span class="input-count">{beacon.suricata.flow_records} flow records <span>·</span> {beacon.suricata.threat_alerts} threat alerts</span></div>
+      <div class="cadence"><div class="cadence-heading"><span>Repeated outbound connections</span><span class="mono">{beacon.cernity.interval_s}s interval</span></div><svg viewBox="0 0 440 92" role="img" aria-label="Illustration of regularly spaced connections at a five second interval"><path d="M0 72H440M0 24H440" stroke="#3a4140" stroke-dasharray="3 5"/>{Array.from({length: 20}, (_, i) => <path d={`M${10 + i * 22} 72v-45`} stroke="#dc987b" stroke-width="3"/>)}<path d="M0 72H440" stroke="#5a6360"/></svg><div class="chart-axis mono"><span>CONNECTION CADENCE</span><span>{beacon.cernity.connections} CONNECTIONS</span></div></div>
+      <div class="signal-connector"><span></span><b>↓</b><span class="mono">CERNITY / BEHAVIORAL ANALYSIS</span></div>
+      <div class="finding"><div class="finding-heading"><span class="finding-label">C2 / BEACON</span><span class="mono">ATT&CK {beacon.cernity.mitre}</span></div><h3>Periodic callback detected</h3><p class="mono entity">{beacon.pair}</p><div class="finding-stats"><div><span>Interval</span><strong>{beacon.cernity.interval_s}s</strong></div><div><span>Jitter</span><strong>{beacon.cernity.jitter_s}s</strong></div><div><span>Connections</span><strong>{beacon.cernity.connections}</strong></div></div></div>
+      <div class="signal-output"><span class="status-dot"></span> One explained finding <span aria-hidden="true">→</span> Your SIEM</div>
+    </figure>
   </section>
-
-  <section id="value">
-    <h2>What Cernity adds</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Behavioural detection</h3>
-        <p class="muted">Beaconing, low-and-slow exfil, DNS tunnelling, lateral fan-out — the patterns a
-        signature IDS has no rule for. Derived from the flows Suricata already emits.</p>
-      </div>
-      <div class="card">
-        <h3>Signal, not volume</h3>
-        <p class="muted">One classified incident instead of dozens of repeating alerts or raw flow rows.
-        Repeated signature hits collapse into a single tracked finding identity.</p>
-      </div>
-      <div class="card">
-        <h3>Analyst-ready context</h3>
-        <p class="muted">Every finding carries a category, an ATT&CK mapping, severity, and the scoped
-        source→destination entities — not a flow row to interpret by hand.</p>
-      </div>
-      <div class="card">
-        <h3>Drops into your pipeline</h3>
-        <p class="muted">Sits between the sensor and the SIEM. Same Suricata, same SIEM — Cernity is the
-        only thing added. Open source at <a href={NDR_REPO}>cernity/cernityndr</a>.</p>
-      </div>
-    </div>
+  <div class="integration-strip"><span class="eyebrow">FINDINGS GO WHERE YOU WORK</span><div><span>Splunk</span><span>Elasticsearch</span><span>OpenSearch</span><span>Devo</span><span>Syslog / CEF</span><span>Webhooks</span></div></div>
+  <section id="platform" class="section-block">
+    <div class="section-heading"><div><span class="eyebrow">01 / THE PLATFORM</span><h2>From network activity<br />to something you can investigate.</h2></div><p>Suricata inspects the traffic. Cernity connects the observations into findings your security team can work with.</p></div>
+    <div class="feature-rows">{outcomes.map(o => <a href={o.href} class="feature-row"><span class="feature-number mono">{o.number}</span><div><span class="eyebrow">{o.label}</span><h3>{o.title}</h3></div><p>{o.text}</p><span class="row-arrow" aria-hidden="true">↗</span></a>)}</div>
   </section>
-
-  {highlight && (
-    <section>
-      <h2>The gap, in one example</h2>
-      <p class="lede">A periodic C2 callback, seen by both — Suricata logged it and said nothing; Cernity named it.</p>
-      <div class="sbs">
-        <div class="head"><strong>{highlight.title}</strong> <span class="pair">{highlight.pair}</span></div>
-        <div class="panels">
-          <div class="panel suricata"><div class="who">Suricata alone</div>
-            <dl><dt>flow records</dt><dd>{highlight.suricata.flow_records}</dd>
-            <dt>threat alerts</dt><dd class="zero">{highlight.suricata.threat_alerts}</dd></dl>
-            <div class="verdict muted">{highlight.suricata.verdict}</div></div>
-          <div class="panel cernity"><div class="who">+ Cernity</div>
-            <dl><dt>finding</dt><dd>{highlight.cernity.category} / {highlight.cernity.detector}</dd>
-            <dt>ATT&CK</dt><dd>{highlight.cernity.mitre}</dd>
-            <dt>cadence</dt><dd>{highlight.cernity.interval_s}s over {highlight.cernity.connections} conns</dd></dl>
-            <div class="verdict">{highlight.cernity.verdict}</div></div>
-        </div>
-        <div class="takeaway">{highlight.takeaway}</div>
-      </div>
-      <p><a class="btn" href="/proof/">See all four verified comparisons →</a></p>
-    </section>
-  )}
+  <section class="architecture section-block" id="architecture">
+    <div class="section-heading"><div><span class="eyebrow">02 / YOUR STACK, CONNECTED</span><h2>Keep your sensors.<br />Keep your SIEM.</h2></div><div><p>Add a central detection tier. Sensor telemetry comes in; explained findings go out. You run the infrastructure.</p><a href="/docs/how-it-works/" class="text-link">Inside the architecture <span aria-hidden="true">↗</span></a></div></div>
+    <div class="pipeline" aria-label="Suricata sends EVE telemetry to Cernity, which sends findings to your SIEM"><div class="pipeline-node"><span class="eyebrow">AT THE EDGE</span><h3>Suricata</h3><p>Packet inspection<br />EVE telemetry + shipper</p><span class="mono node-foot">YOUR SENSORS</span></div><span class="pipeline-arrow" aria-hidden="true">→</span><div class="pipeline-node pipeline-core"><span class="eyebrow">CENTRAL ANALYSIS</span><h3>Cernity<span>.</span></h3><p>Detect · Enrich · Consolidate</p><span class="mono node-foot">EXPLAINED FINDINGS</span></div><span class="pipeline-arrow" aria-hidden="true">→</span><div class="pipeline-node"><span class="eyebrow">WITH YOUR ANALYSTS</span><h3>Your SIEM</h3><p>Investigation<br />Your existing workflows</p><span class="mono node-foot">YOUR OPERATIONS</span></div></div>
+    <div class="architecture-notes"><p><span>01</span> Analysis runs centrally</p><p><span>02</span> You control data retention</p><p><span>03</span> Optional packet forensics</p></div>
+  </section>
+  <section class="section-block evidence-section"><div class="section-heading"><div><span class="eyebrow">03 / THE EVIDENCE</span><h2>Look at the output.<br />Then judge the signal.</h2></div><p>Four curated comparisons from synthetic capture replays. The same traffic, with and without Cernity.</p></div><div class="evidence-grid"><a href="/proof/#beacon" class="evidence-stat"><span class="eyebrow">PERIODIC CALLBACK</span><strong>5<span>s</span></strong><h3>A cadence becomes a finding.</h3><p>20 connections. Zero Suricata threat alerts. One Cernity beacon finding.</p><span class="text-link">Inspect the comparison ↗</span></a><a href="/proof/#signature" class="evidence-stat"><span class="eyebrow">REPEATED SIGNATURE</span><strong>45<span> → </span>1</strong><h3>Repeated alerts, one identity.</h3><p>45 signature alerts consolidated into one tracked finding, with two revisions.</p><span class="text-link">Inspect the comparison ↗</span></a></div><p class="evidence-note">These scenarios demonstrate detection and consolidation, not production accuracy. False leads occurred in the same test. <a href="/proof/#limitations">Read the scope and limitations →</a></p></section>
+  <section class="closing"><span class="eyebrow">PUT THE TELEMETRY TO WORK</span><div><h2>See what your<br />network is telling you.</h2><div><a class="btn primary" href="/docs/getting-started/">Start with the deployment guide ↗</a><a class="text-link" href="https://github.com/cernity/cernityndr">Explore the source on GitHub ↗</a></div></div></section>
 </Base>
