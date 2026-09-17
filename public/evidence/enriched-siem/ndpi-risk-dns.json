@@ -1,0 +1,37 @@
+{
+  "_index": "ndr-findings-2026.09.17",
+  "_id": "ndpi_risk-5639833716-2982677",
+  "_source": {
+    "finding_id": "ndpi_risk-5639833716-2982677",
+    "tenant_id": "homelab",
+    "detector_id": "ndpi_risk",
+    "detector_version": "1.0",
+    "category": "malware",
+    "severity": 6,
+    "confidence": 0.6,
+    "first_seen": "2026-09-17T00:50:54",
+    "last_seen": "2026-09-17T00:50:54",
+    "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"2603:8000:4000:cf00:f474:5b9c:5c9c:badd\"}, {\"type\": \"ndpi_risk\", \"value\": [\"{'risk': 'Susp DNS Traffic', 'risk_score': {'client': 350, 'server': 110, 'total': 460}, 'severity': 'Medium'}\"]}]",
+    "state": "FINAL",
+    "sensor_ids": [],
+    "evidence_refs": [],
+    "mitre": [],
+    "capture_job_ids": [],
+    "suppression_reason": "",
+    "enrichment_state": "NOT_REQUIRED",
+    "devo_delivery_state": "QUEUED",
+    "geo": {
+      "2603:8000:4000:cf00:f474:5b9c:5c9c:badd": {
+        "country": "US",
+        "asn": 20001,
+        "as_org": "Charter Communications Inc"
+      }
+    },
+    "intel": {
+      "rdns": {
+        "2603:8000:4000:cf00:f474:5b9c:5c9c:badd": "syn-2603-8000-4000-cf00-f474-5b9c-5c9c-badd.res6.spectrum.com"
+      }
+    },
+    "@timestamp": "2026-09-17T00:50:54"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "_index": "ndr-findings-2026.09.17",
+  "_id": "long_connection_cumulative-547219036-2982676",
+  "_source": {
+    "finding_id": "long_connection_cumulative-547219036-2982676",
+    "tenant_id": "homelab",
+    "detector_id": "long_connection_cumulative",
+    "detector_version": "1.0",
+    "category": "c2",
+    "severity": 6,
+    "confidence": 1.0,
+    "first_seen": "2026-09-17T00:48:51",
+    "last_seen": "2026-09-17T00:48:51",
+    "entities": "[{\"type\": \"ip\", \"role\": \"src\", \"value\": \"192.168.222.15\"}, {\"type\": \"ip\", \"role\": \"dst\", \"value\": \"44.231.237.105\"}, {\"type\": \"total_duration_s\", \"value\": 20879}, {\"type\": \"connections\", \"value\": 163}]",
+    "state": "FINAL",
+    "sensor_ids": [],
+    "evidence_refs": [],
+    "mitre": [
+      "T1071"
+    ],
+    "capture_job_ids": [],
+    "suppression_reason": "",
+    "enrichment_state": "NOT_REQUIRED",
+    "devo_delivery_state": "QUEUED",
+    "geo": {
+      "44.231.237.105": {
+        "country": "US",
+        "asn": 16509,
+        "as_org": "Amazon.com, Inc."
+      }
+    },
+    "intel": {
+      "rdns": {
+        "44.231.237.105": "ec2-44-231-237-105.us-west-2.compute.amazonaws.com"
+      },
+      "virustotal": {
+        "44.231.237.105": {
+          "malicious": 0,
+          "suspicious": 0,
+          "harmless": 53
+        }
+      }
+    },
+    "@timestamp": "2026-09-17T00:48:51"
+  }
+}
